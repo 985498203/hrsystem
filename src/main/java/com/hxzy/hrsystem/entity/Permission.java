@@ -5,7 +5,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class Permission implements Serializable {
-	private static final long serialVersionUID = 4610103042039300230L;
+	private static final long serialVersionUID = -912119834241803878L;
 	private Integer perm_id;// 权限ID
 	private String perm_name;//权限名称
 	private String url;//权限对应url

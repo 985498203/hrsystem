@@ -18,6 +18,18 @@ public class User implements Serializable {
 	private Integer age;// 员工年龄
 	private String phone;// 员工电话
 	private String email;// 员工邮箱
+	
+	private Dept dept;// 部门，配置多对一
+	
+	
+	public Dept getDept() {
+		return dept;
+	}
+
+	public void setDept(Dept dept) {
+		this.dept = dept;
+	}
+
 	Set<UserRole> userRoleSet = new HashSet<UserRole>();// 配置与UserRole一对多的关系
 
 	public Set<UserRole> getUserRoleSet() {
