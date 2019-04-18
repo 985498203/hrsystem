@@ -1,19 +1,29 @@
 package com.hxzy.hrsystem.entity;
 
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 
 public class Permission implements Serializable {
 	private static final long serialVersionUID = 4610103042039300230L;
-	private Integer role_id;// 权限ID
+	private Integer perm_id;// 权限ID
 	private String perm_name;//权限名称
 	private String url;//权限对应url
 	
+	Set<RolePerm> rolePermSet = new HashSet<RolePerm>();// 配置与RolePerm一对多的关系
 	
-	public Integer getRole_id() {
-		return role_id;
+	public Set<RolePerm> getRolePermSet() {
+		return rolePermSet;
 	}
-	public void setRole_id(Integer role_id) {
-		this.role_id = role_id;
+	public void setRolePermSet(Set<RolePerm> rolePermSet) {
+		this.rolePermSet = rolePermSet;
+	}
+	
+	public Integer getPerm_id() {
+		return perm_id;
+	}
+	public void setPerm_id(Integer perm_id) {
+		this.perm_id = perm_id;
 	}
 	public String getPerm_name() {
 		return perm_name;
