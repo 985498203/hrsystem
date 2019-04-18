@@ -4,24 +4,20 @@
     "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 
 <hibernate-mapping package="com.hxzy.hrsystem.entity">
-	<class name="Role" table="tb_role">
-		<id name="role_id" column="role_id">
+	<class name="Permission" table="tb_permission">
+		<id name="perm_id" column="perm_id">
 			<!-- 主键生成策略 为sequence -->
 			<generator class="sequence">
 				<param name="sequence">
-					seq_role_id
+					seq_perm_id
 				</param>
 			</generator>
 		</id>
-		<property name="role_name" column="role_name"></property>
-		
-		<set name="userRoleSet" inverse="true" lazy="false">
-			<key column="role_id"></key>
-			<one-to-many class="UserRole"/>
-		</set>
+		<property name="perm_name" column="perm_name"></property>
+		<property name="url" column="url"></property>
 		
 		<set name="rolePermSet" inverse="true" lazy="false">
-			<key column="role_id"></key>
+			<key column="perm_id"></key>
 			<one-to-many class="RolePerm"/>
 		</set>
 	</class>
