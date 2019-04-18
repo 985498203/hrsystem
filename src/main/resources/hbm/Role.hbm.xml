@@ -4,23 +4,19 @@
     "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 
 <hibernate-mapping package="com.hxzy.hrsystem.entity">
-	<class name="User" table="tb_user" dynamic-update="true">
-		<id name="user_id" column="user_id">
+	<class name="Role" table="tb_role">
+		<id name="role_id" column="role_id">
 			<!-- 主键生成策略 为sequence -->
 			<generator class="sequence">
 				<param name="sequence">
-					SEQ_USER_SID
+					seq_role_id
 				</param>
 			</generator>
 		</id>
-		<property name="username" column="password"></property>
-		<property name="name" column="name"></property>
-		<property name="age" column="age"></property>
-		<property name="phone" column="phone"></property>
-		<property name="email" column="email"></property>
+		<property name="role_name" column="role_name"></property>
 		
 		<set name="userRoleSet" inverse="true" lazy="false">
-			<key column="user_id"></key>
+			<key column="role_id"></key>
 			<one-to-many class="UserRole"/>
 		</set>
 	</class>
