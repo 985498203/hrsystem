@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class name="com.hxzy.ssh.entity.User" table="tb_user"
+		dynamic-update="true">
+		<id name="id" column="user_id">
+			<!-- 主键生成策略 为sequence -->
+			<generator class="sequence">
+				<param name="sequence">
+					SEQ_USER_SID
+				</param>
+			</generator>
+		</id>
+		<property name="username" column="username"></property>
+		<property name="password" column="password"></property>
+		<set name="bookSet" inverse="true">
+			<key column="user_id"></key>
+			<one-to-many class="com.hxzy.ssh.entity.Book" />
+		</set>
+	</class>
+</hibernate-mapping>

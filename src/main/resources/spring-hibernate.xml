@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="
+	 http://www.springframework.org/schema/beans
+     http://www.springframework.org/schema/beans/spring-beans.xsd
+     http://www.springframework.org/schema/context
+     http://www.springframework.org/schema/context/spring-context.xsd
+     http://www.springframework.org/schema/tx
+     http://www.springframework.org/schema/tx/spring-tx.xsd
+     http://www.springframework.org/schema/aop
+     http://www.springframework.org/schema/aop/spring-aop.xsd
+    ">
+	<!-- 开启注解 -->
+	<context:annotation-config />
+	<!-- 扫描注解 -->
+	<context:component-scan
+		base-package="com.hxzy.hrsystem.dao"></context:component-scan>
+	<context:component-scan
+		base-package="com.hxzy.hrsystem.service"></context:component-scan>
+	<!-- 读取properties文件 -->
+	<bean
+		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="locations">
+			<value>
+				classpath:jdbc.properties
+			</value>
+		</property>
+	</bean>
+	<!-- 配置数据源 -->
+	<bean id="dataSoures"
+		class="org.apache.commons.dbcp.BasicDataSource">
+		<property name="driverClassName"
+			value="${jdbc.driverClassName}"></property>
+		<property name="url" value="${jdbc.url}"></property>
+		<property name="username" value="${jdbc.username}"></property>
+		<property name="password" value="${jdbc.password}"></property>
+	</bean>
+	<!-- 配置hibernate session工厂 -->
+	<bean id="sessionFactory"
+		class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+		<property name="dataSource" ref="dataSoures"></property>
+		<!-- 扫描hibernate映射文件 -->
+		<property name="mappingLocations">
+			<list>
+				<value>classpath:hbm/*.hbm.xml</value>
+			</list>
+		</property>
+		<!-- hibernate其他核心配置 -->
+		<property name="hibernateProperties">
+			<value>
+				hibernate.dialect=org.hibernate.dialect.OracleDialect
+				hibernate.hbm2ddl.auto=update
+				hibernate.show_sql=true
+				hibernate.format_sql=true
+				hibernate.jdbc.batch_size=30
+			</value>
+		</property>
+	</bean>
+	<!-- 配置事务管理器 -->
+	<bean id="transactionManager"
+		class="org.springframework.orm.hibernate4.HibernateTransactionManager">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	<!-- 配置事务 -->
+	<tx:advice id="txAdvice"
+		transaction-manager="transactionManager">
+		<tx:attributes>
+			<!-- 只读事务 -->
+			<tx:method name="find*" read-only="true" />
+			<!-- 没有事务就创建一个新事务 -->
+			<tx:method name="add*" propagation="REQUIRED" />
+			<tx:method name="update*" propagation="REQUIRED" />
+			<tx:method name="delete*" propagation="REQUIRED" />
+		</tx:attributes>
+	</tx:advice>
+
+	<!-- 配置切面通知 -->
+	<aop:config>
+		<aop:pointcut
+			expression="execution(* com.hxzy.ssh.service.impl.*.*(..))" id="aop" />
+		<aop:aspect ref="aop"></aop:aspect>
+	</aop:config>
+</beans>
