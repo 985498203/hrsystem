@@ -9,7 +9,7 @@ import org.springframework.web.servlet.ModelAndView;
 public class LoginController {
 	@RequestMapping(value="/hello",method=RequestMethod.GET)
 	public ModelAndView Login(ModelAndView mav) {
-		System.out.println("hello");
+		System.out.println("你好");
 		mav.setViewName("hello");
 		return mav;
 	}
