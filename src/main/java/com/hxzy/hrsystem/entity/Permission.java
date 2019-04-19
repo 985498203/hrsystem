@@ -6,8 +6,8 @@ import java.util.Set;
 
 public class Permission implements Serializable {
 	private static final long serialVersionUID = -912119834241803878L;
-	private Integer perm_id;// 权限ID
-	private String perm_name;//权限名称
+	private Integer permId;// 权限ID
+	private String permName;//权限名称
 	private String url;//权限对应url
 	
 	Set<RolePerm> rolePermSet = new HashSet<RolePerm>();// 配置与RolePerm一对多的关系
@@ -18,18 +18,17 @@ public class Permission implements Serializable {
 	public void setRolePermSet(Set<RolePerm> rolePermSet) {
 		this.rolePermSet = rolePermSet;
 	}
-	
-	public Integer getPerm_id() {
-		return perm_id;
+	public Integer getPermId() {
+		return permId;
 	}
-	public void setPerm_id(Integer perm_id) {
-		this.perm_id = perm_id;
+	public void setPermId(Integer permId) {
+		this.permId = permId;
 	}
-	public String getPerm_name() {
-		return perm_name;
+	public String getPermName() {
+		return permName;
 	}
-	public void setPerm_name(String perm_name) {
-		this.perm_name = perm_name;
+	public void setPermName(String permName) {
+		this.permName = permName;
 	}
 	public String getUrl() {
 		return url;

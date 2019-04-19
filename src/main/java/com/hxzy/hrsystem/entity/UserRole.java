@@ -7,10 +7,10 @@ import java.io.Serializable;
  */
 public class UserRole implements Serializable {
 	private static final long serialVersionUID = 6530626026356673685L;
-	private Integer user_role_id;// id
+	private Integer userRoleId;// id
 
 	private User user;// 用户
-	
+
 	private Role role;// 职位
 
 	public User getUser() {
@@ -21,7 +21,6 @@ public class UserRole implements Serializable {
 		this.user = user;
 	}
 
-
 	public Role getRole() {
 		return role;
 	}
@@ -30,11 +29,12 @@ public class UserRole implements Serializable {
 		this.role = role;
 	}
 
-	public Integer getUser_role_id() {
-		return user_role_id;
+	public Integer getUserRoleId() {
+		return userRoleId;
 	}
 
-	public void setUser_role_id(Integer user_role_id) {
-		this.user_role_id = user_role_id;
+	public void setUserRoleId(Integer userRoleId) {
+		this.userRoleId = userRoleId;
 	}
+
 }

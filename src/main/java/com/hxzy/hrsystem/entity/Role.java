@@ -11,8 +11,8 @@ import java.util.Set;
 public class Role implements Serializable {
 
 	private static final long serialVersionUID = -8126774522037041059L;
-	private Integer role_id;// 职位ID
-	private String role_name;// 职位名
+	private Integer roleId;// 职位ID
+	private String roleName;// 职位名
 
 	Set<UserRole> userRoleSet = new HashSet<UserRole>();// 配置与UserRole一对多的关系
 	Set<RolePerm> rolePermSet = new HashSet<RolePerm>();// 配置与RolePerm一对多的关系
@@ -33,19 +33,20 @@ public class Role implements Serializable {
 		this.userRoleSet = userRoleSet;
 	}
 
-	public Integer getRole_id() {
-		return role_id;
+	public Integer getRoleId() {
+		return roleId;
 	}
 
-	public void setRole_id(Integer role_id) {
-		this.role_id = role_id;
+	public void setRoleId(Integer roleId) {
+		this.roleId = roleId;
 	}
 
-	public String getRole_name() {
-		return role_name;
+	public String getRoleName() {
+		return roleName;
 	}
 
-	public void setRole_name(String role_name) {
-		this.role_name = role_name;
+	public void setRoleName(String roleName) {
+		this.roleName = roleName;
 	}
+	
 }

@@ -4,21 +4,25 @@
     "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 
 <hibernate-mapping package="com.hxzy.hrsystem.entity">
-	<class name="Permission" table="tb_permission">
-		<id name="permId" column="perm_id">
+	<class name="Funds" table="tb_funds">
+		<id name="fundsId" column="funds_id">
 			<!-- 主键生成策略 为sequence -->
 			<generator class="sequence">
 				<param name="sequence">
-					seq_perm_id
+					seq_funds_id
 				</param>
 			</generator>
 		</id>
-		<property name="permName" column="perm_name"></property>
-		<property name="url" column="url"></property>
+		<property name="money" column="money"></property>
+		<!-- 单向一对一 -->
+		<many-to-one name="user" class="User" column="user_id" unique="true"></many-to-one>
 		
-		<set name="rolePermSet" inverse="true" lazy="false">
-			<key column="perm_id"></key>
-			<one-to-many class="RolePerm"/>
+		<!-- 配置与福利表welfare的一对多的关系 -->
+		<set name="welFareSet">
+			<key column="funds_id"></key>
+			<one-to-many class="WelFare"/>
 		</set>
+		
+		
 	</class>
 </hibernate-mapping>

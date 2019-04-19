@@ -6,9 +6,9 @@ import java.util.Set;
 
 public class Dept implements Serializable {
 
-	private static final long serialVersionUID = -6458056658636446534L;
-	private Integer dept_id;// 部门ID
-	private String dept_name;// 部门名称
+	private static final long serialVersionUID = -119237731424491129L;
+	private Integer deptId;// 部门ID
+	private String deptName;// 部门名称
 
 	Set<User> userSet = new HashSet<User>();// 配置一对多
 
@@ -20,20 +20,20 @@ public class Dept implements Serializable {
 		this.userSet = userSet;
 	}
 
-	public Integer getDept_id() {
-		return dept_id;
+	public Integer getDeptId() {
+		return deptId;
 	}
 
-	public void setDept_id(Integer dept_id) {
-		this.dept_id = dept_id;
+	public void setDeptId(Integer deptId) {
+		this.deptId = deptId;
 	}
 
-	public String getDept_name() {
-		return dept_name;
+	public String getDeptName() {
+		return deptName;
 	}
 
-	public void setDept_name(String dept_name) {
-		this.dept_name = dept_name;
+	public void setDeptName(String deptName) {
+		this.deptName = deptName;
 	}
-
+	
 }

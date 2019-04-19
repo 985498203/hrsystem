@@ -11,17 +11,34 @@ import java.util.Set;
 public class User implements Serializable {
 
 	private static final long serialVersionUID = -6284168751186821312L;
-	private Integer user_id;// 员工ID
+	private Integer userId;// 员工ID
 	private String username;// 员工账号
 	private String password;// 员工密码
 	private String name;// 员工姓名
 	private Integer age;// 员工年龄
 	private String phone;// 员工电话
 	private String email;// 员工邮箱
-	
+	private Worder worder;// 工单，配置一对一
 	private Dept dept;// 部门，配置多对一
-	
-	
+
+	private Set<WorderRecord> worderRecordSet = new HashSet<WorderRecord>();// 工单申请记录
+
+	public Set<WorderRecord> getWorderRecordSet() {
+		return worderRecordSet;
+	}
+
+	public void setWorderRecordSet(Set<WorderRecord> worderRecordSet) {
+		this.worderRecordSet = worderRecordSet;
+	}
+
+	public Worder getWorder() {
+		return worder;
+	}
+
+	public void setWorder(Worder worder) {
+		this.worder = worder;
+	}
+
 	public Dept getDept() {
 		return dept;
 	}
@@ -40,12 +57,13 @@ public class User implements Serializable {
 		this.userRoleSet = userRoleSet;
 	}
 
-	public Integer getUser_id() {
-		return user_id;
+
+	public Integer getUserId() {
+		return userId;
 	}
 
-	public void setUser_id(Integer user_id) {
-		this.user_id = user_id;
+	public void setUserId(Integer userId) {
+		this.userId = userId;
 	}
 
 	public String getUsername() {
