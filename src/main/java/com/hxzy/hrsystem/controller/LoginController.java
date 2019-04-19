@@ -11,7 +11,7 @@ public class LoginController {
 	public ModelAndView Login(ModelAndView mav) {
 		System.out.println("hello");
 		mav.setViewName("hello");
-		
 		return mav;
 	}
+	
 }
