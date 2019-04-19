@@ -13,7 +13,8 @@
 				</param>
 			</generator>
 		</id>
-		<property name="username" column="password"></property>
+		<property name="username" column="username"></property>
+		<property name="password" column="password"></property>
 		<property name="name" column="name"></property>
 		<property name="age" column="age"></property>
 		<property name="phone" column="phone"></property>

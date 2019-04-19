@@ -13,6 +13,7 @@
      http://www.springframework.org/schema/tx/spring-tx.xsd
      http://www.springframework.org/schema/aop
      http://www.springframework.org/schema/aop/spring-aop.xsd
+     
     ">
 	<!-- 开启注解 -->
 	<context:annotation-config />
@@ -53,7 +54,7 @@
 		<property name="hibernateProperties">
 			<value>
 				hibernate.dialect=org.hibernate.dialect.OracleDialect
-				hibernate.hbm2ddl.auto=create
+				hibernate.hbm2ddl.auto=update
 				hibernate.show_sql=true
 				hibernate.format_sql=true
 				hibernate.jdbc.batch_size=30
