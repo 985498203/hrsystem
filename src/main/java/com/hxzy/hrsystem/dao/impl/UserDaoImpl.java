@@ -13,7 +13,7 @@ import org.springframework.stereotype.Component;
 import com.hxzy.hrsystem.dao.UserDao;
 import com.hxzy.hrsystem.entity.User;
 
-@Component
+@Component("userDaoImpl")
 public class UserDaoImpl implements UserDao {
 
 	private SessionFactory sessionFactory;
@@ -82,7 +82,7 @@ public class UserDaoImpl implements UserDao {
 	}
 
 	@Override
-	public void save(User user) {
+	public void add(User user) {
 		Session session = null;
 		try {
 			session = sessionFactory.openSession();// 打开session

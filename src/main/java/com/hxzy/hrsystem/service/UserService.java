@@ -35,7 +35,7 @@ public interface UserService {
 	 * 
 	 * @param entity
 	 */
-	public void saveUser(User user);
+	public void addUser(User user);
 
 	/**
 	 * 更新

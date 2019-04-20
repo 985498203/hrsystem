@@ -31,7 +31,7 @@ public interface BaseDao<T> {
 	 * 
 	 * @param entity
 	 */
-	public void save(T t);
+	public void add(T t);
 
 	/**
 	 * 更新

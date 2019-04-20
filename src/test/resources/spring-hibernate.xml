@@ -52,11 +52,11 @@
 		<!-- hibernate其他核心配置 -->
 		<property name="hibernateProperties">
 			<value>
-				hibernate.dialect=org.hibernate.dialect.OracleDialect
-				hibernate.hbm2ddl.auto=create
-				hibernate.show_sql=true
-				hibernate.format_sql=true
-				hibernate.jdbc.batch_size=30
+				hibernate.dialect = org.hibernate.dialect.OracleDialect
+				hibernate.show_sql = true
+				hibernate.hbm2ddl.auto = update
+				hibernate.format_sql = true
+				hibernate.jdbc.batch_size = 30
 			</value>
 		</property>
 	</bean>
@@ -81,7 +81,8 @@
 	<!-- 配置切面通知 -->
 	<aop:config>
 		<aop:pointcut
-			expression="execution(* com.hxzy.ssh.service.impl.*.*(..))" id="aop" />
+			expression="execution(* com.hxzy.hrsystem.service.impl.*.*(..))"
+			id="aop" />
 		<aop:aspect ref="aop"></aop:aspect>
 	</aop:config>
 </beans>
