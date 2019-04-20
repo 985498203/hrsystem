@@ -2,6 +2,7 @@ package com.hxzy.hrsystem.dao;
 
 import java.util.List;
 
+
 public interface BaseDao<T> {
 	/**
 	 * 查询所有

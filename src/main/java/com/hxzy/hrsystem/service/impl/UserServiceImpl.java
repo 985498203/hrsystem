@@ -5,24 +5,26 @@ import java.util.List;
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
+
 import com.hxzy.hrsystem.dao.UserDao;
 import com.hxzy.hrsystem.entity.User;
 import com.hxzy.hrsystem.service.UserService;
 
 @Component
-public class UserServiceImpl implements UserService{
-	
+@Transactional
+public class UserServiceImpl implements UserService {
+
 	public UserDao userDao;
-	
-	
-	@Resource(name="userDaoImpl")
+
+	@Resource(name = "userDaoImpl")
 	public void setUserDao(UserDao userDao) {
 		this.userDao = userDao;
 	}
 
 	@Override
 	public List<User> finAllUser() {
-		
+
 		return userDao.finAll();
 	}
 
@@ -51,5 +53,5 @@ public class UserServiceImpl implements UserService{
 	public void deleteUser(User user) {
 		userDao.delete(user);
 	}
-	
+
 }
