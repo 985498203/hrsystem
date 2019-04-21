@@ -2,9 +2,8 @@ package com.hxzy.hrsystem.dao.impl;
 
 import java.util.List;
 
-import javax.annotation.Resource;
-
 import org.hibernate.Query;
+import org.hibernate.SQLQuery;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -15,6 +14,8 @@ import com.hxzy.hrsystem.entity.User;
 public class UserDaoImpl implements UserDao {
 	@Autowired
 	private SessionFactory sessionFactory;
+
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<User> finAll() {
 		return sessionFactory.getCurrentSession().createQuery("from User").list();
@@ -53,6 +54,29 @@ public class UserDaoImpl implements UserDao {
 	public void delete(User user) {
 		sessionFactory.getCurrentSession().delete(user);// 删除用户
 
+	}
+	
+	public List queryBySql(String sql) {
+		List<Object> list = sessionFactory.getCurrentSession().createSQLQuery(sql).list();
+		return list;
+	}
+
+	public int excuteBySql(String sql) {
+		int result;
+		SQLQuery query = sessionFactory.getCurrentSession().createSQLQuery(sql);
+		result = query.executeUpdate();
+		return result;
+	}
+	public List queryByHql(String hql) {
+		List<Object> list = sessionFactory.getCurrentSession().createQuery(hql).list();
+		return list;
+	}
+
+	public int excuteByHql(String hql) {
+		int result;
+		Query query = sessionFactory.getCurrentSession().createQuery(hql);
+		result = query.executeUpdate();
+		return result;
 	}
 
 }

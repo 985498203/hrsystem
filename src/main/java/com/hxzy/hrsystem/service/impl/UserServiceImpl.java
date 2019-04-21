@@ -5,14 +5,11 @@ import java.util.List;
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.Transactional;
-
 import com.hxzy.hrsystem.dao.UserDao;
 import com.hxzy.hrsystem.entity.User;
 import com.hxzy.hrsystem.service.UserService;
 
 @Component
-@Transactional
 public class UserServiceImpl implements UserService {
 
 	public UserDao userDao;

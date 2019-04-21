@@ -18,15 +18,16 @@ public class LoginController {
 		this.userService = userService;
 	}
 
-	@RequestMapping(value = "/hello", method = RequestMethod.GET)
+	@RequestMapping(value = "/index", method = RequestMethod.GET)
 	public ModelAndView Login(ModelAndView mav) {
 		System.out.println("你好");
-		mav.setViewName("main");
+		mav.setViewName("login");
 		return mav;
 	}
 
+	
 	@RequestMapping(value = "/add", method = RequestMethod.GET)
-	public ModelAndView add(ModelAndView mav) {
+	public ModelAndView login(ModelAndView mav) {
 		User user = new User();
 		user.setUsername("bb");
 		user.setPassword("cc");
