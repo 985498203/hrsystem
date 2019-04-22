@@ -19,8 +19,8 @@ public class UserTest extends BaseTest {
 	@Test
 	public void addUser() {
 		User user = new User();
-		user.setUsername("aa");
-		user.setPassword("王五");
+		user.setUsername("赵六");
+		user.setPassword("赵六");
 		userService.addUser(user);
 		System.out.println("添加成功");
 	}

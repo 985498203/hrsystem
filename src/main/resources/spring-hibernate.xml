@@ -93,6 +93,6 @@
 			expression="execution(* com.hxzy.hrsystem.service.impl.*.*(..))"
 			id="txPointcut" />
 		<aop:advisor advice-ref="txAdvice"
-			pointcut-ref="txPointcut" />
+			pointcut-ref="txPointcut"  />
 	</aop:config>
 </beans>
