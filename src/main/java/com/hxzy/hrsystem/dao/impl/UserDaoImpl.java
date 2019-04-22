@@ -3,6 +3,7 @@ package com.hxzy.hrsystem.dao.impl;
 import java.util.List;
 
 import org.hibernate.Query;
+import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,7 +30,7 @@ public class UserDaoImpl implements UserDao {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<User> finAll() {
+	public List<User> findAll() {
 		return this.getSession().createQuery("from User").list();
 	}
 
@@ -101,6 +102,16 @@ public class UserDaoImpl implements UserDao {
 		query.setParameter("userName", userName);
 		User user2 = (User) query.uniqueResult();
 		return user2;
+	}
+
+	@Override
+	public List<Role> findAllRoleByUserId(int id) {
+		String sql = "select r.* from tb_user_role ur,tb_role r where ur.user_id =? and ur.role_id = r.role_id";
+		Session session = sessionFactory.getCurrentSession();
+		SQLQuery query = session.createSQLQuery(sql).addEntity(Role.class);
+		query.setInteger(0, id);
+		List<Role> resultList = query.list();
+		return resultList;
 	}
 
 }

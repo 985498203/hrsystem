@@ -16,10 +16,18 @@ public class RoleDaoImpl implements RoleDao {
 	@Autowired
 	private SessionFactory sessionFactory;
 
-	@SuppressWarnings("unchecked")
+	/**
+	 * 得到一个Session
+	 * 
+	 * @return
+	 */
+	public Session getSession() {
+		return this.sessionFactory.getCurrentSession();
+	}
+
 	@Override
-	public List<Role> finAll() {
-		return sessionFactory.getCurrentSession().createQuery("from Role").list();
+	public List<Role> findAll() {
+		return this.getSession().createQuery("from Role").list();
 	}
 
 	@Override

@@ -13,7 +13,7 @@
 			</generator>
 		</id>
 		<property name="roleName" column="role_name"></property>
-
+		<property name="remarks" column="remarks"></property>
 		<set name="userRoleSet" inverse="true" lazy="true">
 			<key column="role_id"></key>
 			<one-to-many class="UserRole" />

@@ -29,9 +29,9 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public List<User> finAllUser() {
+	public List<User> findAllUser() {
 
-		return userDao.finAll();
+		return userDao.findAll();
 	}
 
 	@Override
@@ -122,6 +122,16 @@ public class UserServiceImpl implements UserService {
 			return false;
 		}
 
+	}
+
+	@Override
+	public User getUserByName(String username) {
+		return userDao.getUserByName(username);
+	}
+
+	@Override
+	public List<Role> findAllRoleByUserId(int id) {
+		return userDao.findAllRoleByUserId(id);
 	}
 
 }

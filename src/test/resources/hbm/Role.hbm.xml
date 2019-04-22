@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE hibernate-mapping PUBLIC 
     "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
     "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
@@ -14,15 +13,15 @@
 			</generator>
 		</id>
 		<property name="roleName" column="role_name"></property>
-		
+		<property name="remarks" column="remarks"></property>
 		<set name="userRoleSet" inverse="true" lazy="true">
 			<key column="role_id"></key>
-			<one-to-many class="UserRole"/>
+			<one-to-many class="UserRole" />
 		</set>
-		
+
 		<set name="rolePermSet" inverse="true" lazy="true">
 			<key column="role_id"></key>
-			<one-to-many class="RolePerm"/>
+			<one-to-many class="RolePerm" />
 		</set>
 	</class>
 </hibernate-mapping>

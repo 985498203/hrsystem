@@ -18,6 +18,19 @@
 
 	<!--项目依赖 -->
 	<dependencies>
+		<!-- springsecurity依赖start -->
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-web</artifactId>
+			<version>4.2.11.RELEASE</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-config</artifactId>
+			<version>4.2.11.RELEASE</version>
+		</dependency>
+
+		<!-- springsecurity依赖end -->
 		<dependency>
 			<groupId>javax.el</groupId>
 			<artifactId>javax.el-api</artifactId>

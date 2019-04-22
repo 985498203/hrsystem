@@ -13,7 +13,7 @@ public interface PermissionService {
 	 * 
 	 * @return
 	 */
-	public List<Permission> finAllPermission();
+	public List<Permission> findAllPermission();
 
 	/**
 	 * 通过id查询
@@ -53,7 +53,7 @@ public interface PermissionService {
 	public void deletePermission(Permission permission);
 	
 	/**
-	 * 根据职位id查询所有权限
+	 * 根据角色id查询所有权限
 	 * 
 	 * @param id
 	 * @return

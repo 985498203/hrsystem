@@ -52,9 +52,8 @@ public class UserTest extends BaseTest {
 	@Test
 	public void findAllUser() {
 
-		List<User> userList = userService.finAllUser();
+		List<User> userList = userService.findAllUser();
 		for (User user : userList) {
-
 			System.out.println("姓名：" + user.getUsername());
 		}
 	}

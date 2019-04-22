@@ -9,7 +9,7 @@ public interface BaseDao<T> {
 	 * 
 	 * @return
 	 */
-	public List<T> finAll();
+	public List<T> findAll();
 
 	/**
 	 * 通过条件查询

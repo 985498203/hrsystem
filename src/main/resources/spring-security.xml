@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans
+	xmlns="http://www.springframework.org/schema/security"
+	xmlns:beans="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans        
+	http://www.springframework.org/schema/beans/spring-beans.xsd
+    http://www.springframework.org/schema/security       
+    http://www.springframework.org/schema/security/spring-security.xsd">
+	<!--过滤资源 start -->
+	<!--不进行拦截的静态资源 -->
+	<http pattern="/static/**" security="none" />
+	<http security="none" pattern="*.js" />
+	<http security="none" pattern="*.css" />
+
+	<http auto-config="true" use-expressions="false">
+		<!-- 禁用csrf令牌 -->
+		<csrf disabled="true" />
+		<!-- 设置URL权限 -->
+		<!-- 此处权限的名称必须以ROLE_作为前缀 -->
+		<!-- 登录页面可以匿名访问 -->
+		<intercept-url pattern="/user/login.html"
+			access="IS_AUTHENTICATED_ANONYMOUSLY" />
+		<!-- admin目录下的资源需要ADMIN或DB权限 -->
+		<intercept-url pattern="/admin/**"
+			access="ROLE_ADMIN,ROLE_DB" />
+		<!-- db目录下的资源需要DB权限 -->
+		<intercept-url pattern="/sys/**" access="ROLE_SYS" />
+		<!-- 其他目录下的需要USER权限才能访问 -->
+		<intercept-url pattern="/**" access="ROLE_USER" />
+		<!--使用自带的登录表单 -->
+		<form-login login-page="/user/login.html"
+			password-parameter="password" username-parameter="username"
+			authentication-failure-url="/user/login.html?error=-1"
+			authentication-success-forward-url="/main.html" />
+		<logout logout-url="/logout" />
+	</http>
+
+
+
+
+	<authentication-manager>
+		<authentication-provider
+			user-service-ref="myUserDetailsService">
+			<password-encoder ref="md5Encoder"></password-encoder>
+		</authentication-provider>
+	</authentication-manager>
+
+	<!-- 认证类 -->
+	<beans:bean id="myUserDetailsService"
+		class="com.hxzy.hrsystem.service.MyUserDetailsService"></beans:bean>
+
+
+
+</beans:beans>

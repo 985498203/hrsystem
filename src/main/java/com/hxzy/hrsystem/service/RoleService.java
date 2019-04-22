@@ -14,7 +14,7 @@ public interface RoleService {
 	 * 
 	 * @return
 	 */
-	public List<Role> finAllRole();
+	public List<Role> findAllRole();
 
 	/**
 	 * 通过id查询

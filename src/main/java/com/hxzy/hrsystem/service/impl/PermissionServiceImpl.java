@@ -28,8 +28,8 @@ public class PermissionServiceImpl implements PermissionService {
 	}
 
 	@Override
-	public List<Permission> finAllPermission() {
-		return permissionDao.finAll();
+	public List<Permission> findAllPermission() {
+		return permissionDao.findAll();
 	}
 
 	@Override

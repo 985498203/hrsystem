@@ -29,7 +29,7 @@ public class RoleTest extends BaseTest {
 
 	@Test
 	public void findAllRole() {
-		List<Role> roleList = roleService.finAllRole();
+		List<Role> roleList = roleService.findAllRole();
 		for (Role role : roleList) {
 			System.out.println("id:" + role.getRoleId() + ";" + "名：" + role.getRoleName());
 		}

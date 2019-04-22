@@ -18,7 +18,7 @@ public class LoginController {
 		this.userService = userService;
 	}
 
-	@RequestMapping(value = "/index", method = RequestMethod.GET)
+	@RequestMapping(value = "/user/login", method = RequestMethod.GET)
 	public ModelAndView Login(ModelAndView mav) {
 		System.out.println("你好");
 		mav.setViewName("login");

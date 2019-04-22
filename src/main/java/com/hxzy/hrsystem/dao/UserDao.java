@@ -9,7 +9,7 @@ import com.hxzy.hrsystem.entity.User;
 
 public interface UserDao extends BaseDao<User> {
 	/**
-	 * 添加一个职位
+	 * 添加一个角色
 	 */
 	public void addRole(User user, Role role);
 
@@ -19,7 +19,15 @@ public interface UserDao extends BaseDao<User> {
 	public User getUserByName(String userName);
 
 	/**
-	 * 添加多个职位
+	 * 添加多个角色
 	 */
 	public void addRole(User user, List<Role> roleList);
+
+	/**
+	 * 根据用户id查询角色
+	 * 
+	 * @param id
+	 * @return
+	 */
+	public List<Role> findAllRoleByUserId(int id);
 }

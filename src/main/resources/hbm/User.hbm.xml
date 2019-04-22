@@ -19,6 +19,7 @@
 		<property name="age" column="age"></property>
 		<property name="phone" column="phone"></property>
 		<property name="email" column="email"></property>
+		<property name="state" column="state"></property>
 
 		<set name="userRoleSet" inverse="true" lazy="true">
 			<key column="user_id"></key>

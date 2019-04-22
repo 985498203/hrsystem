@@ -18,7 +18,7 @@ public class PermissionDaoImpl implements PermissionDao {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<Permission> finAll() {
+	public List<Permission> findAll() {
 		return sessionFactory.getCurrentSession().createQuery("from Permission").list();
 	}
 

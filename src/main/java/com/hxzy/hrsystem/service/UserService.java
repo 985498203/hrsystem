@@ -14,7 +14,7 @@ public interface UserService {
 	 * 
 	 * @return
 	 */
-	public List<User> finAllUser();
+	public List<User> findAllUser();
 
 	/**
 	 * 通过条件查询
@@ -62,4 +62,17 @@ public interface UserService {
 	 * 添加多个职位
 	 */
 	public boolean addRole(User user, List<Role> roleList);
+
+	/**
+	 * 通过Name查询用户
+	 */
+	public User getUserByName(String username);
+
+	/**
+	 * 根据用户id查询职位
+	 * 
+	 * @param id
+	 * @return
+	 */
+	public List<Role> findAllRoleByUserId(int id);
 }
