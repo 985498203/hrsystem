@@ -14,6 +14,8 @@
      http://www.springframework.org/schema/aop
      http://www.springframework.org/schema/aop/spring-aop.xsd
     ">
+	
+
 	<!-- 开启注解 -->
 	<context:annotation-config />
 	<!-- 扫描注解 -->
@@ -32,7 +34,6 @@
 	</bean>
 	<!-- 配置数据源 -->
 	<bean id="dataSoures"
-	
 		class="org.apache.commons.dbcp.BasicDataSource">
 		<property name="driverClassName"
 			value="${jdbc.driverClassName}"></property>
@@ -42,7 +43,8 @@
 	</bean>
 	<!-- 配置hibernate session工厂 -->
 	<bean id="sessionFactory"
-		class="org.springframework.orm.hibernate4.LocalSessionFactoryBean" destroy-method="destroy">
+		class="org.springframework.orm.hibernate4.LocalSessionFactoryBean"
+		destroy-method="destroy">
 		<property name="dataSource" ref="dataSoures"></property>
 
 		<!-- 扫描hibernate映射文件 -->
@@ -79,6 +81,7 @@
 		<tx:attributes>
 			<tx:method name="get*" read-only="true" />
 			<tx:method name="find*" read-only="true" />
+			<tx:method name="*" read-only="true" />
 			<tx:method name="add*" propagation="REQUIRED" />
 			<tx:method name="update*" propagation="REQUIRED" />
 			<tx:method name="delete*" propagation="REQUIRED" />
@@ -91,6 +94,6 @@
 			expression="execution(* com.hxzy.hrsystem.service.impl.*.*(..))"
 			id="txPointcut" />
 		<aop:advisor advice-ref="txAdvice"
-			pointcut-ref="txPointcut" />
+			pointcut-ref="txPointcut"  />
 	</aop:config>
 </beans>

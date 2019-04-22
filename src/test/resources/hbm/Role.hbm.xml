@@ -15,12 +15,12 @@
 		</id>
 		<property name="roleName" column="role_name"></property>
 		
-		<set name="userRoleSet" inverse="true" lazy="false">
+		<set name="userRoleSet" inverse="true" lazy="true">
 			<key column="role_id"></key>
 			<one-to-many class="UserRole"/>
 		</set>
 		
-		<set name="rolePermSet" inverse="true" lazy="false">
+		<set name="rolePermSet" inverse="true" lazy="true">
 			<key column="role_id"></key>
 			<one-to-many class="RolePerm"/>
 		</set>

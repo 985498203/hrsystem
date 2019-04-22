@@ -3,27 +3,39 @@ package com.hxzy.hrsystem.dao.impl;
 import java.util.List;
 
 import org.hibernate.Query;
-import org.hibernate.SQLQuery;
+import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
 import com.hxzy.hrsystem.dao.UserDao;
+import com.hxzy.hrsystem.entity.Role;
 import com.hxzy.hrsystem.entity.User;
+import com.hxzy.hrsystem.entity.UserRole;
 
 @Component("userDaoImpl")
 public class UserDaoImpl implements UserDao {
 	@Autowired
 	private SessionFactory sessionFactory;
 
+	/**
+	 * 得到一个Session
+	 * 
+	 * @return
+	 */
+	public Session getSession() {
+		return this.sessionFactory.getCurrentSession();
+	}
+
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<User> finAll() {
-		return sessionFactory.getCurrentSession().createQuery("from User").list();
+		return this.getSession().createQuery("from User").list();
 	}
 
 	@Override
 	public User getBy(User user) {
-		Query query = sessionFactory.getCurrentSession()
+		Query query = this.getSession()
 				.createQuery("from User u where u.username = :username and u.password = :password");// 得到Query对象
 		query.setString("username", user.getUsername());
 		query.setString("password", user.getPassword());
@@ -33,7 +45,7 @@ public class UserDaoImpl implements UserDao {
 
 	@Override
 	public User getById(int id) {
-		Query query = sessionFactory.getCurrentSession().createQuery("from User u where u.id =:id");// 得到Query对象
+		Query query = this.getSession().createQuery("from User u where u.id =:id");// 得到Query对象
 		query.setParameter("id", id);
 		User user2 = (User) query.uniqueResult();
 		return user2;
@@ -41,42 +53,54 @@ public class UserDaoImpl implements UserDao {
 
 	@Override
 	public void add(User user) {
-		sessionFactory.getCurrentSession().save(user);// 增加用户
+		this.getSession().save(user);// 增加用户
 	}
 
 	@Override
 	public void update(User user) {
-		sessionFactory.getCurrentSession().update(user);// 更新用户
+		this.getSession().update(user);// 更新用户
 
 	}
 
 	@Override
 	public void delete(User user) {
-		sessionFactory.getCurrentSession().delete(user);// 删除用户
-
-	}
-	
-	public List queryBySql(String sql) {
-		List<Object> list = sessionFactory.getCurrentSession().createSQLQuery(sql).list();
-		return list;
+		this.getSession().delete(user);// 删除用户
 	}
 
-	public int excuteBySql(String sql) {
-		int result;
-		SQLQuery query = sessionFactory.getCurrentSession().createSQLQuery(sql);
-		result = query.executeUpdate();
-		return result;
-	}
-	public List queryByHql(String hql) {
-		List<Object> list = sessionFactory.getCurrentSession().createQuery(hql).list();
-		return list;
+	@Override
+	public void addRole(User user, Role role) {
+		UserRole userRole = new UserRole();
+		userRole.setRole(role);
+		userRole.setUser(user);
+		this.getSession().save(userRole);
 	}
 
-	public int excuteByHql(String hql) {
-		int result;
-		Query query = sessionFactory.getCurrentSession().createQuery(hql);
-		result = query.executeUpdate();
-		return result;
+	@Override
+	public void addRole(User user, List<Role> roleList) {
+		Session session = this.getSession();
+		for (int i = 0; i < roleList.size(); i++) {
+			UserRole userRole = new UserRole();
+			userRole.setUser(user);
+			Role role = roleList.get(i);
+			userRole.setRole(role);
+			session.save(userRole);
+			if (i % 10 == 0) {
+				session.flush();
+				session.clear();
+			}
+
+		}
+
+	}
+
+	@Override
+	public User getUserByName(String userName) {
+		Session session = this.getSession();
+		String hql = "from User u where u.userName=:userName";
+		Query query = session.createQuery(hql);
+		query.setParameter("userName", userName);
+		User user2 = (User) query.uniqueResult();
+		return user2;
 	}
 
 }

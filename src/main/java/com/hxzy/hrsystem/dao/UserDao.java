@@ -4,39 +4,22 @@ import java.util.List;
 
 import org.hibernate.Query;
 
+import com.hxzy.hrsystem.entity.Role;
 import com.hxzy.hrsystem.entity.User;
 
 public interface UserDao extends BaseDao<User> {
 	/**
-	 * 执行sql查询语句
-	 * 
-	 * @param sql
-	 * @return
+	 * 添加一个职位
 	 */
-	public List queryBySql(String sql);
+	public void addRole(User user, Role role);
 
 	/**
-	 * 执行sql语句
-	 * 
-	 * @param sql
-	 * @return
+	 * 通过Name查询用户
 	 */
-	public int excuteBySql(String sql);
+	public User getUserByName(String userName);
 
 	/**
-	 * 执行hql查询语句
-	 * 
-	 * @param hql
-	 * @return
+	 * 添加多个职位
 	 */
-	public List queryByHql(String hql);
-
-	/**
-	 * 执行hql语句
-	 * 
-	 * @param hql
-	 * @return
-	 */
-	public int excuteByHql(String hql);
-
+	public void addRole(User user, List<Role> roleList);
 }

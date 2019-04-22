@@ -15,7 +15,7 @@
 		<link href="static/asserts/css/signin.css" rel="stylesheet">
 	</head>
 	<body class="text-center">
-		<form class="form-signin" action="/user/login.html">
+		<form class="form-signin" method="post" action="/user/login.html">
 			<h1 class="h3 mb-3 font-weight-normal">用户登录</h1>
 			<label class="sr-only">用户名</label>
 			<input type="text" class="form-control" placeholder="用户名" name="username" required="" autofocus="">

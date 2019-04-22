@@ -4,7 +4,9 @@ import java.util.List;
 
 import org.springframework.stereotype.Component;
 
+import com.hxzy.hrsystem.entity.Role;
 import com.hxzy.hrsystem.entity.User;
+
 @Component
 public interface UserService {
 	/**
@@ -35,19 +37,29 @@ public interface UserService {
 	 * 
 	 * @param entity
 	 */
-	public void addUser(User user);
+	public boolean addUser(User user);
 
 	/**
 	 * 更新
 	 * 
 	 * @param entity
 	 */
-	public void updateUsre(User user);
+	public boolean updateUsre(User user);
 
 	/**
 	 * 删除
 	 * 
 	 * @param entity
 	 */
-	public void deleteUser(User user);
+	public boolean deleteUser(User user);
+
+	/**
+	 * 添加一个职位
+	 */
+	public boolean addRole(User user, Role role);
+
+	/**
+	 * 添加多个职位
+	 */
+	public boolean addRole(User user, List<Role> roleList);
 }

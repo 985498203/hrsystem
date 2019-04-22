@@ -51,6 +51,15 @@ public interface PermissionService {
 	 * @param entity
 	 */
 	public void deletePermission(Permission permission);
+	
+	/**
+	 * 根据职位id查询所有权限
+	 * 
+	 * @param id
+	 * @return
+	 */
+	List<Permission> findAllPermissionByRoleId(int roleId);
+
 
 	
 }

@@ -12,4 +12,12 @@ public interface PermissionDao extends BaseDao<Permission> {
 	 * @return
 	 */
 	public List<Permission> findAllPermissionByUserId(int userId);
+
+	/**
+	 * 根据职位id查询所有权限
+	 * 
+	 * @param id
+	 * @return
+	 */
+	List<Permission> findAllPermissionByRoleId(int roleId);
 }

@@ -7,15 +7,18 @@ import java.util.Set;
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.hxzy.hrsystem.dao.RoleDao;
 import com.hxzy.hrsystem.dao.UserDao;
+import com.hxzy.hrsystem.entity.Permission;
 import com.hxzy.hrsystem.entity.Role;
 import com.hxzy.hrsystem.entity.User;
 import com.hxzy.hrsystem.entity.UserRole;
 import com.hxzy.hrsystem.service.RoleService;
 
 @Component("roleServiceImpl")
+@Transactional
 public class RoleServiceImpl implements RoleService {
 	private UserDao userDao;
 	private RoleDao roleDao;
@@ -60,6 +63,11 @@ public class RoleServiceImpl implements RoleService {
 	public void deleteRole(Role role) {
 		roleDao.delete(role);
 
+	}
+
+	@Override
+	public List<Permission> findAllPermissionByRoleId(int roleId) {
+		return roleDao.findAllPermissionByRoleId(roleId);
 	}
 
 }

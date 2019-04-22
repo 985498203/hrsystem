@@ -1,8 +1,6 @@
 package com.hxzy.hrsystem.dao.impl;
 
 import java.util.List;
-import java.util.Set;
-
 import org.hibernate.Query;
 import org.hibernate.SQLQuery;
 import org.hibernate.Session;
@@ -10,6 +8,7 @@ import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import com.hxzy.hrsystem.dao.RoleDao;
+import com.hxzy.hrsystem.entity.Permission;
 import com.hxzy.hrsystem.entity.Role;
 
 @Component("roleDaoImpl")
@@ -58,6 +57,16 @@ public class RoleDaoImpl implements RoleDao {
 		SQLQuery query = session.createSQLQuery(sql).addEntity(Role.class);
 		query.setInteger(0, userId);
 		List<Role> resultList = query.list();
+		return resultList;
+	}
+
+	@Override
+	public List<Permission> findAllPermissionByRoleId(int roleId) {
+		String sql = "select p.* from tb_ROLE_PERM rp,tb_Permission p where rp.role_id =? and rp.PERM_ID= p.perm_id";
+		Session session = sessionFactory.getCurrentSession();
+		SQLQuery query = session.createSQLQuery(sql).addEntity(Permission.class);
+		query.setInteger(0, roleId);
+		List<Permission> resultList = query.list();
 		return resultList;
 	}
 

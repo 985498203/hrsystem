@@ -59,4 +59,12 @@ public class PermissionServiceImpl implements PermissionService {
 		return permissionDao.findAllPermissionByUserId(userId);
 	}
 
+	@Override
+	public List<Permission> findAllPermissionByRoleId(int roleId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	
+
 }

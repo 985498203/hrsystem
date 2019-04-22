@@ -1,8 +1,6 @@
 package com.hxzy.hrsystem.dao.impl;
 
 import java.util.List;
-import java.util.Set;
-
 import org.hibernate.Query;
 import org.hibernate.SQLQuery;
 import org.hibernate.Session;
@@ -11,9 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.hxzy.hrsystem.dao.PermissionDao;
-import com.hxzy.hrsystem.dao.RoleDao;
 import com.hxzy.hrsystem.entity.Permission;
-import com.hxzy.hrsystem.entity.Role;
 
 @Component("permissionDaoImpl")
 public class PermissionDaoImpl implements PermissionDao {
@@ -60,8 +56,15 @@ public class PermissionDaoImpl implements PermissionDao {
 		Session session = sessionFactory.getCurrentSession();
 		SQLQuery query = session.createSQLQuery(sql).addEntity(Permission.class);
 		query.setInteger(0, userId);
+		@SuppressWarnings("unchecked")
 		List<Permission> resultList = query.list();
 		return resultList;
+	}
+
+	@Override
+	public List<Permission> findAllPermissionByRoleId(int roleId) {
+		
+		return null;
 	}
 
 }

@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Component;
 
+import com.hxzy.hrsystem.entity.Permission;
 import com.hxzy.hrsystem.entity.Role;
 import com.hxzy.hrsystem.entity.User;
 @Component
@@ -52,4 +53,12 @@ public interface RoleService {
 	 * @param entity
 	 */
 	public void deleteRole(Role role);
+
+	/**
+	 * 根据职位id查询所有权限
+	 * 
+	 * @param id
+	 * @return
+	 */
+	List<Permission> findAllPermissionByRoleId(int roleId);
 }

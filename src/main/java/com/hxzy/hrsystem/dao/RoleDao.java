@@ -1,8 +1,7 @@
 package com.hxzy.hrsystem.dao;
 
 import java.util.List;
-import java.util.Set;
-
+import com.hxzy.hrsystem.entity.Permission;
 import com.hxzy.hrsystem.entity.Role;
 
 public interface RoleDao extends BaseDao<Role> {
@@ -13,5 +12,13 @@ public interface RoleDao extends BaseDao<Role> {
 	 * @return
 	 */
 	List<Role> findAllRoleByUserId(int id);
+
+	/**
+	 * 根据职位id查询所有权限
+	 * 
+	 * @param id
+	 * @return
+	 */
+	List<Permission> findAllPermissionByRoleId(int roleId);
 
 }
