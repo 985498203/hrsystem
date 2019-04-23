@@ -18,7 +18,12 @@
 			expression="org.springframework.stereotype.Service" />
 	</context:component-scan>
 
+	<!-- 在 springDispatcherServlet-servlet.xml 中配置 -->
+	<mvc:view-controller path="/"
+		view-name="main"/>
 
+	<!-- 还需要使用 mvc:annotation-driven 标签,否则,在使用 Controller 处理request请求时,访问 该页面,会报异常; -->
+	<mvc:annotation-driven></mvc:annotation-driven>
 
 	<!-- 扫描注解 -->
 	<context:component-scan

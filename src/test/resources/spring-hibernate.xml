@@ -14,7 +14,7 @@
      http://www.springframework.org/schema/aop
      http://www.springframework.org/schema/aop/spring-aop.xsd
     ">
-	
+
 
 	<!-- 开启注解 -->
 	<context:annotation-config />
@@ -93,6 +93,6 @@
 			expression="execution(* com.hxzy.hrsystem.service.impl.*.*(..))"
 			id="txPointcut" />
 		<aop:advisor advice-ref="txAdvice"
-			pointcut-ref="txPointcut"  />
+			pointcut-ref="txPointcut" />
 	</aop:config>
 </beans>

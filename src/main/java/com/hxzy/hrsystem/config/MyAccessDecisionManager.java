@@ -1,25 +1,21 @@
-package com.hxzy.hrsystem.service;
+package com.hxzy.hrsystem.config;
 
 import java.util.Collection;
 import java.util.Iterator;
-import java.util.List;
-
-import org.springframework.security.access.AccessDecisionVoter;
+import org.springframework.security.access.AccessDecisionManager;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.access.ConfigAttribute;
 import org.springframework.security.access.SecurityConfig;
-import org.springframework.security.access.vote.AbstractAccessDecisionManager;
 import org.springframework.security.authentication.InsufficientAuthenticationException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.stereotype.Component;
 
-@Component
-public class MyAccessDecisionManager extends AbstractAccessDecisionManager {
-
-	protected MyAccessDecisionManager(List<AccessDecisionVoter<? extends Object>> decisionVoters) {
-		super(decisionVoters);
-	}
+/**
+ * 自定义认证管理器
+ * 
+ * 如果该页面不需要权限访问，则直接结束
+ */
+public class MyAccessDecisionManager implements AccessDecisionManager {
 
 	@Override
 	public void decide(Authentication authentication, Object object, Collection<ConfigAttribute> configAttributes)
@@ -40,6 +36,17 @@ public class MyAccessDecisionManager extends AbstractAccessDecisionManager {
 		}
 		// 该用户没有权限访问该资源
 		throw new AccessDeniedException("没有权限访问");
+
+	}
+
+	@Override
+	public boolean supports(ConfigAttribute attribute) {
+		return true;
+	}
+
+	@Override
+	public boolean supports(Class<?> clazz) {
+		return true;
 	}
 
 }

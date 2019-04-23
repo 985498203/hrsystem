@@ -122,4 +122,10 @@ public class User implements Serializable {
 		this.email = email;
 	}
 
+	@Override
+	public String toString() {
+		return "User [userId=" + userId + ", username=" + username + ", password=" + password + ", name=" + name
+				+ ", age=" + age + ", phone=" + phone + ", email=" + email + ", state=" + state + "]";
+	}
+	
 }

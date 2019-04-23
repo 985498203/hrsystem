@@ -97,9 +97,9 @@ public class UserDaoImpl implements UserDao {
 	@Override
 	public User getUserByName(String userName) {
 		Session session = this.getSession();
-		String hql = "from User u where u.userName=:userName";
+		String hql = "from User u where u.username=:username";
 		Query query = session.createQuery(hql);
-		query.setParameter("userName", userName);
+		query.setParameter("username", userName);
 		User user2 = (User) query.uniqueResult();
 		return user2;
 	}

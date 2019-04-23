@@ -1,9 +1,7 @@
-package com.hxzy.hrsystem.service;
+package com.hxzy.hrsystem.config;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import javax.annotation.Resource;
 
@@ -12,20 +10,18 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.stereotype.Component;
-
 import com.hxzy.hrsystem.entity.Role;
 import com.hxzy.hrsystem.entity.User;
 import com.hxzy.hrsystem.entity.UserDTO;
+import com.hxzy.hrsystem.service.UserService;
 
 /**
  * 
  * 自定义登录验证
  */
-@Component
+
 public class MyUserDetailsService implements UserDetailsService {
 	public UserService userService;
-
 	@Resource(name = "userServiceImpl")
 	public void setUserService(UserService userService) {
 		this.userService = userService;

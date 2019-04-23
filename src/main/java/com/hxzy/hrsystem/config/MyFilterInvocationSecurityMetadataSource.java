@@ -1,4 +1,4 @@
-package com.hxzy.hrsystem.service;
+package com.hxzy.hrsystem.config;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -14,16 +14,13 @@ import org.springframework.security.access.ConfigAttribute;
 import org.springframework.security.access.SecurityConfig;
 import org.springframework.security.web.FilterInvocation;
 import org.springframework.security.web.access.intercept.FilterInvocationSecurityMetadataSource;
-import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
-
 import com.hxzy.hrsystem.entity.Permission;
 import com.hxzy.hrsystem.entity.Role;
+import com.hxzy.hrsystem.service.RoleService;
 
 /**
- * 动态定义应用程序中的安全URL
+ * 认证数据源,动态定义应用程序中的安全URL
  */
-@Component
 public class MyFilterInvocationSecurityMetadataSource implements FilterInvocationSecurityMetadataSource {
 	// 资源权限集合,Key(url) value(角色集合(以ROLE_为前缀的角色名))
 	private static Map<String, Collection<ConfigAttribute>> resourceMap = null;
@@ -113,7 +110,7 @@ public class MyFilterInvocationSecurityMetadataSource implements FilterInvocatio
 				return resourceMap.get(resUrl);// 获得该url所需的角色列表
 			}
 		}
-		//数据库中没有该url的信息，放行
+		// 数据库中没有该url的信息，放行
 		return null;
 	}
 
@@ -125,7 +122,7 @@ public class MyFilterInvocationSecurityMetadataSource implements FilterInvocatio
 
 	@Override
 	public boolean supports(Class<?> clazz) {
-		return false;
+		return true;
 	}
 
 }
