@@ -55,9 +55,9 @@ public class RecruitInfoController {
 			recruitInfoService.addRecruitInfo(recruitInfo);
 			return ResponseEntity.status(HttpStatus.CREATED).build();
 		} catch (Exception e) {
-			// TODO: handle exception
 			e.printStackTrace();
 		}
+		
 //		return "redirect:addRecruitInfo";
 		return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
 	}
