@@ -1,0 +1,108 @@
+@charset "UTF-8";
+.wordtree input {
+	width: 100%;
+	height: 35px;
+	border:1px solid gray;
+}
+.wordtree label {
+	font-size: 20px;
+	font-weight: bold;
+	font-family: sans-serif;
+}
+.wordtree{
+	margin-top: 10px;
+}
+.foot{
+	text-align: right;
+	margin-top: 10px;
+}
+.foot button{
+	width:50px;
+	display: inline;
+	margin-left: 5px;
+	height: 30px;
+	border: 0px;
+}
+.foot .guanbi{
+	background-color: #e74c3c;
+}
+.foot .xiugai{
+	background-color: #2ecc71;
+}
+.branch{
+	position:relative;
+	height:600px;
+	margin:100px auto;
+	width: 400px;
+	background-color:white;
+	opacity: 1;
+	z-index: 1;
+}
+.branchs{
+	position:relative;
+	height:500px;
+	margin:100px auto;
+	width: 400px;
+	background-color:white;
+	opacity: 1;
+	z-index: 1;
+}
+.secondary{
+	padding-left:10%;
+	position:absolute;
+	z-index:1;
+	height:600px;
+	width: 90%;
+}
+.branch form{
+	height:600px;
+	margin:0px auto;
+	width: 400px;
+	background-color:white;
+	z-index: 1;
+}
+.input{
+	margin-top: 10px;
+}
+.dropdowns button:hover {
+	color: orange;
+}
+.dropdowns {
+  position: relative;
+  display: inline-block;
+  color: green;
+}
+.dropdowns button{
+	border: 0;
+	background: white;
+}
+hr{
+	margin: 0px 0px;
+	padding: 3px 0px;
+}
+.dropdown-contents {
+  	display: none;
+  	position: absolute;
+  	background-color: white;
+  	min-width: 80px;
+  	box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  	padding: 0px 0px;
+  	margin: 0px 0px;
+}
+.dropdown-contents p{
+	padding:0px 0px;
+	margin:0px auto;
+	width: 60px;
+	text-align: center;
+}
+#page{
+	text-align: center;
+}
+.dropdowns:hover .dropdown-contents {
+  display: block;
+}
+.pagers li{
+	text-align: center;
+	display: inline;
+	padding: 0px 5px;
+}

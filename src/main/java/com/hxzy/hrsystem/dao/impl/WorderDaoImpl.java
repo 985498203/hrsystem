@@ -78,6 +78,6 @@ public class WorderDaoImpl implements WorderDao {
 		Query query = getSession().createQuery(hql);
 		query.setParameter("worderId", id);
 		Worder worder = (Worder) query.list().get(id);
-		
+
 	}
 }

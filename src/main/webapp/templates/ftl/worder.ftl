@@ -17,7 +17,11 @@
 		
 		<#list worder as wd>
 		<tr>
+<<<<<<< HEAD
 			<td></td>
+=======
+			<td>${wd.count}</td>
+>>>>>>> refs/remotes/origin/hlh
 			<td>${wd.worderId}</td>
 			<td>${wd.title}</td>
 			<td>${wd.detail}</td>

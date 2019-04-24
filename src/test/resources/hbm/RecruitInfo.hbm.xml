@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="com.hxzy.hrsystem.entity">
+	<class name="RecruitInfo" table="tb_recruit_info">
+		<id name="recruitId" column="recruit_id">
+			<!-- 主键生成策略 为sequence -->
+			<generator class="sequence">
+				<param name="sequence">
+					seq_recruit_id
+				</param>
+			</generator>
+		</id>
+		<property name="recruitNumber" column="recruit_number"></property>
+		<property name="recruitDept" column="recruit_dept"></property>
+		<property name="describe" column="describe"></property>
+	</class>
+</hibernate-mapping>

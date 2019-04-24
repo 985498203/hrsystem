@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="com.hxzy.hrsystem.entity">
+	<class name="RolePerm" table="tb_role_perm">
+		<id name="rolePermId" column="role_perm_id">
+			<!-- 主键生成策略 为sequence -->
+			<generator class="sequence">
+				<param name="sequence">
+					seq_role_perm_id
+				</param>
+			</generator>
+		</id>
+		<!--User,与UserRole的多对一关系 -->
+		<many-to-one name="role" class="Role" column="role_id" />
+		<!--Role,与RolePerm的多对一关系 -->
+		<many-to-one name="permission" class="Permission" column="perm_id" />
+		
+
+	</class>
+</hibernate-mapping>

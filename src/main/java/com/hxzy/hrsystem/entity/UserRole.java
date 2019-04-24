@@ -10,7 +10,6 @@ public class UserRole implements Serializable {
 	private Integer userRoleId;// id
 
 	private User user;// 用户
-
 	private Role role;// 职位
 
 	public User getUser() {
