@@ -67,4 +67,28 @@ public interface PermissionService {
 	 */
 	public void deletePermissionById(int id);
 
+	/**
+	 * 员工信息分页查询
+	 * 
+	 * @param start 开始索引
+	 * @param max   一页显示的条数
+	 * @return
+	 */
+	public List<Permission> findAllPermissionByIndex(int start, int max);
+
+	/** 总页数 **/
+	public int pageNo(int end);
+
+	/**
+	 * 获取总记录数
+	 * 
+	 * @return
+	 */
+	public int getConut();
+	
+	/**
+	 * 批量删除
+	 * @param idList PermissionID数组
+	 */
+	public void deletePermissionAll(int[] idArray);
 }

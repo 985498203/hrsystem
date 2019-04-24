@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -18,7 +19,7 @@ import com.hxzy.hrsystem.entity.Permission;
 import com.hxzy.hrsystem.service.PermissionService;
 
 @Controller
-@RequestMapping("/permission")
+@RequestMapping("/perm")
 public class PermissionController {
 
 	private PermissionService permissionService;
@@ -29,16 +30,17 @@ public class PermissionController {
 	}
 
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
-	public ModelAndView permissionList(ModelAndView mav) {
-		List<Permission> prmlist = permissionService.findAllPermission();
+	public ModelAndView getpermissions(@RequestParam(value = "pageNo", defaultValue = "1") Integer pageNo,
+			ModelAndView mav) {
+		List<Permission> prmlist = permissionService.findAllPermissionByIndex(pageNo, 5);
 //		List<PermissionDTO> dtolist = new ArrayList<PermissionDTO>();
 //		for (Permission permission : list) {
 //			PermissionDTO dto = new PermissionDTO(permission.getPermId(),permission.getPermName(),permission.getUrl());
 //			dtolist.add(dto);
 //		}
 		mav.addObject("prmlist", prmlist);
-		
-		
+		mav.setViewName("admin/perm");
+
 		return mav;
 	}
 

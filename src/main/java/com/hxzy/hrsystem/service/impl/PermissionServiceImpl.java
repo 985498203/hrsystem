@@ -61,7 +61,7 @@ public class PermissionServiceImpl implements PermissionService {
 
 	@Override
 	public List<Permission> findAllPermissionByRoleId(int roleId) {
-		
+
 		return permissionDao.findAllPermissionByRoleId(roleId);
 	}
 
@@ -70,6 +70,36 @@ public class PermissionServiceImpl implements PermissionService {
 		permissionDao.deleteById(id);
 	}
 
-	
+	@Override
+	public List<Permission> findAllPermissionByIndex(int start, int max) {
+		return permissionDao.findAllByIndex(start, max);
+	}
+
+	@Override
+	public int pageNo(int max) {
+		int page = 0;
+		if (permissionDao.getPageCount() / max == 0) {
+			page = permissionDao.getPageCount() / max;
+		} else {
+			page = (permissionDao.getPageCount() / max) + 1;
+		}
+		return page;
+	}
+
+	/**
+	 * 获取总记录数
+	 * 
+	 * @return
+	 */
+	@Override
+	public int getConut() {
+		return permissionDao.getConut();
+
+	}
+
+	@Override
+	public void deletePermissionAll(int[] idArray) {
+		permissionDao.deleteAll(idArray);
+	}
 
 }

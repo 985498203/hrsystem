@@ -12,11 +12,11 @@
 		<script type="text/javascript" src="static/asserts/js/bootstrap.min.js"></script>
 		<script type="text/javascript" src="static/asserts/js/index.js"></script>
 		<script type="text/javascript" src="static/asserts/js/permission.js"></script>
-		<#if !list??>
+		<!-- <#if !list??>
 			<script type="text/javascript">
 	 			window.location.href="finduser.html?pageNo=1";
 	 		</script>
-		</#if>
+		</#if> -->
    		<link rel="stylesheet" type="text/css" href="static/asserts/css/bootstrap.min.css" />
         <link rel="stylesheet" type="text/css" href="static/asserts/css/bootstrap-theme.min.css">
         <link rel="stylesheet" type="text/css" href="static/asserts/css/index.css">
@@ -123,14 +123,6 @@
             	</div>    
             	<!-- 权限管理模块 -->
 				<div class="qxgl" id="qxglpage">
-					  
-					  
-					  
-					  
-					  
-					  
-					  
-					  
 					  
 					  
 					  
