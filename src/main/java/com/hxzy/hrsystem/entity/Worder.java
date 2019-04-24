@@ -15,6 +15,7 @@ public class Worder implements Serializable {
 	private String title;// 工单标题
 	private String detail;// 工单详情
 	private String state;// 工单状态
+	
 
 	private User user;// 用户，配置一对一
 	
