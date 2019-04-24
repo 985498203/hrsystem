@@ -13,18 +13,16 @@
      http://www.springframework.org/schema/tx/spring-tx.xsd
      http://www.springframework.org/schema/aop
      http://www.springframework.org/schema/aop/spring-aop.xsd
-     
     ">
+
+
 	<!-- 开启注解 -->
 	<context:annotation-config />
 	<!-- 扫描注解 -->
-	<context:component-scan
-		base-package="com.hxzy.hrsystem.dao"></context:component-scan>
-	<context:component-scan
-		base-package="com.hxzy.hrsystem.service"></context:component-scan>
+	<context:component-scan base-package="com.hxzy.hrsystem.dao"></context:component-scan>
+	<context:component-scan base-package="com.hxzy.hrsystem.service"></context:component-scan>
 	<!-- 读取properties文件 -->
-	<bean
-		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+	<bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
 		<property name="locations">
 			<value>
 				classpath:jdbc.properties
@@ -34,16 +32,15 @@
 	<!-- 配置数据源 -->
 	<bean id="dataSoures"
 		class="org.apache.commons.dbcp.BasicDataSource">
-		<property name="driverClassName"
-			value="${jdbc.driverClassName}"></property>
+		<property name="driverClassName" value="${jdbc.driverClassName}"></property>
 		<property name="url" value="${jdbc.url}"></property>
 		<property name="username" value="${jdbc.username}"></property>
 		<property name="password" value="${jdbc.password}"></property>
 	</bean>
 	<!-- 配置hibernate session工厂 -->
-	<bean id="sessionFactory"
-		class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+	<bean id="sessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean" destroy-method="destroy">
 		<property name="dataSource" ref="dataSoures"></property>
+
 		<!-- 扫描hibernate映射文件 -->
 		<property name="mappingLocations">
 			<list>
@@ -60,29 +57,34 @@
 				hibernate.jdbc.batch_size=30
 			</value>
 		</property>
+		
+		
 	</bean>
-	<!-- 配置事务管理器 -->
-	<bean id="transactionManager"
-		class="org.springframework.orm.hibernate4.HibernateTransactionManager">
+	<!-- 配置 Spring 的声明式事物 -->
+	<bean id="transactionManager" class="org.springframework.orm.hibernate4.HibernateTransactionManager">
 		<property name="sessionFactory" ref="sessionFactory"></property>
 	</bean>
-	<!-- 配置事务 -->
-	<tx:advice id="txAdvice"
-		transaction-manager="transactionManager">
+<!-- 	<tx:annotation-driven  transaction-manager="transactionManager" /> -->
+
+	<!-- 配置事物属性 ，需要事物管理器 -->
+	<tx:advice id="txAdvice"  transaction-manager="transactionManager">
+		<!-- 定义事务传播规则 -->
+		<!-- REQUIRED的含义是支持当前已经存在的事务,如果还没有事务，就创建一个新事务 <tx:method name="*" propagation="REQUIRED"/> 
+			表示所有方法都应用REQUIRED事务规则 -->
+
 		<tx:attributes>
-			<!-- 只读事务 -->
+			<tx:method name="get*" read-only="true" />
 			<tx:method name="find*" read-only="true" />
-			<!-- 没有事务就创建一个新事务 -->
 			<tx:method name="add*" propagation="REQUIRED" />
 			<tx:method name="update*" propagation="REQUIRED" />
 			<tx:method name="delete*" propagation="REQUIRED" />
+			<tx:method name="*" read-only="true" />
 		</tx:attributes>
 	</tx:advice>
 
-	<!-- 配置切面通知 -->
+	<!-- 配置事物切点，并把事物属性和切点关联起来 -->
 	<aop:config>
-		<aop:pointcut
-			expression="execution(* com.hxzy.ssh.service.impl.*.*(..))" id="aop" />
-		<aop:aspect ref="aop"></aop:aspect>
+		<aop:pointcut expression="execution(* com.hxzy.hrsystem.service.impl.*.*(..))" id="txPointcut" />
+		<aop:advisor advice-ref="txAdvice" pointcut-ref="txPointcut"  />
 	</aop:config>
 </beans>
