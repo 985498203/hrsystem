@@ -11,6 +11,7 @@
 		<script type="text/javascript" src="static/asserts/js/jquery-3.2.1.min.js"></script>
 		<script type="text/javascript" src="static/asserts/js/bootstrap.min.js"></script>
 		<script type="text/javascript" src="static/asserts/js/index.js"></script>
+		<script type="text/javascript" src="static/asserts/js/permission.js"></script>
 		<#if !list??>
 			<script type="text/javascript">
 	 			window.location.href="finduser.html?pageNo=1";
@@ -44,8 +45,7 @@
                 <div class="meun-item" onclick="zhaoping()" role="tab" data-toggle="tab"><img src="static/asserts/img/icon_house_grey.png">招聘</div>
                 <div class="meun-item" onclick="kaoqin()" role="tab" data-toggle="tab"><img src="static/asserts/img/icon_change_grey.png">考勤</div>
             	<div class="meun-title">权限管理</div>
-                <div class="meun-item" onclick="yhgl()" role="tab" data-toggle="tab"><img src="static/asserts/img/icon_user_grey.png">用户管理</div>
-                <div class="meun-item" onclick="qxgl()" role="tab" data-toggle="tab"><img src="static/asserts/img/icon_chara_grey.png">权限管理</div>
+                <div class="meun-item" id="qxgl" onclick="qxgl()" role="tab" data-toggle="tab"><img src="static/asserts/img/icon_chara_grey.png">权限管理</div>
                 <div class="meun-item" onclick="jsgl()" role="tab" data-toggle="tab"><img src="static/asserts/img/icon_card_grey.png">角色管理</div>
             </div>
             <!-- 右侧具体内容栏目 -->
@@ -121,13 +121,19 @@
 				<div class="kaoqin">
 					  <h1>考勤</h1>
             	</div>    
-            	<!-- 用户管理模块 -->
-				<div class="yhgl">
-					  <h1>用户管理</h1>
-            	</div>   
             	<!-- 权限管理模块 -->
-				<div class="qxgl">
-					  <h1>权限管理</h1>
+				<div class="qxgl" id="qxglpage">
+					  
+					  
+					  
+					  
+					  
+					  
+					  
+					  
+					  
+					  
+					  
             	</div> 
             	<!-- 角色管理模块 -->
 				<div class="jsgl">

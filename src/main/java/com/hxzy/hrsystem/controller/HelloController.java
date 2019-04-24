@@ -13,4 +13,10 @@ public class HelloController {
 		mav.setViewName("index");
 		return mav;
 	}
+	@RequestMapping(value = "/a", method = RequestMethod.GET)
+	public ModelAndView Logina(ModelAndView mav) {
+		System.out.println("主页");
+		mav.setViewName("a");
+		return mav;
+	}
 }

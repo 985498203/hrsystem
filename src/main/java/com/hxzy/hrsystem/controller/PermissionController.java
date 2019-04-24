@@ -1,6 +1,9 @@
 package com.hxzy.hrsystem.controller;
 
+import java.util.ArrayList;
 import java.util.List;
+
+import javax.annotation.Resource;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -10,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.hxzy.hrsystem.dto.PermissionDTO;
 import com.hxzy.hrsystem.entity.Permission;
 import com.hxzy.hrsystem.service.PermissionService;
 
@@ -19,15 +23,23 @@ public class PermissionController {
 
 	private PermissionService permissionService;
 
-	@RequestMapping("permissionServiceImpl")
+	@Resource(name = "permissionServiceImpl")
 	public void setPermissionService(PermissionService permissionService) {
 		this.permissionService = permissionService;
 	}
 
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
-	public @ResponseBody List<Permission> permissionList(ModelAndView mav) {
-		List<Permission> list = permissionService.findAllPermission();
-		return list;
+	public ModelAndView permissionList(ModelAndView mav) {
+		List<Permission> prmlist = permissionService.findAllPermission();
+//		List<PermissionDTO> dtolist = new ArrayList<PermissionDTO>();
+//		for (Permission permission : list) {
+//			PermissionDTO dto = new PermissionDTO(permission.getPermId(),permission.getPermName(),permission.getUrl());
+//			dtolist.add(dto);
+//		}
+		mav.addObject("prmlist", prmlist);
+		
+		
+		return mav;
 	}
 
 	@RequestMapping(value = "/find/{id}", method = RequestMethod.GET)

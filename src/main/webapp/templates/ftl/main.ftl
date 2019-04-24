@@ -404,10 +404,10 @@
 		alert("dsdsd");
 		$.ajax({
 			type : "get",
-			url : "${base}/user/list.json",
+			url : "${base}/permission/list.json",
 			dataType : "json",+
 			success : function(data) {
-				alert(data[0].username);
+				console.log("成功");
 			}
 		});
 	}
