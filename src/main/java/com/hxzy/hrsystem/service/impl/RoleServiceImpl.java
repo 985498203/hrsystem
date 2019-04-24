@@ -22,6 +22,7 @@ import com.hxzy.hrsystem.service.RoleService;
 public class RoleServiceImpl implements RoleService {
 	private UserDao userDao;
 	private RoleDao roleDao;
+
 	@Resource(name = "userDaoImpl")
 	public void setUserDao(UserDao userDao) {
 		this.userDao = userDao;
@@ -67,6 +68,12 @@ public class RoleServiceImpl implements RoleService {
 	@Override
 	public List<Permission> findAllPermissionByRoleId(int roleId) {
 		return roleDao.findAllPermissionByRoleId(roleId);
+	}
+
+	@Override
+	public void deleteRoleById(int id) {
+		roleDao.deleteById(id);
+
 	}
 
 }

@@ -1,4 +1,4 @@
-package com.hxzy.hrsystem.dao;
+﻿package com.hxzy.hrsystem.dao;
 
 import java.util.List;
 
@@ -30,4 +30,20 @@ public interface UserDao extends BaseDao<User> {
 	 * @return
 	 */
 	public List<Role> findAllRoleByUserId(int id);
+
+	/**
+	 * 查询根据索引查员工信息
+	 */
+	public List<User> findAllByIndex(int start, int end);
+
+	/**
+	 * 批量删除员工信息
+	 */
+	public void deleteAll(List<Integer> list);
+	
+	/** 总页数setter方法 **/
+	public void setPageCount(int pageCount);
+	
+	/** 总页数getter方法 **/
+	public int getPageCount();
 }

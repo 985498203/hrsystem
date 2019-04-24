@@ -22,6 +22,7 @@ import com.hxzy.hrsystem.service.UserService;
 
 public class MyUserDetailsService implements UserDetailsService {
 	public UserService userService;
+
 	@Resource(name = "userServiceImpl")
 	public void setUserService(UserService userService) {
 		this.userService = userService;
@@ -55,7 +56,8 @@ public class MyUserDetailsService implements UserDetailsService {
 	 * @return
 	 */
 	public User getUser(String username) {
-		return userService.getUserByName(username);// 通过用户名查询用户信息
+		// return userService.(username);// 通过用户名查询用户信息
+		return null;
 	}
 
 	/**

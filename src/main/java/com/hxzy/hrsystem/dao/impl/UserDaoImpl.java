@@ -19,6 +19,8 @@ public class UserDaoImpl implements UserDao {
 	@Autowired
 	private SessionFactory sessionFactory;
 
+	private int pageCount;// 总页数
+
 	/**
 	 * 得到一个Session
 	 * 
@@ -26,6 +28,16 @@ public class UserDaoImpl implements UserDao {
 	 */
 	public Session getSession() {
 		return this.sessionFactory.getCurrentSession();
+	}
+
+	@Override
+	public int getPageCount() {
+		return pageCount;
+	}
+
+	@Override
+	public void setPageCount(int pageCount) {
+		this.pageCount = pageCount;
 	}
 
 	@SuppressWarnings("unchecked")
@@ -104,6 +116,7 @@ public class UserDaoImpl implements UserDao {
 		return user2;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<Role> findAllRoleByUserId(int id) {
 		String sql = "select r.* from tb_user_role ur,tb_role r where ur.user_id =? and ur.role_id = r.role_id";
@@ -112,6 +125,45 @@ public class UserDaoImpl implements UserDao {
 		query.setInteger(0, id);
 		List<Role> resultList = query.list();
 		return resultList;
+	}
+
+	@Override
+	public void deleteById(int id) {
+		Session session = this.getSession();
+		Query query = session.createQuery("delete from User u where u.userId=?");
+		query.setInteger(0, id);
+		query.executeUpdate();
+	}
+
+	/**
+	 * 查询员工信息
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<User> findAllByIndex(int start, int end) {
+		Session session = this.getSession();
+		String hql = "from User";
+		Query query = session.createQuery(hql);
+		List<User> user = query.list();
+		setPageCount(user.size());// 保存总条数
+		query.setFirstResult(start);// 开始
+		query.setMaxResults(end);// 每页显示条数
+		List<User> list = query.list();
+		return list;
+	}
+
+	/**
+	 * 批量删除员工信息
+	 */
+	@Override
+	public void deleteAll(List<Integer> list) {
+		Session session = this.getSession();
+		for (int i = 0; i < list.size(); i++) {
+			User us = (User) session.load(User.class, list.get(i));
+			if (us != null) {
+				session.delete(us);
+			}
+		}
 	}
 
 }

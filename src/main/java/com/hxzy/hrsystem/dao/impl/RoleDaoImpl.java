@@ -78,4 +78,12 @@ public class RoleDaoImpl implements RoleDao {
 		return resultList;
 	}
 
+	@Override
+	public void deleteById(int id) {
+		Session session = this.getSession();
+		Query query = session.createQuery("delete form Role r where r.roleId=?");
+		query.setInteger(0, id);
+		query.executeUpdate();
+	}
+
 }

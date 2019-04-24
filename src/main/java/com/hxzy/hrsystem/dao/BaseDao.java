@@ -47,5 +47,12 @@ public interface BaseDao<T> {
 	 * @param entity
 	 */
 	public void delete(T t);
+	
+	/**
+	 * 删除
+	 * 
+	 * @param entity
+	 */
+	public void deleteById(int id);
 
 }

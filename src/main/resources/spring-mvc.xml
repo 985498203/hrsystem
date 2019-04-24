@@ -11,19 +11,30 @@
      http://www.springframework.org/schema/mvc
      http://www.springframework.org/schema/mvc/spring-mvc.xsd">
 	<!-- 开启注解 -->
-	<mvc:annotation-driven />
-	<context:component-scan
-		base-package="com.lb.yqf">
-		<context:exclude-filter type="annotation"
-			expression="org.springframework.stereotype.Service" />
-	</context:component-scan>
+	<!-- <mvc:annotation-driven> <mvc:message-converters> <bean class="org.springframework.http.converter.StringHttpMessageConverter" 
+		/> <bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter" 
+		/> </mvc:message-converters> </mvc:annotation-driven> -->
+	<!--添加json适配器 -->
+	<!-- <bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter"> 
+		<property name="messageConverters"> <list> <bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping"></bean> 
+		</list> </property> </bean> -->
+	<!--使用fastjson的方式 -->
 
-	<!-- 在 springDispatcherServlet-servlet.xml 中配置 -->
-	<mvc:view-controller path="/"
-		view-name="main"/>
+	<mvc:annotation-driven>
+		<mvc:message-converters
+			register-defaults="true">
+			<!-- 避免IE执行AJAX时,返回JSON出现下载文件 -->
+			<bean id="fastJsonHttpMessageConverter"
+				class="com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter">
+				<property name="supportedMediaTypes">
+					<list>
+						<value>application/json;charset=UTF-8</value>
+					</list>
+				</property>
+			</bean>
+		</mvc:message-converters>
+	</mvc:annotation-driven>
 
-	<!-- 还需要使用 mvc:annotation-driven 标签,否则,在使用 Controller 处理request请求时,访问 该页面,会报异常; -->
-	<mvc:annotation-driven></mvc:annotation-driven>
 
 	<!-- 扫描注解 -->
 	<context:component-scan

@@ -75,4 +75,21 @@ public interface UserService {
 	 * @return
 	 */
 	public List<Role> findAllRoleByUserId(int id);
+
+	/**
+	 * 通过id删除
+	 * 
+	 * @param id
+	 */
+	public void deleteUserById(int id);
+
+	/** 根据范围查询员工信息 **/
+	public List<User> findUserAllByIndex(int start, int end);
+
+	/** 批量删除员工信息 **/
+	public void deleteUserAll(List<Integer> userIdList);
+
+	/** 总页数 **/
+	public int pageNo(int end);
+
 }

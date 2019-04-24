@@ -134,4 +134,30 @@ public class UserServiceImpl implements UserService {
 		return userDao.findAllRoleByUserId(id);
 	}
 
+	@Override
+	public void deleteUserById(int id) {
+		userDao.deleteById(id);
+	}
+
+	@Override
+	public List<User> findUserAllByIndex(int start, int end) {
+		return userDao.findAllByIndex(start, end);
+	}
+
+	@Override
+	public void deleteUserAll(List<Integer> userIdList) {
+		userDao.deleteAll(userIdList);
+	}
+
+	@Override
+	public int pageNo(int end) {
+		int page = 0;
+		if (userDao.getPageCount() / end == 0) {
+			page = userDao.getPageCount() / end;
+		} else {
+			page = (userDao.getPageCount() / end) + 1;
+		}
+		return page;
+	}
+
 }

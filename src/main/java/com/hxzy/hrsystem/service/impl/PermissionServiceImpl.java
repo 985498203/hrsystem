@@ -61,8 +61,13 @@ public class PermissionServiceImpl implements PermissionService {
 
 	@Override
 	public List<Permission> findAllPermissionByRoleId(int roleId) {
-		// TODO Auto-generated method stub
-		return null;
+		
+		return permissionDao.findAllPermissionByRoleId(roleId);
+	}
+
+	@Override
+	public void deletePermissionById(int id) {
+		permissionDao.deleteById(id);
 	}
 
 	

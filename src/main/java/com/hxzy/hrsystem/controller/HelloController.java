@@ -7,10 +7,10 @@ import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 public class HelloController {
-	@RequestMapping(value = "/main.html", method = RequestMethod.GET)
+	@RequestMapping(value = "/index.html", method = RequestMethod.GET)
 	public ModelAndView Login(ModelAndView mav) {
 		System.out.println("主页");
-		mav.setViewName("main");
+		mav.setViewName("index");
 		return mav;
 	}
 }

@@ -61,4 +61,9 @@ public interface RoleService {
 	 * @return
 	 */
 	List<Permission> findAllPermissionByRoleId(int roleId);
+	/**
+	 * 通过id删除
+	 * @param id
+	 */
+	public void deleteRoleById(int id);
 }

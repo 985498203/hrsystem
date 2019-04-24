@@ -63,8 +63,17 @@ public class PermissionDaoImpl implements PermissionDao {
 
 	@Override
 	public List<Permission> findAllPermissionByRoleId(int roleId) {
-		
+
 		return null;
+	}
+
+	@Override
+	public void deleteById(int id) {
+		Session session = sessionFactory.getCurrentSession();
+		Query query = session.createQuery("delete form Permission p where p.permId=?");
+		query.setInteger(0, id);
+		query.executeUpdate();
+
 	}
 
 }

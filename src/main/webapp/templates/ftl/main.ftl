@@ -400,21 +400,16 @@
 	</div>
 </body>
 <script type="text/javascript">
-	function yhgl(){
+	function yhgl() {
 		alert("dsdsd");
 		$.ajax({
-	        type:"GET",
-	        url:"${base}/user/list.html",
-	        dataType:"test",
-	        success:function(data){
-	           alert(data);
-	        },
-	        error:function(jqXHR){
-	           aler("发生错误："+ jqXHR.status);
-	        }
+			type : "get",
+			url : "${base}/user/list.json",
+			dataType : "json",+
+			success : function(data) {
+				alert(data[0].username);
+			}
 		});
-		
 	}
-	
 </script>
 </html>

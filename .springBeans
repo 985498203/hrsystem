@@ -9,8 +9,6 @@
 	<configs>
 	</configs>
 	<autoconfigs>
-		<config>src/main/resources/spring-hibernate.xml</config>
-		<config>src/main/resources/spring-mvc.xml</config>
 	</autoconfigs>
 	<configSets>
 	</configSets>
