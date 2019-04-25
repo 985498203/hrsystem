@@ -63,7 +63,6 @@ public class PermissionServiceImpl implements PermissionService {
 
 	@Override
 	public List<Permission> findAllPermissionByRoleId(int roleId) {
-
 		return permissionDao.findAllPermissionByRoleId(roleId);
 	}
 
@@ -79,13 +78,13 @@ public class PermissionServiceImpl implements PermissionService {
 
 	@Override
 	public int getTotalPages(int pagesize) {
-		int totalPage = 0;
-		if (permissionDao.getConut() / pagesize == 0) {
-			totalPage = permissionDao.getConut() / pagesize;
+		int totalPage = permissionDao.getConut() / pagesize;
+		if (permissionDao.getConut() % pagesize == 0) {
+			return totalPage;
 		} else {
-			totalPage = (permissionDao.getConut() / pagesize) + 1;
+			return totalPage + 1;
 		}
-		return totalPage;
+
 	}
 
 	/**
@@ -106,19 +105,17 @@ public class PermissionServiceImpl implements PermissionService {
 	@Override
 	public PageInfo getPageInfo(int currentPage) {
 		PageInfo info = new PageInfo<Permission>();
-		// 设置总记录数
-		info.setCount(permissionDao.getConut());
-		// 设置总页数
-		info.setTotalPages(this.getTotalPages(5));
-		// 当前页数
-		info.setCurrentPage(currentPage);
-		// 设置分页的数据
-		
-		
-		
-		
-		List<Permission> permissions = permissionDao.findAllByIndex(start, info.getPagesize());
-		info.setPageList(permissions);
+		info.setCount(permissionDao.getConut()); // 设置总记录数
+		info.setTotalPages(this.getTotalPages(info.getPagesize()));// 设置总页数
+		info.setCurrentPage(currentPage);// 当前页数
+		List<Permission> permissions = permissionDao.findAllByIndex((currentPage - 1) * info.getPagesize(),
+				info.getPagesize());
+		info.setPageList(permissions);// 设置分页的数据
+		int[] nums = new int[this.getTotalPages(info.getPagesize())];
+		for (int i = 0; i < nums.length; i++) {
+			nums[i] = i+1;
+		}
+		info.setNavigatepageNums(nums);// 设置所有导航页号
 		return info;
 	}
 

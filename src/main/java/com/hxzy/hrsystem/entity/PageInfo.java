@@ -8,6 +8,15 @@ public class PageInfo<T> {
 	private List<T> pageList;// 当前页的记录集合
 	private Integer currentPage;// 当前页数
 	private Integer totalPages;// 总页数
+	private int[] navigatepageNums;// 所有导航页号
+
+	public int[] getNavigatepageNums() {
+		return navigatepageNums;
+	}
+
+	public void setNavigatepageNums(int[] navigatepageNums) {
+		this.navigatepageNums = navigatepageNums;
+	}
 
 	public Integer getCount() {
 		return count;

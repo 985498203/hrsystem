@@ -85,7 +85,6 @@ public class PermissionDaoImpl implements PermissionDao {
 
 	@Override
 	public List<Permission> findAllPermissionByRoleId(int roleId) {
-
 		return null;
 	}
 
@@ -114,7 +113,7 @@ public class PermissionDaoImpl implements PermissionDao {
 	@Override
 	public int getConut() {
 		Session session = this.getSession();
-		String hql = "select count(1)  from Permission";
+		String hql = "select count(*)  from Permission";
 		Query query = session.createQuery(hql);
 		int count = ((Long) query.iterate().next()).intValue();
 		return count;
@@ -130,7 +129,6 @@ public class PermissionDaoImpl implements PermissionDao {
 			} else {
 				hql = hql + " or id=" + idList[i];
 			}
-
 		}
 		Session session = this.getSession();
 		Query q = session.createQuery("delete from Permission where " + hql);

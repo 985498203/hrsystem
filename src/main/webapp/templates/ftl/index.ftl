@@ -120,13 +120,13 @@
             	<!-- 考勤模块 -->
 				<div class="kaoqin">
 					  <h1>考勤</h1>
-            	</div>    
-            	<!-- 权限管理模块 -->
+            	</div>
+            	<!-- 权限管理模块 --> 
 				<div class="qxgl" id="qxglpage">
-					  
-					  
-					  
+			  	 		<iframe scrolling="no" id="qxgliframe" name="main" frameborder="0"
+     						 style="min-height:600px;width:100%;height:100%;"></iframe>
             	</div> 
+            	
             	<!-- 角色管理模块 -->
 				<div class="jsgl">
 					  <h1>角色管理</h1>
