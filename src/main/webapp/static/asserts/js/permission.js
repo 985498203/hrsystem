@@ -18,28 +18,7 @@ $(function() {
 	      }
 	      ifr.style.height = height + 'px'
 	  }
-	
-	//添加权限资源
-	  function checkAddPerm(){
-		  
-		  
-	  }
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
 	// 单击 a 链接，加载 a.html
 	$("#qxgl").click(function() {
 //		$.ajax({
@@ -52,9 +31,7 @@ $(function() {
 //			}
 //		});
 		
-		$('#qxgliframe').attr('src','perms.html')
-		
-		
+		$('#qxgliframe').attr('src','perms')
 	});
 	// function permqx(obj) {
 	// var qx = $("#permtable #permqx");// 获取permtable下的全选框

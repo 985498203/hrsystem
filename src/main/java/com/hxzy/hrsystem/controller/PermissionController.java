@@ -5,14 +5,17 @@ import javax.annotation.Resource;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.hxzy.hrsystem.entity.PageInfo;
 import com.hxzy.hrsystem.entity.Permission;
 import com.hxzy.hrsystem.service.PermissionService;
+import com.hxzy.hrsystem.util.JsonData;
 
 @Controller
 public class PermissionController {
@@ -46,11 +49,11 @@ public class PermissionController {
 		return mav;
 	}
 
-	@RequestMapping(value = "/perms", method = RequestMethod.POST)
-	public ModelAndView addPermission(@ModelAttribute Permission permission, ModelAndView mav) {
-		mav.setViewName("redirect:/list");
-		permissionService.addPermission(permission);
-		return mav;
+	@RequestMapping(value = "/perm", method = RequestMethod.POST)
+	@ResponseBody
+	public JsonData addPermission(Permission permission) {
+		permissionService.addPermission(permission);//添加
+		return JsonData.success();//返回处理结果
 	}
 
 	@RequestMapping(value = "/perms{id}", method = RequestMethod.PUT)
