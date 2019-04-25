@@ -32,7 +32,7 @@ public class PermissionController {
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
 	public ModelAndView getpermissions(@RequestParam(value = "pageNo", defaultValue = "1") Integer pageNo,
 			ModelAndView mav) {
-		List<Permission> prmlist = permissionService.findAllPermissionByIndex(pageNo, 5);
+		List<Permission> prmlist = permissionService.getPageInfo(currentPage)
 //		List<PermissionDTO> dtolist = new ArrayList<PermissionDTO>();
 //		for (Permission permission : list) {
 //			PermissionDTO dto = new PermissionDTO(permission.getPermId(),permission.getPermName(),permission.getUrl());

@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Component;
 
+import com.hxzy.hrsystem.entity.PageInfo;
 import com.hxzy.hrsystem.entity.Permission;
 
 @Component
@@ -76,8 +77,6 @@ public interface PermissionService {
 	 */
 	public List<Permission> findAllPermissionByIndex(int start, int max);
 
-	/** 总页数 **/
-	public int pageNo(int end);
 
 	/**
 	 * 获取总记录数
@@ -85,10 +84,25 @@ public interface PermissionService {
 	 * @return
 	 */
 	public int getConut();
-	
+
 	/**
 	 * 批量删除
+	 * 
 	 * @param idList PermissionID数组
 	 */
 	public void deletePermissionAll(int[] idArray);
+
+	/**
+	 * 封装分页信息
+	 * 
+	 * @return PageInfo分页信息
+	 */
+	public PageInfo getPageInfo(int currentPage);
+	
+	/**
+	 * 得到总页数
+	 * @return
+	 */
+	public int getTotalPages(int pagesize);
+
 }

@@ -8,12 +8,14 @@ import org.springframework.stereotype.Component;
 
 import com.hxzy.hrsystem.dao.PermissionDao;
 import com.hxzy.hrsystem.dao.UserDao;
+import com.hxzy.hrsystem.entity.PageInfo;
 import com.hxzy.hrsystem.entity.Permission;
 import com.hxzy.hrsystem.entity.Role;
 import com.hxzy.hrsystem.service.PermissionService;
 
 @Component("permissionServiceImpl")
 public class PermissionServiceImpl implements PermissionService {
+
 	private UserDao userDao;
 	private PermissionDao permissionDao;
 
@@ -76,14 +78,14 @@ public class PermissionServiceImpl implements PermissionService {
 	}
 
 	@Override
-	public int pageNo(int max) {
-		int page = 0;
-		if (permissionDao.getPageCount() / max == 0) {
-			page = permissionDao.getPageCount() / max;
+	public int getTotalPages(int pagesize) {
+		int totalPage = 0;
+		if (permissionDao.getConut() / pagesize == 0) {
+			totalPage = permissionDao.getConut() / pagesize;
 		} else {
-			page = (permissionDao.getPageCount() / max) + 1;
+			totalPage = (permissionDao.getConut() / pagesize) + 1;
 		}
-		return page;
+		return totalPage;
 	}
 
 	/**
@@ -94,12 +96,30 @@ public class PermissionServiceImpl implements PermissionService {
 	@Override
 	public int getConut() {
 		return permissionDao.getConut();
-
 	}
 
 	@Override
 	public void deletePermissionAll(int[] idArray) {
 		permissionDao.deleteAll(idArray);
+	}
+
+	@Override
+	public PageInfo getPageInfo(int currentPage) {
+		PageInfo info = new PageInfo<Permission>();
+		// 设置总记录数
+		info.setCount(permissionDao.getConut());
+		// 设置总页数
+		info.setTotalPages(this.getTotalPages(5));
+		// 当前页数
+		info.setCurrentPage(currentPage);
+		// 设置分页的数据
+		
+		
+		
+		
+		List<Permission> permissions = permissionDao.findAllByIndex(start, info.getPagesize());
+		info.setPageList(permissions);
+		return info;
 	}
 
 }

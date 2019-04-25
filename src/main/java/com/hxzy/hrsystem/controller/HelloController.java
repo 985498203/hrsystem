@@ -7,12 +7,12 @@ import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 public class HelloController {
-//	@RequestMapping(value = "/index", method = RequestMethod.GET)
-//	public ModelAndView Login(ModelAndView mav) {
-//		System.out.println("主页");
-//		mav.setViewName("admin/perm");
-//		return mav;
-//	}
+	@RequestMapping(value = "/index", method = RequestMethod.GET)
+	public ModelAndView Login(ModelAndView mav) {
+		System.out.println("主页");
+		mav.setViewName("index");
+		return mav;
+	}
 	@RequestMapping(value = "/a", method = RequestMethod.GET)
 	public ModelAndView Logina(ModelAndView mav) {
 		System.out.println("主页");
