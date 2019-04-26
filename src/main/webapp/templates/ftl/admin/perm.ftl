@@ -29,20 +29,20 @@
 			<div class="col-md-12">
 				<table class="table table-condensed table-hover" id="permtable">
 					<thead>
-						<th><input type="checkbox" id="permqx" onclick="permqx(0)">全选</th>
+						<th><input type="checkbox" id="input_all" onclick="permqx(0)">全选</th>
 						<th>资源名称</th>
 						<th>资源URL</th>
 					</thead>
 					<tbody>
 						<#list pageInfo.pageList as p>
 						<tr>
-							<td><input type="checkbox" class="permxz"
+							<td><input type="checkbox"  id="input_one"
 								onclick="permqx(1)" value="${p.permId}">
 							</th>
 							</td>
 							<td>${p.permName}</td>
 							<td>${p.url}</td>
-							<td>
+							<td width="600px">
 								<button class="btn btn-primary btn-sm ">
 									<span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
 									编辑
@@ -68,9 +68,6 @@
 
 						<#if pageInfo.currentPage==1>
 						<li class="disabled"><a>首页</a></li>
-						<li class="disabled"><a aria-label="shangyiye">
-							<span aria-hidden="true">&laquo;</span>
-							</a></li>
 					<#else>
 						<li><a href="perms.html?pn=1" >首页</a>
 						</li>
@@ -86,9 +83,6 @@
 						<li><a href="perms.html?pn=${n}">${n}</a></li></#if> </#list>
 
 						<#if pageInfo.currentPage== pageInfo.totalPages> <!-- 如果当前的页数为末页设为禁用 -->
-						<li class="disabled"><a aria-label="Next"> <span
-								aria-hidden="true">&raquo;</span>
-						</a></li>
 						<li class="disabled"><a>末页</a></li>
 						<#else> <!-- 如果当前的页数不是末页 ,正常显示 -->
 						<li><a href="perms.html?pn=${pageInfo.currentPage+1}"
@@ -142,7 +136,36 @@
 
 </body>
 <script type="text/javascript">
+/* 全选反选事件 */
+function permqx(obj){
+	var all = document.getElementById("input_all");
+	var noe = document.getElementsByName("input_one");
+	if(obj == 1){
+
+		if(all.checked == true){
+			alert("true");
+			for(var i=0 ;i<noe.length;i++){
+				noe[i].checked = true;
+			}
+		}else{
+			for(var i=0 ;i<noe.length;i++){
+				noe[i].checked = false;
+			}
+		}
+		}else{
+	}
+}
 	$(function() {
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
 			$("#addPermModal").click(function() {//新增权限资源
 				$('#permaddModal').modal({//弹出新增权限资源模态框
 					backdrop : 'static'
@@ -172,15 +195,7 @@
 					          alert("添加失败");
 					      }
 					});
-					
 				}
-				
-				
-				
-				
-				
-				
-				
 			});
 	});
 
