@@ -111,7 +111,7 @@ public class UserServiceImpl implements UserService {
 				for (Role role2 : roleList) {
 					Role role3 = roleDao.getById(role2.getRoleId());// 查询角色是否存在
 					if (null == role3) {
-						return false;//有一个不存在则返回false;
+						return false;// 有一个不存在则返回false;
 					}
 				}
 				userDao.addRole(user2, roleList);
@@ -158,6 +158,11 @@ public class UserServiceImpl implements UserService {
 			page = (userDao.getPageCount() / end) + 1;
 		}
 		return page;
+	}
+
+	@Override
+	public boolean addRoleById(Integer userId, Integer roleId) {
+		return userDao.addRoleById(userId, roleId);
 	}
 
 }

@@ -7,6 +7,13 @@ import com.hxzy.hrsystem.entity.User;
 
 public interface PermissionDao extends BaseDao<Permission> {
 	/**
+	 * 获取所有的顶级权限
+	 * 
+	 * @return
+	 */
+	public List<Permission> findAllSuperPermission();
+
+	/**
 	 * 通过用户id查询所有的权限
 	 * 
 	 * @param userId
@@ -20,7 +27,7 @@ public interface PermissionDao extends BaseDao<Permission> {
 	 * @param id
 	 * @return
 	 */
-	List<Permission> findAllPermissionByRoleId(int roleId);
+	public List<Permission> findAllPermissionByRoleId(int roleId);
 
 	/**
 	 * 员工信息分页查询
@@ -51,10 +58,31 @@ public interface PermissionDao extends BaseDao<Permission> {
 	 * @return
 	 */
 	public int getConut();
-	
+
 	/**
 	 * 批量删除权限信息
 	 */
 	public void deleteAll(int[] idList);
+
+	/**
+	 * 检查权限名是否重复
+	 * 
+	 * @param name
+	 * @return
+	 */
+	public boolean checkPermName(String name);
+
+	/**
+	 * 检查url是否重复
+	 * 
+	 * @param url
+	 * @return
+	 */
+	public boolean checkPermUrl(String url);
+
+	/**
+	 * 批量增加
+	 */
+	public void addAll(List<Permission> permissions);
 
 }

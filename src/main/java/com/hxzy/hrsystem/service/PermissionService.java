@@ -10,6 +10,13 @@ import com.hxzy.hrsystem.entity.Permission;
 @Component
 public interface PermissionService {
 	/**
+	 * 获取所有的顶级权限
+	 * 
+	 * @return
+	 */
+	public List<Permission> findAllSuperPermission();
+
+	/**
 	 * 查询所有
 	 * 
 	 * @return
@@ -77,7 +84,6 @@ public interface PermissionService {
 	 */
 	public List<Permission> findAllPermissionByIndex(int start, int max);
 
-
 	/**
 	 * 获取总记录数
 	 * 
@@ -98,11 +104,33 @@ public interface PermissionService {
 	 * @return PageInfo分页信息
 	 */
 	public PageInfo getPageInfo(int currentPage);
-	
+
 	/**
 	 * 得到总页数
+	 * 
 	 * @return
 	 */
 	public int getTotalPages(int pagesize);
+
+	/**
+	 * 检查权限名是否重复
+	 * 
+	 * @param name
+	 * @return
+	 */
+	public boolean checkPermName(String name);
+
+	/**
+	 * 检查url是否重复
+	 * 
+	 * @param url
+	 * @return
+	 */
+	public boolean checkPermUrl(String url);
+	/**
+	 * 批量增加
+	 */
+	public void addAll(List<Permission> permissions);
+
 
 }

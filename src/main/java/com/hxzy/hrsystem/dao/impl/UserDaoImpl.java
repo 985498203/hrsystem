@@ -122,7 +122,7 @@ public class UserDaoImpl implements UserDao {
 		String sql = "select r.* from tb_user_role ur,tb_role r where ur.user_id =? and ur.role_id = r.role_id";
 		Session session = sessionFactory.getCurrentSession();
 		SQLQuery query = session.createSQLQuery(sql).addEntity(Role.class);
-		query.setInteger(0, id);
+		query.setInteger(1, id);
 		List<Role> resultList = query.list();
 		return resultList;
 	}
@@ -131,7 +131,7 @@ public class UserDaoImpl implements UserDao {
 	public void deleteById(int id) {
 		Session session = this.getSession();
 		Query query = session.createQuery("delete from User u where u.userId=?");
-		query.setInteger(0, id);
+		query.setInteger(1, id);
 		query.executeUpdate();
 	}
 
@@ -164,6 +164,30 @@ public class UserDaoImpl implements UserDao {
 				session.delete(us);
 			}
 		}
+	}
+
+	@Override
+	public boolean addRoleById(Integer userId, Integer roleId) {
+		Session session = this.getSession();
+		// 查询用户
+		String hql = "from User u where u.userId=?";
+		Query query = session.createQuery(hql);
+		query.setParameter(0, userId);
+		User user = (User) query.uniqueResult();
+		// 查询角色
+		String hql2 = "from Role r where r.roleId=?";
+		Query query2 = session.createQuery(hql2);
+		query2.setParameter(0, roleId);
+		Role role = (Role) query2.uniqueResult();
+		if(null==user || null==role) {
+			return false;
+		}else {
+			UserRole userRole = new UserRole();
+			userRole.setUser(user);
+			userRole.setRole(role);
+			session.save(userRole);
+		}
+		return true;
 	}
 
 }

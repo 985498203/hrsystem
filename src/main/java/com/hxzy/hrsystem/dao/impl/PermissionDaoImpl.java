@@ -15,6 +15,7 @@ import com.hxzy.hrsystem.entity.Permission;
 public class PermissionDaoImpl implements PermissionDao {
 	@Autowired
 	private SessionFactory sessionFactory;
+	
 	private int pageCount;// 总页数
 
 	@Override
@@ -77,7 +78,7 @@ public class PermissionDaoImpl implements PermissionDao {
 		String sql = "select p.* from tb_ROLE_PERM rp,tb_role r,tb_user_role ur,tb_Permission p where ur.user_id =? and ur.role_id = r.role_id and r.role_id = rp.ROLE_ID and rp.PERM_ID= p.perm_id";
 		Session session = this.getSession();
 		SQLQuery query = session.createSQLQuery(sql).addEntity(Permission.class);
-		query.setInteger(0, userId);
+		query.setInteger(1, userId);
 		@SuppressWarnings("unchecked")
 		List<Permission> resultList = query.list();
 		return resultList;
@@ -92,12 +93,13 @@ public class PermissionDaoImpl implements PermissionDao {
 	public void deleteById(int id) {
 		Session session = this.getSession();
 		Query query = session.createQuery("delete form Permission p where p.permId=?");
-		query.setInteger(0, id);
+		query.setInteger(1, id);
 		query.executeUpdate();
 
 	}
 
 	@Override
+	@SuppressWarnings("unchecked")
 	public List<Permission> findAllByIndex(int start, int max) {
 		Session session = this.getSession();
 		String hql = "from Permission";
@@ -133,6 +135,54 @@ public class PermissionDaoImpl implements PermissionDao {
 		Session session = this.getSession();
 		Query q = session.createQuery("delete from Permission where " + hql);
 		q.executeUpdate();
+	}
+
+	@Override
+	public List<Permission> findAllSuperPermission() {
+		String sql = "select * from tb_permission where parent_id is null";
+		Session session = this.getSession();
+		SQLQuery query = session.createSQLQuery(sql).addEntity(Permission.class);
+		@SuppressWarnings("unchecked")
+		List<Permission> resultList = query.list();
+		return resultList;
+	}
+
+	@Override
+	public boolean checkPermName(String name) {
+		Query query = this.getSession().createQuery("from Permission p where p.permName =:name");// 得到Query对象
+		query.setParameter("name", name);
+		Permission permission2 = (Permission) query.uniqueResult();
+		if(null==permission2) {
+			return true;
+		}else {
+			return false;
+		}
+	}
+
+	@Override
+	public boolean checkPermUrl(String url) {
+		Query query = this.getSession().createQuery("from Permission p where p.url =:url");// 得到Query对象
+		query.setParameter("url", url);
+		Permission permission2 = (Permission) query.uniqueResult();
+		if(null==permission2) {
+			return true;
+		}else {
+			return false;
+		}
+	}
+
+	@Override
+	public void addAll(List<Permission> permissions) {
+		Session session = getSession();
+		for(int i=0;i<permissions.size();i++) {
+			Permission permission = permissions.get(i);
+			session.save(permission); // 保存对象
+			// 批插入的对象立即写入数据库并释放内存
+			if (i % 10 == 0) {
+				session.flush();
+				session.clear();
+			}
+		}
 	}
 
 }

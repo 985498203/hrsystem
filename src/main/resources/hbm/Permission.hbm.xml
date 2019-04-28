@@ -15,10 +15,20 @@
 		</id>
 		<property name="permName" column="perm_name"></property>
 		<property name="url" column="url"></property>
-		
-		<set name="rolePermSet" inverse="true" lazy="false">
+
+		<set name="rolePermSet" inverse="true" lazy="false" >
 			<key column="perm_id"></key>
-			<one-to-many class="RolePerm"/>
+			<one-to-many class="RolePerm" />
+		</set>
+
+		<!-- parent属性，本类与Permission(上级)的多对一关系 -->
+		<many-to-one name="parent" class="Permission"
+			column="parent_id" cascade="save-update" />
+
+		<!-- children属性，本类与Permission(下级)的一对多关系 -->
+		<set name="children">
+			<key column="parent_id"></key>
+			<one-to-many class="Permission" />
 		</set>
 	</class>
 </hibernate-mapping>

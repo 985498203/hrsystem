@@ -40,6 +40,15 @@ public interface UserService {
 	public boolean addUser(User user);
 
 	/**
+	 * 通过id添加角色
+	 * 
+	 * @param userId 用户id
+	 * @param roleId 角色id
+	 * @return
+	 */
+	public boolean addRoleById(Integer userId, Integer roleId);
+
+	/**
 	 * 更新
 	 * 
 	 * @param entity
@@ -91,7 +100,7 @@ public interface UserService {
 
 	/** 总页数 **/
 	public int pageNo(int end);
-	
+
 	
 
 }

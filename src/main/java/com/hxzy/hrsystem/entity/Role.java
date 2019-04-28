@@ -15,6 +15,16 @@ public class Role implements Serializable {
 	private String roleName;// 角色名
 	private String remarks;// 角色备注
 
+	public Role(String roleName, String remarks) {
+		super();
+		this.roleName = roleName;
+		this.remarks = remarks;
+	}
+
+	public Role() {
+		super();
+	}
+
 	public String getRemarks() {
 		return remarks;
 	}

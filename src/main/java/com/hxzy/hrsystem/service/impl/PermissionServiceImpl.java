@@ -119,4 +119,25 @@ public class PermissionServiceImpl implements PermissionService {
 		return info;
 	}
 
+	@Override
+	public List<Permission> findAllSuperPermission() {
+		return permissionDao.findAllSuperPermission();
+	}
+
+	@Override
+	public boolean checkPermName(String name) {
+		return permissionDao.checkPermName(name);
+	}
+
+	@Override
+	public boolean checkPermUrl(String url) {
+		return permissionDao.checkPermUrl(url);
+	}
+
+	@Override
+	public void addAll(List<Permission> permissions) {
+		permissionDao.addAll(permissions);
+		
+	}
+
 }
