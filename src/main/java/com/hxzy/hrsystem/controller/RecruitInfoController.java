@@ -67,7 +67,7 @@ public class RecruitInfoController {
 	}
 	
 	
-	
+	 
 	/**
 	 * 
 	 * 更新
