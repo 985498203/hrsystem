@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
+import javax.persistence.Version;
 import javax.validation.Valid;
 
 import org.springframework.stereotype.Controller;
@@ -69,26 +70,27 @@ public class PermissionController {
 	@ResponseBody
 	public JsonData addPermission(@RequestParam("parentId") Integer parentId, @Valid Permission permission,
 			BindingResult result) {
-		if (parentId != 0 && null != parentId) {
+		if (parentId > -1 && null != parentId) {
 			if (result.hasErrors()) {
 				// 校验失败，返回失败信息，在模态框中显示校验错误信息
 				Map<String, Object> errorMap = new HashMap<>();
 				List<FieldError> fieldErrors = result.getFieldErrors();
 				for (FieldError fieldError : fieldErrors) {
-					System.out.println("错误的字段：" + fieldError.getField());
-					System.out.println("错误的信息：" + fieldError.getDefaultMessage());
 					errorMap.put(fieldError.getField(), fieldError.getDefaultMessage());
 				}
-				return JsonData.fail("fdsafsdafsda").add("errorInfo", errorMap);
+				return JsonData.fail().add("errorInfo", errorMap);
 			}
 			Permission permission2 = permissionService.getPermissionById(parentId);
 			if (null != permission2) {
 				permission.setParent(permission2);
+			}else {
+				return JsonData.fail();//父id不存在
 			}
 		}
 		permissionService.addPermission(permission);// 添加数据
 		int zys = permissionService.getTotalPages(5);// 得到总页数
 		return JsonData.success(zys);// 返回处理结果
+
 	}
 
 	@RequestMapping(value = "/perms{id}", method = RequestMethod.PUT)

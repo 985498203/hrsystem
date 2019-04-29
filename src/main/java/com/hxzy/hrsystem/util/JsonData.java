@@ -28,6 +28,7 @@ public class JsonData {
 		jsonData.data = object;
 		jsonData.msg = msg;
 		return jsonData;
+		
 	}
 
 	public JsonData add(String key, Object value) {
@@ -119,4 +120,11 @@ public class JsonData {
 		this.data = data;
 	}
 
+	public Map<String, Object> getExtend() {
+		return extend;
+	}
+
+	public void setExtend(Map<String, Object> extend) {
+		this.extend = extend;
+	}
 }
