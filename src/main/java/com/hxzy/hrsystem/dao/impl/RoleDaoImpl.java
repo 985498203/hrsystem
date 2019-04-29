@@ -249,4 +249,13 @@ public class RoleDaoImpl implements RoleDao {
 		return true;
 	}
 
+	@Override
+	public int getConut() {
+		Session session = this.getSession();
+		String hql = "select count(*) from Role";
+		Query query = session.createQuery(hql);
+		int count = ((Long) query.iterate().next()).intValue();
+		return count;
+	}
+
 }

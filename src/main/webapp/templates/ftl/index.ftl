@@ -12,11 +12,11 @@
 		<script type="text/javascript" src="static/asserts/js/bootstrap.min.js"></script>
 		<script type="text/javascript" src="static/asserts/js/index.js"></script>
 		<script type="text/javascript" src="static/asserts/js/permission.js"></script>
-		<!-- <#if !list??>
+		<#if !list??>
 			<script type="text/javascript">
 	 			window.location.href="finduser.html?pageNo=1";
 	 		</script>
-		</#if> -->
+		</#if>
    		<link rel="stylesheet" type="text/css" href="static/asserts/css/bootstrap.min.css" />
         <link rel="stylesheet" type="text/css" href="static/asserts/css/bootstrap-theme.min.css">
         <link rel="stylesheet" type="text/css" href="static/asserts/css/index.css">
@@ -46,7 +46,7 @@
                 <div class="meun-item" onclick="kaoqin()" role="tab" data-toggle="tab"><img src="static/asserts/img/icon_change_grey.png">考勤</div>
             	<div class="meun-title">权限管理</div>
                 <div class="meun-item" id="qxgl" onclick="qxgl()" role="tab" data-toggle="tab"><img src="static/asserts/img/icon_chara_grey.png">权限管理</div>
-                <div class="meun-item" onclick="jsgl()" role="tab" data-toggle="tab"><img src="static/asserts/img/icon_card_grey.png">角色管理</div>
+                <div class="meun-item" id="jsgl" onclick="jsgl()" role="tab" data-toggle="tab"><img src="static/asserts/img/icon_card_grey.png">角色管理</div>
             </div>
             <!-- 右侧具体内容栏目 -->
             <div id="rightContent">
@@ -123,13 +123,12 @@
             	</div>
             	<!-- 权限管理模块 --> 
 				<div class="qxgl" id="qxglpage">
-			  	 		<iframe scrolling="no" id="qxgliframe" name="main" frameborder="0"
-     						 style="min-height:600px;width:100%;height:100%;"></iframe>
+			  	 		
             	</div> 
-            	
+            			<iframe scrolling="no" id="qxgliframe" name="main" frameborder="0"
+     						 style="min-height:600px;width:100%;height:100%;"></iframe>
             	<!-- 角色管理模块 -->
-				<div class="jsgl">
-					  <h1>角色管理</h1>
+				<div id="jsgl" >
             	</div>                     	
 			</div>
 			<!-- 修改员工信息弹框 -->

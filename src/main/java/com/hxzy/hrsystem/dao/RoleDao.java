@@ -6,6 +6,13 @@ import com.hxzy.hrsystem.entity.Role;
 
 public interface RoleDao extends BaseDao<Role> {
 	/**
+	 * 获取总记录数
+	 * 
+	 * @return
+	 */
+	public int getConut();
+	
+	/**
 	 * 根据用户id查询职位
 	 * 
 	 * @param id
@@ -57,6 +64,7 @@ public interface RoleDao extends BaseDao<Role> {
 
 	/**
 	 * 批量删除职位信息
+	 * 
 	 */
 	public void deleteAll(int[] idList);
 
@@ -85,6 +93,7 @@ public interface RoleDao extends BaseDao<Role> {
 
 	/**
 	 * 批量增加
+	 * 
 	 */
 	public void addAll(List<Role> roles);
 

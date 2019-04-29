@@ -101,7 +101,7 @@ public class PermissionServiceImpl implements PermissionService {
 	public void deletePermissionAll(int[] idArray) {
 		permissionDao.deleteAll(idArray);
 	}
-
+	
 	@Override
 	public PageInfo getPageInfo(int currentPage) {
 		PageInfo info = new PageInfo<Permission>();

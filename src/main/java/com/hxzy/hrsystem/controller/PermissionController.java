@@ -53,51 +53,64 @@ public class PermissionController {
 	}
 
 	@RequestMapping(value = "/perm/{id}", method = RequestMethod.GET)
-	public ModelAndView permissionInfo(@PathVariable(name = "id", required = true) int id, ModelAndView mav) {
-		mav.setViewName("userinfo");
-		mav.addObject("user", permissionService.getPermissionById(id));
-		return mav;
+	@ResponseBody
+	public JsonData permissionInfo(@PathVariable(name = "id", required = true) int id) {
+		System.out.println("id:" + id);
+		Permission permission = permissionService.getPermissionById(id);
+		return JsonData.success(permission);
 	}
 
 	@RequestMapping(value = "/perm/{id}", method = RequestMethod.DELETE)
-	public ModelAndView delPermission(@PathVariable(name = "id", required = true) int id, ModelAndView mav) {
-		mav.setViewName("redirect:/list");
-		permissionService.deletePermissionById(id);
-		return mav;
+	@ResponseBody
+	public JsonData deletePermission(@PathVariable(name = "id", required = true) int id) {
+		try {
+			permissionService.deletePermissionById(id);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return JsonData.fail();
+		}
+		return JsonData.success();
 	}
 
 	@RequestMapping(value = "/perm", method = RequestMethod.POST)
 	@ResponseBody
-	public JsonData addPermission(@RequestParam("parentId") Integer parentId, @Valid Permission permission,
+	public JsonData addPermission(@Valid Permission permission,
 			BindingResult result) {
-		if (parentId > -1 && null != parentId) {
-			if (result.hasErrors()) {
-				// 校验失败，返回失败信息，在模态框中显示校验错误信息
-				Map<String, Object> errorMap = new HashMap<>();
-				List<FieldError> fieldErrors = result.getFieldErrors();
-				for (FieldError fieldError : fieldErrors) {
-					errorMap.put(fieldError.getField(), fieldError.getDefaultMessage());
-				}
-				return JsonData.fail().add("errorInfo", errorMap);
+		if (result.hasErrors()) {
+			// 校验失败，返回失败信息，在模态框中显示校验错误信息
+			Map<String, Object> errorMap = new HashMap<>();
+			List<FieldError> fieldErrors = result.getFieldErrors();
+			for (FieldError fieldError : fieldErrors) {
+				errorMap.put(fieldError.getField(), fieldError.getDefaultMessage());
 			}
-			Permission permission2 = permissionService.getPermissionById(parentId);
-			if (null != permission2) {
-				permission.setParent(permission2);
-			}else {
-				return JsonData.fail();//父id不存在
-			}
+			return JsonData.fail().add("errorInfo", errorMap);
 		}
+//		if (parentId > -1 && null != parentId) {
+		
+//			Permission permission2 = permissionService.getPermissionById(parentId);
+//			if (null != permission2) {
+//				permission.setParent(permission2);
+//			} else {
+//				return JsonData.fail();// 父id不存在
+//			}
+//		}
 		permissionService.addPermission(permission);// 添加数据
 		int zys = permissionService.getTotalPages(5);// 得到总页数
 		return JsonData.success(zys);// 返回处理结果
 
 	}
 
-	@RequestMapping(value = "/perms{id}", method = RequestMethod.PUT)
-	public ModelAndView updatePermission(@ModelAttribute Permission permission, ModelAndView mav) {
-		mav.setViewName("redirect:/list");
-		permissionService.updatePermission(permission);
-		return mav;
+	@RequestMapping(value = "/perm/{id}", method = RequestMethod.PUT)
+	@ResponseBody
+	public JsonData updatePermission(@ModelAttribute Permission permission) {
+		if (null != permission.getPermId()) {
+			Permission permission2 = permissionService.getPermissionById(permission.getPermId());
+			permission2.setPermName(permission.getPermName());
+			permission2.setUrl(permission.getUrl());
+			permissionService.updatePermission(permission2);
+			return JsonData.success();
+		}
+		return JsonData.fail();
 	}
 
 	/**

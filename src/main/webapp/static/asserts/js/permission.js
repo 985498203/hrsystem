@@ -18,21 +18,16 @@ $(function() {
 	      }
 	      ifr.style.height = height + 'px'
 	  }
-
-	// 单击 a 链接，加载 a.html
-	$("#qxgl").click(function() {
-//		$.ajax({
-//			type : 'GET',
-//			url : 'perms.html',
-//			dataType : 'html',
-//			success : function(data) {
-//				console.log("成功");
-//				//$('#qxgliframe').html(data);
-//			}
-//		});
-		
-		$('#qxgliframe').attr('src','perms')
-	});
+	  
+		$("#jsgl").click(function() {
+			$('#qxgliframe').attr('src','roles');
+		});
+		$("#qxgl").click(function() {
+			$('#qxgliframe').attr('src','perms');
+		});
+	 //切换
+	
+	 
 	// function permqx(obj) {
 	// var qx = $("#permtable #permqx");// 获取permtable下的全选框
 	// var xz = $("#permtable .permxz");// 获取permtable
@@ -59,5 +54,4 @@ $(function() {
 	/*
 	 * $("#a2").click(function(){ $('#con').load('./b.html'); });
 	 */
-	
 });

@@ -4,12 +4,20 @@ import java.util.List;
 
 import org.springframework.stereotype.Component;
 
+import com.hxzy.hrsystem.entity.PageInfo;
 import com.hxzy.hrsystem.entity.Permission;
 import com.hxzy.hrsystem.entity.Role;
 import com.hxzy.hrsystem.entity.User;
 
 @Component
 public interface RoleService {
+	/**
+	 * 封装分页信息
+	 * 
+	 * @return PageInfo分页信息
+	 */
+	public PageInfo getPageInfo(int currentPage);
+	
 	/**
 	 * 通过id添加权限
 	 * 
@@ -128,4 +136,10 @@ public interface RoleService {
 	 * 批量增加
 	 */
 	public void addRoleAll(List<Role> roles);
+	/**
+	 * 得到总页数
+	 * 
+	 * @return
+	 */
+	public int getTotalPages(int i);
 }

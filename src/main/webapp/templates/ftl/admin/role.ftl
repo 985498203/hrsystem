@@ -5,7 +5,7 @@
 <head>
 
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>权限管理</title>
+<title>角色管理</title>
 <!-- Bootstrap core CSS -->
 <script src="static/asserts/js/jquery.min.js"></script>
 <link rel="stylesheet" type="text/css"

@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.hxzy.hrsystem.dao.RoleDao;
 import com.hxzy.hrsystem.dao.UserDao;
+import com.hxzy.hrsystem.entity.PageInfo;
 import com.hxzy.hrsystem.entity.Permission;
 import com.hxzy.hrsystem.entity.Role;
 import com.hxzy.hrsystem.service.RoleService;
@@ -110,6 +111,33 @@ public class RoleServiceImpl implements RoleService {
 	@Override
 	public boolean addPermAllById(Integer roleId, List<Integer> permIdList) {
 		return roleDao.addPermAllById(roleId, permIdList);
+	}
+
+	@Override
+	public int getTotalPages(int pagesize) {
+		int totalPage = roleDao.getConut() / pagesize;
+		if (roleDao.getConut() % pagesize == 0) {
+			return totalPage;
+		} else {
+			return totalPage + 1;
+		}
+	}
+
+	@Override
+	public PageInfo getPageInfo(int currentPage) {
+		PageInfo info = new PageInfo<Permission>();
+		info.setCount(roleDao.getConut()); // 设置总记录数
+		info.setTotalPages(this.getTotalPages(info.getPagesize()));// 设置总页数
+		info.setCurrentPage(currentPage);// 当前页数
+		List<Role> roles = roleDao.findAllByIndex((currentPage - 1) * info.getPagesize(),
+				info.getPagesize());
+		info.setPageList(roles);// 设置分页的数据
+		int[] nums = new int[this.getTotalPages(info.getPagesize())];
+		for (int i = 0; i < nums.length; i++) {
+			nums[i] = i+1;
+		}
+		info.setNavigatepageNums(nums);// 设置所有导航页号
+		return info;
 	}
 
 }
