@@ -53,9 +53,11 @@ public class RecruitInfoServiceImpl implements RecruitInfoService {
 
 	//根据ID查询
 	@Override
-	public void findRecruitInfoById(int id) {
+	public RecruitInfo findRecruitInfoById(int id) {
 		// TODO Auto-generated method stub
-		recruitInfoDao.findRecruitInfoById(id);
+		
+		return recruitInfoDao.findRecruitInfoById(id);
+		
 	}
 
 	

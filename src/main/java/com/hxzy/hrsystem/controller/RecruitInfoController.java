@@ -8,8 +8,10 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.hxzy.hrsystem.entity.RecruitInfo;
@@ -20,10 +22,13 @@ import com.hxzy.hrsystem.service.RecruitInfoService;
 public class RecruitInfoController {
 	private RecruitInfoService recruitInfoService;
 	
+	
 	@Resource(name="recruitInfoServiceImpl")
 	public void setWorderService(RecruitInfoService recruitInfoService) {
 		this.recruitInfoService=recruitInfoService;
 	}
+	
+	
 	/**
 	 * 
 	 * 查询所有
@@ -42,8 +47,9 @@ public class RecruitInfoController {
 	}
 	
 	
+	
 	/**
-	 * 
+	 * 添加
 	 * 
 	 * @param worder
 	 * @return
@@ -56,31 +62,44 @@ public class RecruitInfoController {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
 //		return "redirect:addRecruitInfo";
 		return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
 	}
 	
 	
+	
 	/**
 	 * 
-	 * 
+	 * 更新
+	 * @param mav
+	 * @param recruitInfo
+	 * @return
 	 */
 	@RequestMapping(value = "/updateRecruitInfo",method=RequestMethod.GET)
-	public String updateRecruitInfo(RecruitInfo recruitInfo) {
+	public ModelAndView updateRecruitInfo(@ModelAttribute ModelAndView mav , RecruitInfo recruitInfo) {
 		System.out.println(recruitInfo.toString());
-		recruitInfoService.updataRecruitInfo(recruitInfo);
-		return "redirect:updateRecruitInfo";
+		RecruitInfo recruitInfo2 = recruitInfoService.findRecruitInfoById(recruitInfo.getRecruitId());
+		recruitInfo2.setRecruitNumber(recruitInfo.getRecruitNumber());
+		recruitInfo2.setRecruitDept(recruitInfo.getRecruitDept());
+		recruitInfo2.setDescribe(recruitInfo.getDescribe());
+		recruitInfoService.updataRecruitInfo(recruitInfo2);
+		mav.setViewName("updateRecruitInfo");
+		return mav;
 	}
 	
-
+	
+	
 	/**
 	 * 
-	 * 
+	 * 删除
+	 * @param mav
+	 * @param id
+	 * @return
 	 */
 	@RequestMapping(value = "/deleteRecruitInfo",method=RequestMethod.DELETE)
-	public String deleteWorder(RecruitInfo id) {
+	public ModelAndView deleteWorder(@RequestParam(value="id")ModelAndView mav , RecruitInfo id) {
 		recruitInfoService.deleteRecruitInfo(id);
-		return "redirect:deleteRecruitInfo";
+		mav.setViewName("deleteRecruitInfo");
+		return mav;
 	}
 }

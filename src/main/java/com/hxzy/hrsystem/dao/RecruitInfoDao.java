@@ -13,5 +13,5 @@ public interface RecruitInfoDao {
 	
 	public void deleteRecruitInfo(RecruitInfo id);//删
 	
-	public void findRecruitInfoById(int id);//根据ID查询
+	public RecruitInfo findRecruitInfoById(int id);//根据ID查询
 }

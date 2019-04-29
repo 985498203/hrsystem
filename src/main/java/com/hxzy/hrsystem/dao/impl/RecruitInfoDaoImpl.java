@@ -32,7 +32,7 @@ public class RecruitInfoDaoImpl implements RecruitInfoDao {
 	}
 	
 	//查询工单
-	@Override	
+	@Override
 	public List<RecruitInfo> findRecruitInfoAll() {
 		// TODO Auto-generated method stub
 		String hql = "FROM RecruitInfo";
@@ -44,7 +44,6 @@ public class RecruitInfoDaoImpl implements RecruitInfoDao {
 	@Override
 	public void addRecruitInfo(RecruitInfo recruitInfo) {
 		// TODO Auto-generated method stub
-		
 		getSession().save(recruitInfo);
 	}
 
@@ -69,12 +68,12 @@ public class RecruitInfoDaoImpl implements RecruitInfoDao {
 
 	//根据ID查询
 	@Override
-	public void findRecruitInfoById(int id) {
+	public RecruitInfo findRecruitInfoById(int id) {
 		// TODO Auto-generated method stub
 		String hql = "FROM Worder WHERE worderId = :worderId";
 		Query query = getSession().createQuery(hql);
-		query.setParameter("worderId", id);
+		query.setParameter("recruitInfoid", id);
 		RecruitInfo recruitInfo = (RecruitInfo) query.list().get(id);
-		
+		return recruitInfo;
 	}
 }

@@ -37,9 +37,6 @@ public class WorderController {
 		mav.addObject("worder" , worder);
 		return mav;
 	}
-	
-	
-	
 	/**
 	 * 
 	 * 
