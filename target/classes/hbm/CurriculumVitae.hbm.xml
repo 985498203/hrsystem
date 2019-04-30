@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="com.hxzy.hrsystem.entity">
+	<class name="CurriculumVitae" table="tb_curriculum_vitae">
+		<id name="cvId" column="cv_id">
+			<!-- 主键生成策略 为sequence -->
+			<generator class="sequence">
+				<param name="sequence">
+					seq_cv_id
+				</param>
+			</generator>
+		</id>
+		<property name="name" column="name"></property>
+		<property name="age" column="age"></property>
+		
+		<property name="phone" column="phone"></property>
+		<property name="email" column="email"></property>
+		<property name="education" column="education"></property>
+		<property name="major" column="major"></property>
+		<property name="skill" column="skill"></property>
+		<property name="experience" column="experience"></property>
+		<property name="state" column="state"></property>
+		
+		<!-- 单向一对一 -->
+		<many-to-one name="user" class="User" column="user_id" unique="true"></many-to-one>
+		
+	</class>
+</hibernate-mapping>

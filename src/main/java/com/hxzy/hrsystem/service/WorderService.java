@@ -5,13 +5,18 @@ import java.util.List;
 import com.hxzy.hrsystem.entity.Worder;
 
 public interface WorderService {
-	public List<Worder> findWorderAll();//查询工单
+	/** 查询工单信息 **/
+	public List<Worder> findAll(int start, int end);
 
-	public void addWorder(Worder worder);//增
-	
-	public void updataWorder(Worder worder);//改
-	
-	public void deleteWorder(Worder id);//删
-	
-	public void findWorderById(int id);//根据ID查询
+	/** 修改工单信息 **/
+	public void updateAll(Worder worder);
+
+	/** 删除工单信息 **/
+	public void deleteAll(List<Integer> list);
+
+	/** 添加工单信息 **/
+	public void addAll(Worder worder);
+
+	/** 总页数 **/
+	public int pageNo(int end);
 }

@@ -6,6 +6,9 @@ $(function() {
 	      var height  = Math.max(cHeight, sHeight)
 	      return height
 	  }
+	  
+	  
+	  
 	  //根据ID获取iframe对象
 	  var ifr = document.getElementById('qxgliframe')
 	  ifr.onload = function() {
@@ -13,18 +16,46 @@ $(function() {
 	  	  ifr.style.height='0px';
 	      var iDoc = ifr.contentDocument || ifr.document
 	      var height = calcPageHeight(iDoc)
-	      if(height < 850){
-	      	height = 850;
+	      if(height < 500){
+	      	height = 500;
 	      }
-	      ifr.style.height = height + 'px'
+	      ifr.style.height = height + 'px';
 	  }
 	  
+	  function wind(){
+		  //根据ID获取iframe对象
+		  var ifr = document.getElementById('qxgliframe')
+		  ifr.onload = function() {
+		  	  //解决打开高度太高的页面后再打开高度较小页面滚动条不收缩
+		  	  ifr.style.height='0px';
+		      var iDoc = ifr.contentDocument || ifr.document
+		      var height = calcPageHeight(iDoc)
+		      if(height < 850){
+		      	height = 850;
+		      }
+		      ifr.style.height = height + 'px'
+		  }
+		  
+	  }
+	  
+	  
+	  
+	  
 		$("#jsgl").click(function() {
+			$('#qxgliframe').show();
 			$('#qxgliframe').attr('src','roles');
 		});
 		$("#qxgl").click(function() {
+			$('#qxgliframe').show();
 			$('#qxgliframe').attr('src','perms');
 		});
+		$("#zpgl").click(function() {
+			$('#qxgliframe').show();
+			$('#qxgliframe').attr('src','recruitInfo');
+		});
+		
+		
+		
 	 //切换
 	
 	 

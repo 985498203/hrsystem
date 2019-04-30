@@ -11,12 +11,7 @@
 		<script type="text/javascript" src="static/asserts/js/jquery-3.2.1.min.js"></script>
 		<script type="text/javascript" src="static/asserts/js/bootstrap.min.js"></script>
 		<script type="text/javascript" src="static/asserts/js/index.js"></script>
-		<script type="text/javascript" src="static/asserts/js/permission.js"></script>
-		<#if !list??>
-			<script type="text/javascript">
-	 			window.location.href="finduser.html?pageNo=1";
-	 		</script>
-		</#if>
+	<script type="text/javascript" src="static/asserts/js/permission.js"></script>
    		<link rel="stylesheet" type="text/css" href="static/asserts/css/bootstrap.min.css" />
         <link rel="stylesheet" type="text/css" href="static/asserts/css/bootstrap-theme.min.css">
         <link rel="stylesheet" type="text/css" href="static/asserts/css/index.css">
@@ -42,7 +37,7 @@
                 <div class="meun-item" onclick="gongdan()" role="tab" data-toggle="tab"><img src="static/asserts/img/icon_source.png">工单</div>
                 <div class="meun-item" onclick="ygxx()" role="tab" data-toggle="tab"><img src="static/asserts/img/icon_card_grey.png">员工信息</div>
                 <div class="meun-title">人事管理</div>
-                <div class="meun-item" onclick="zhaoping()" role="tab" data-toggle="tab"><img src="static/asserts/img/icon_house_grey.png">招聘</div>
+                <div class="meun-item" id="zpgl"  onclick="zhaoping()" role="tab" data-toggle="tab"><img src="static/asserts/img/icon_house_grey.png">招聘</div>
                 <div class="meun-item" onclick="kaoqin()" role="tab" data-toggle="tab"><img src="static/asserts/img/icon_change_grey.png">考勤</div>
             	<div class="meun-title">权限管理</div>
                 <div class="meun-item" id="qxgl" onclick="qxgl()" role="tab" data-toggle="tab"><img src="static/asserts/img/icon_chara_grey.png">权限管理</div>
@@ -52,160 +47,26 @@
             <div id="rightContent">
             	<!-- 工单模块 -->
             	<div class="gongdan">
-            		<h1>工单模块</h1>
             	</div>
             	<!-- 员工信息模块 -->
             	<div class="ygxx">
-            		<div>
-            		  <form action="deluser.html" method="post">
-					  <table class="table">
-					 	<tr>
-							<th>全选<br/><input type="checkbox" id="all" name="all" onclick="qx(1);"/></th>
-							<th>员工编号</th>
-							<th>员工姓名</th>
-							<th>员工年龄</th>
-							<th>员工电话</th>
-							<th>员工邮箱</th>
-							<th class="th">
-								<div class="dropdowns">
-									<span>操作</span><b class="caret"></b>
-									<div class="dropdown-contents">
-										<p>
-											<button id="delete" type="submit">删除</button>
-										</p>
-										<hr>
-										<p>
-											<button id="update" type="button" onclick="tj()">添加</button>
-										</p>
-									</div>
-								</div>
-							</th>
-						</tr>
-						<#if list??>
-							<#list list as u>
-								<tr>
-									<td><input type="checkbox" id="one" value="${u.userId}" name="one" onclick="qx(2);"/></td>
-									<td>${u.userId}</td>
-									<td>${u.name}</td>
-									<td>${u.age}</td>
-									<td>${u.phone}</td>
-									<td>${u.email}</td>
-									<td style="text-align:left;">
-										<button id="update" value="${u.userId},${u.name},${u.age},${u.phone},${u.email}" type="button" name="update${u.userId}" style="border:0px;background-color:#eff3f6;color:green;" onclick="xs(${u.userId})">修改</button>
-									</td>
-								</tr>
-							</#list>
-						</#if>
-				  	  </table>
-				  </form>
-				  </div>
-				  <#if list??>
-				  <div id="page">
-				  	<ul class="pagers">
-					    <li><a href="finduser.html?pageNo=1">首页</a></li>
-					    <li>|</li>
-					    <li><a href="finduser.html?pageNo=<#if dno-1 gt 1>${dno-1}<#else>1</#if>">上一页</a></li>
-					    <li>|</li>
-					    <li><a href="finduser.html?pageNo=<#if dno+1 gt pageNo>${pageNo}<#else>${dno+1}</#if>">下一页</a></li>
-					    <li>|</li>
-					    <li><a href="finduser.html?pageNo=${pageNo}">尾页</a></li>
-				  	</ul>
-				  </div>
-				  </#if>
             	</div>
             	<!-- 招聘模块 -->
             	<div class="zhaoping">
-            		  <h1>招聘</h1>
             	</div> 
             	<!-- 考勤模块 -->
 				<div class="kaoqin">
 					  <h1>考勤</h1>
-            	</div>
-            	<!-- 权限管理模块 --> 
-				<div class="qxgl" id="qxglpage">
-			  	 		
+            	</div>     
+            	<!-- 权限管理模块 -->
+			<div class="qxgl" id="qxglpage">
             	</div> 
             			<iframe scrolling="no" id="qxgliframe" name="main" frameborder="0"
      						 style="min-height:600px;width:100%;height:100%;"></iframe>
             	<!-- 角色管理模块 -->
 				<div id="jsgl" >
+					  
             	</div>                     	
-			</div>
-			<!-- 修改员工信息弹框 -->
-			<div class="branch" id="branch">
-				<form action="updateuser.html" method="post">
-					<div class="secondary">
-						<div class="wordtree">
-							<label>员工编号：</label><br>
-							<div class="input">
-								<input id="input0" readonly="readonly" class="userid" autocomplete='off' type="text" name="userId" placeholder="员工编号"/><br>
-							</div>
-						</div>
-						<div class="wordtree">
-							<label>员工姓名：</label><br>
-							<div class="input">
-								<input id="input1" class="name" autocomplete='off' type="text" name="name" placeholder="员工姓名"/><br>
-							</div>
-						</div>
-						<div class="wordtree">
-							<label>员工年龄：</label><br>
-							<div class="input">
-								<input id="input2" class="age" autocomplete='off' type="text" name="age" placeholder="员工年龄"/><br>
-							</div>
-						</div>
-						<div class="wordtree">
-							<label>员工电话：</label><br>
-							<div class="input">
-								<input id="input3" class="phone" autocomplete='off' type="text" name="phone" placeholder="员工电话"/><br>
-							</div>
-						</div>
-						<div class="wordtree">
-							<label>员工邮箱：</label><br>
-							<div class="input">
-								<input id="input4" class="email" autocomplete='off' type="text" name="email" placeholder="员工邮箱"/><br>
-							</div>
-						</div>
-						<div class="foot">
-							<button class="guanbi" type="button" onclick="gb()">关闭</button>
-							<button class="xiugai" type="submit">修改</button>
-						</div>
-					</div>
-				</form>
-			</div>
-			<!-- 添加员工信息弹框 -->
-			<div class="branchs" id="branchs">
-				<form action="adduser.html" method="post">
-					<div class="secondary">
-						<div class="wordtree">
-							<label>员工姓名：</label><br>
-							<div class="input">
-								<input autocomplete='off' type="text" name="name" placeholder="员工姓名"/><br>
-							</div>
-						</div>
-						<div class="wordtree">
-							<label>员工年龄：</label><br>
-							<div class="input">
-								<input autocomplete='off' type="text" name="age" placeholder="员工年龄"/><br>
-							</div>
-						</div>
-						<div class="wordtree">
-							<label>员工电话：</label><br>
-							<div class="input">
-								<input autocomplete='off' type="text" name="phone" placeholder="员工电话"/><br>
-							</div>
-						</div>
-						<div class="wordtree">
-							<label>员工邮箱：</label><br>
-							<div class="input">
-								<input autocomplete='off' type="text" name="email" placeholder="员工邮箱"/><br>
-							</div>
-						</div>
-						<div class="foot">
-							<button class="guanbi" type="button" onclick="tjgb()">关闭</button>
-							<button class="xiugai" type="submit">添加</button>
-						</div>
-					</div>
-				</form>
 			</div>
 		</div>
 </body>

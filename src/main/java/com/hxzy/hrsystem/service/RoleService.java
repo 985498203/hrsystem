@@ -12,6 +12,20 @@ import com.hxzy.hrsystem.entity.User;
 @Component
 public interface RoleService {
 	/**
+	 * 查询所有
+	 * 
+	 * @return
+	 */
+	public List<Role> findAllRole();
+	/**
+	 * 通过id查询
+	 * 
+	 * @param id
+	 * @return
+	 */
+	public Role getRoleById(int id);
+
+	/**
 	 * 封装分页信息
 	 * 
 	 * @return PageInfo分页信息
@@ -36,20 +50,8 @@ public interface RoleService {
 	 */
 	public boolean addPermAllById(Integer roleId, List<Integer> permIdList);
 
-	/**
-	 * 查询所有
-	 * 
-	 * @return
-	 */
-	public List<Role> findAllRole();
 
-	/**
-	 * 通过id查询
-	 * 
-	 * @param id
-	 * @return
-	 */
-	public Role getRoleById(int id);
+	
 
 	/**
 	 * 通过Userid查询

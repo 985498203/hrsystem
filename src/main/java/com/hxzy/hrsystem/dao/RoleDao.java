@@ -1,9 +1,13 @@
 package com.hxzy.hrsystem.dao;
 
 import java.util.List;
+
+import org.springframework.stereotype.Component;
+
 import com.hxzy.hrsystem.entity.Permission;
 import com.hxzy.hrsystem.entity.Role;
 
+@Component
 public interface RoleDao extends BaseDao<Role> {
 	/**
 	 * 获取总记录数

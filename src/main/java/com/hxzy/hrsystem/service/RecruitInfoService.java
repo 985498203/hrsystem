@@ -11,7 +11,7 @@ public interface RecruitInfoService {
 	
 	public void updataRecruitInfo(RecruitInfo recruitInfo);//改
 	
-	public void deleteRecruitInfo(RecruitInfo id);//删
+	public void deleteRecruitInfo(int id);//删
 	
 	public void findRecruitInfoById(int id);//根据ID查询
 }

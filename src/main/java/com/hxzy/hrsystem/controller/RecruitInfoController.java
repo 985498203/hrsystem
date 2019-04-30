@@ -8,12 +8,15 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.hxzy.hrsystem.entity.RecruitInfo;
 import com.hxzy.hrsystem.service.RecruitInfoService;
+import com.hxzy.hrsystem.util.JsonData;
 
 
 @Controller
@@ -36,30 +39,40 @@ public class RecruitInfoController {
 	public ModelAndView findRecruitInfoAll(ModelAndView mav, HttpServletRequest request) {
 		System.out.println("1");
 		List<RecruitInfo> recruitInfo = (List<RecruitInfo>) recruitInfoService.findRecruitInfoAll();
-		mav.setViewName("recruitInfo");
+		for (RecruitInfo recruitInfo2 : recruitInfo) {
+			System.out.println(recruitInfo2);
+		}
+		
+		mav.setViewName("recruitInfo/recruitInfo");
 		mav.addObject("recruitInfo" , recruitInfo);
 		return mav;
 	}
-	
-	
-	
 	/**
 	 * 
-	 * 
+	 * 添加
 	 * @param worder
 	 * @return
 	 */
-	@RequestMapping(method=RequestMethod.POST)
-	public ResponseEntity<Void> addWorder(RecruitInfo recruitInfo) {
+	@RequestMapping(value="recruitInfo", method=RequestMethod.POST)
+	public @ResponseBody JsonData addWorder(RecruitInfo recruitInfo) {
 		try {
 			recruitInfoService.addRecruitInfo(recruitInfo);
-			return ResponseEntity.status(HttpStatus.CREATED).build();
 		} catch (Exception e) {
 			e.printStackTrace();
+			return  JsonData.fail();
 		}
+		return  JsonData.success();
 		
-//		return "redirect:addRecruitInfo";
-		return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+		
+//		try {
+//			recruitInfoService.addRecruitInfo(recruitInfo);
+//			return ResponseEntity.status(HttpStatus.CREATED).build();
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}
+//		
+////		return "redirect:addRecruitInfo";
+//		return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
 	}
 	
 	
@@ -67,21 +80,32 @@ public class RecruitInfoController {
 	 * 
 	 * 
 	 */
-	@RequestMapping(value = "/updateRecruitInfo",method=RequestMethod.GET)
-	public String updateRecruitInfo(RecruitInfo recruitInfo) {
-		System.out.println(recruitInfo.toString());
-		recruitInfoService.updataRecruitInfo(recruitInfo);
-		return "redirect:updateRecruitInfo";
+	@RequestMapping(value = "/recruitInfo/{id}",method = RequestMethod.PUT)
+	@ResponseBody
+	public JsonData updateRecruitInfo(RecruitInfo recruitInfo) {
+		try {
+			recruitInfoService.updataRecruitInfo(recruitInfo);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return  JsonData.fail();
+		}
+		return  JsonData.success();
 	}
-	
 
 	/**
 	 * 
 	 * 
 	 */
-	@RequestMapping(value = "/deleteRecruitInfo",method=RequestMethod.DELETE)
-	public String deleteWorder(RecruitInfo id) {
-		recruitInfoService.deleteRecruitInfo(id);
-		return "redirect:deleteRecruitInfo";
+	@RequestMapping(value = "/recruitinfo/{id}", method = RequestMethod.DELETE)
+	@ResponseBody
+	public JsonData deleteWorder(@PathVariable(name = "id", required = true) int id) {
+		try {
+			System.out.println("id:"+id);
+			recruitInfoService.deleteRecruitInfo(id);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return JsonData.fail();
+		}
+		return JsonData.success();
 	}
 }

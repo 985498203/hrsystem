@@ -15,7 +15,6 @@ import com.hxzy.hrsystem.entity.Role;
 import com.hxzy.hrsystem.service.RoleService;
 
 @Component("roleServiceImpl")
-@Transactional
 public class RoleServiceImpl implements RoleService {
 	private UserDao userDao;
 	private RoleDao roleDao;

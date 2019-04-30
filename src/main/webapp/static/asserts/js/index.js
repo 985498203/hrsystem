@@ -1,7 +1,7 @@
 $(document).ready(function(){
 	$(".zhaoping").hide();
 	$(".gongdan").hide();
-	$(".ygxx").show();
+	$(".ygxx").hide();
 	$(".yhgl").hide();
 	$(".qxgl").hide();
 	$(".jsgl").hide();
@@ -9,22 +9,7 @@ $(document).ready(function(){
 	$(".branch").hide();
 	$(".branchs").hide();
 });
-function xs(id){
-	var user = $("button[name='update"+id+"']").val().split(',');
-	for(var i=0;i<user.length;i++){
-		$('#input'+i).val(user[i]);
-	};
-    $(".branch").show();
-};
-function gb(){
-	$(".branch").hide();
-};
-function tj(){
-	$(".branchs").show();
-};
-function tjgb(){
-	$(".branchs").hide();
-};
+
 function gongdan(){
 	$(".yhgl").hide();
 	$(".qxgl").hide();
@@ -33,6 +18,26 @@ function gongdan(){
 	$(".ygxx").hide();
 	$(".kaoqin").hide();
 	$(".gongdan").show();
+	
+
+	//$('#qxgliframe').attr('src','findworder.html?pageNo=1');
+	//获得需要隐藏的iframe元素对象。
+	var iframe = document.getElementById('qxgliframe') ;
+	//设置属性为隐藏。
+	iframe.style = "display:none";
+	
+	
+	$.ajax({
+		url:"findworder.html",
+		data:{"pageNo":1},
+		type:'get',
+		dataType:"text",
+		success:function(msg){
+			$(".gongdan").html(msg);
+		}
+	});
+	
+	
 };
 function ygxx(){
 	$(".zhaoping").hide();
@@ -42,6 +47,20 @@ function ygxx(){
 	$(".qxgl").hide();
 	$(".jsgl").hide();
 	$(".ygxx").show();
+	//$('#qxgliframe').attr('src','finduser.html?pageNo=1');
+	//获得需要隐藏的iframe元素对象。
+	var iframe = document.getElementById('qxgliframe') ;
+	//设置属性为隐藏。
+	iframe.style = "display:none";
+	$.ajax({
+		url:"finduser.html",
+		data:{"pageNo":1},
+		type:'get',
+		dataType:"text",
+		success:function(msgs){
+			$(".ygxx").html(msgs);
+		}
+	});
 };
 function zhaoping(){
 	$(".zhaoping").show();
@@ -87,21 +106,4 @@ function jsgl(){
 	$(".qxgl").hide();
 	$(".jsgl").show();
 	$(".kaoqin").hide();
-}
-function qx(obj){
-	var alls = document.getElementsByName("all");
-	var all = document.getElementById("all");
-	var ahs = document.getElementsByName("one");
-	if(obj == 1){
-		if(all.checked == true){
-			for(var i=0 ;i<ahs.length;i++){
-				ahs[i].checked = true;
-			}
-		}else{
-			for(var i=0 ;i<ahs.length;i++){
-				ahs[i].checked = false;
-			}
-		}
-		}else{
-	}
 }

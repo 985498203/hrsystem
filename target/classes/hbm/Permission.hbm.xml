@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="com.hxzy.hrsystem.entity">
+	<class name="Permission" table="tb_permission">
+		<id name="permId" column="perm_id">
+			<!-- 主键生成策略 为sequence -->
+			<generator class="sequence">
+				<param name="sequence">
+					seq_perm_id
+				</param>
+			</generator>
+		</id>
+		<property name="permName" column="perm_name"></property>
+		<property name="url" column="url"></property>
+
+		<set name="rolePermSet" inverse="true" lazy="false" >
+			<key column="perm_id"></key>
+			<one-to-many class="RolePerm" />
+		</set>
+
+		<!-- parent属性，本类与Permission(上级)的多对一关系 -->
+		<many-to-one name="parent" class="Permission"
+			column="parent_id" cascade="save-update" />
+
+		<!-- children属性，本类与Permission(下级)的一对多关系 -->
+		<set name="children">
+			<key column="parent_id"></key>
+			<one-to-many class="Permission" />
+		</set>
+	</class>
+</hibernate-mapping>

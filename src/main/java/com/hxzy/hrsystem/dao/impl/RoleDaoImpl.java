@@ -18,6 +18,7 @@ import com.hxzy.hrsystem.entity.UserRole;
 public class RoleDaoImpl implements RoleDao {
 	@Autowired
 	private SessionFactory sessionFactory;
+	
 	private int pageCount;// 总页数
 
 	/**
@@ -85,9 +86,10 @@ public class RoleDaoImpl implements RoleDao {
 	@Override
 	public void deleteById(int id) {
 		Session session = this.getSession();
-		Query query = session.createQuery("delete form Role r where r.roleId=?");
-		query.setInteger(0, id);
-		query.executeUpdate();
+		Query query = this.getSession().createQuery("from Role r where r.roleId=?");// 得到Query对象
+		query.setParameter(0, id);
+		Role role = (Role) query.uniqueResult();
+		session.delete(role);
 	}
 
 	@Override

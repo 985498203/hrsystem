@@ -13,6 +13,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.hxzy.hrsystem.dao.RecruitInfoDao;
+import com.hxzy.hrsystem.entity.Permission;
 import com.hxzy.hrsystem.entity.RecruitInfo;
 
 @SuppressWarnings("all")
@@ -57,14 +58,12 @@ public class RecruitInfoDaoImpl implements RecruitInfoDao {
 
 	//删
 	@Override
-	public void deleteRecruitInfo(RecruitInfo id) {
-		// TODO Auto-generated method stub
-		String hql = "DELETE FROM Worder WHERE worderId = :worderId";
-		Query query = getSession().createQuery(hql);
+	public void deleteRecruitInfo(int id) {
+		Session session = this.getSession();
+		Query query = this.getSession().createQuery("from RecruitInfo r where r.recruitId =:recruitId");// 得到Query对象
+		query.setParameter("recruitId", id);
 		RecruitInfo recruitInfo = (RecruitInfo) query.uniqueResult();
-		query.setParameter("worderId", id);
-		query.executeUpdate();
-		getSession().delete(id);
+		session.delete(recruitInfo);
 	}
 
 	//根据ID查询

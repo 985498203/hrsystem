@@ -18,6 +18,12 @@
 
 	<!--项目依赖 -->
 	<dependencies>
+		<!-- java-email -->
+		<dependency>
+			<groupId>javax.mail</groupId>
+			<artifactId>mail</artifactId>
+			<version>1.4</version>
+		</dependency>
 		<!-- springsecurity依赖start -->
 		<dependency>
 			<groupId>org.springframework.security</groupId>
@@ -63,11 +69,8 @@
 		<!-- <dependency> <groupId>ch.qos.logback</groupId> <artifactId>logback-classic</artifactId> 
 			<version>1.2.2</version> </dependency> -->
 		<!-- 添加Log4J依赖 -->
-		<!-- <dependency>
-			<groupId>log4j</groupId>
-			<artifactId>log4j</artifactId>
-			<version>1.2.16</version>
-		</dependency> -->
+		<!-- <dependency> <groupId>log4j</groupId> <artifactId>log4j</artifactId> 
+			<version>1.2.16</version> </dependency> -->
 		<!-- freemarker start -->
 		<dependency>
 			<groupId>org.springframework</groupId>

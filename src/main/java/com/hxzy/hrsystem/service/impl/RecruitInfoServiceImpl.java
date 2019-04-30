@@ -46,7 +46,7 @@ public class RecruitInfoServiceImpl implements RecruitInfoService {
 
 
 	@Override
-	public void deleteRecruitInfo(RecruitInfo id) {
+	public void deleteRecruitInfo(int id) {
 		// TODO Auto-generated method stub
 		recruitInfoDao.deleteRecruitInfo(id);
 	}

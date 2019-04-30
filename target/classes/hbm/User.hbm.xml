@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="com.hxzy.hrsystem.entity">
+	<class name="User" table="tb_user" dynamic-update="true">
+		<id name="userId" column="user_id">
+			<!-- 主键生成策略 为sequence -->
+			<generator class="sequence">
+				<param name="sequence">
+					SEQ_USER_SID
+				</param>
+			</generator>
+		</id>
+		<property name="username" column="username"></property>
+		<property name="password" column="password"></property>
+		<property name="name" column="name"></property>
+		<property name="age" column="age"></property>
+		<property name="gender" column="gender" ></property>
+		<property name="phone" column="phone"></property>
+		<property name="email" column="email"></property>
+		<property name="state" column="state"></property>
+
+		<set name="userRoleSet" inverse="true" lazy="true">
+			<key column="user_id"></key>
+			<one-to-many class="UserRole" />
+		</set>
+		<!-- 三,表示和分类的关系 -->
+		<!--3.1name:一的一方对象的名字 class: 一的一方类的全限定名 column:外键的名字 -->
+		<many-to-one name="dept" class="Dept" column="dept_id"
+			lazy="no-proxy" />
+		<!--工单， 配置一对一 -->
+		<one-to-one name="worder" class="Worder"
+			property-ref="user"></one-to-one>
+
+		<!-- 配置一对多，与tb_worderRecord表关联 -->
+		<set name="worderRecordSet" inverse="true" lazy="true">
+			<key column="user_id"></key>
+			<one-to-many class="WorderRecord" />
+		</set>
+
+	</class>
+</hibernate-mapping>
