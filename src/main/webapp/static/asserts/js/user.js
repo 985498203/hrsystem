@@ -24,7 +24,7 @@ function fys(a){
 	$.ajax({
 		url:"finduser.html",
 		data:{"pageNo":pageNo},
-		type:'get',
+		type:'post',
 		dataType:"text",
 		success:function(msgs){
 			$("#ygyg").html(msgs);
@@ -42,7 +42,7 @@ function dels(){
 	$.ajax({
 		traditional:true,
 		url:'deluser.html',
-		data:{"one":check_val,"_method":"DELETE"},
+		data:{"one":check_val},
 		type:'post',
 		dataType:"JSON",
 		success:function(msgs){
@@ -124,7 +124,7 @@ function uxg(){
 	var email = $("input[name='email']").val();
 	$.ajax({
 		url:'updateuser.html',
-		data:{"userId":userId,"name":name,"age":age,"phone":phone,"email":email,"_method":"PUT"},
+		data:{"userId":userId,"name":name,"age":age,"phone":phone,"email":email},
 		type:'post',
 		dataType:"JSON",
 		success:function(msgs){
@@ -149,7 +149,7 @@ function utj(){
 	$.ajax({
 		url:'adduser.html',
 		type:'post',
-		data:{"name":name,"age":age,"phone":phone,"email":email,"_method":"PUT"},
+		data:{"name":name,"age":age,"phone":phone,"email":email},
 		dataType:"JSON",
 		success:function(msg){
 			if(msg.msgs == 1){

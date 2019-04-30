@@ -38,16 +38,25 @@
 						<#list pageInfo.pageList as p>
 						<tr>
 							<td width="80px"><input type="checkbox" id="input_one"
-								onclick="roleqx(1)" value="${p.roleId}">
-							</td>
+								onclick="roleqx(1)" value="${p.roleId}"></td>
 							<td>${p.roleName}</td>
 							<td>${p.remarks}</td>
 							<td>
-								<button class="btn btn-primary btn-sm editRoleButton" value="${p.roleId}" >
+								<button class="btn btn-primary btn-sm editRoleButton"
+									value="${p.roleId}">
 									<span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
 									编辑
 								</button>
-								<button class="btn btn-danger btn-sm deleteRoleButton" value="${p.roleId}">
+								<button class="btn btn-primary btn-sm grantPermButton"
+									value="${p.roleId}">
+									<span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
+									授权
+								</button>
+
+
+
+								<button class="btn btn-danger btn-sm deleteRoleButton"
+									value="${p.roleId}">
 									<span class="glyphicon glyphicon-trash"></span> 删除
 								</button>
 							</td>
@@ -140,12 +149,14 @@
 							<h4 class="modal-title">修改角色</h4>
 						</div>
 						<!-- 隐藏表单：id -->
-						<input type="hidden" name="roleId" id="roleId_update_input" value=""/>
-						
+						<input type="hidden" name="roleId" id="roleId_update_input"
+							value="" />
+
 						<div class="modal-body">
 							<p>角色名称</p>
-							<input type="text" class="form-control" id="roleName_update_input"
-								name="roleName"> <span class="help-block"></span>
+							<input type="text" class="form-control"
+								id="roleName_update_input" name="roleName"> <span
+								class="help-block"></span>
 						</div>
 						<div class="modal-body">
 							<p>角色描述</p>
@@ -155,7 +166,8 @@
 						<div class="modal-footer">
 							<button data-dismiss="modal" class="btn btn-default"
 								type="button">关闭</button>
-							<button class="btn btn-primary" id="role_update_btn" type="button">更新</button>
+							<button class="btn btn-primary" id="role_update_btn"
+								type="button">更新</button>
 						</div>
 					</div>
 					<!-- /.modal-content -->
@@ -169,13 +181,18 @@
 <script type="text/javascript">
 	$(function() {
 
+		$(".grantPermButton").click(function() {//授权按钮点击事件
+			var id = $(this).val();
+			window.location.href = 'role/grantperm/'+id;
+		});
+
 		function reset_from(ele) {
 			$(ele)[0].reset();//jq对象转DOM对象调用reset方法
 			$(ele).find('*').removeClass('has-error has-success');//清空表单样式
 			$(ele).find('.help-block').text('');//清除提示信息
 			$('#roleAddModal select').html('');
 		}
-		
+
 		$("#addRoleButton").click(function() {//点击新增按钮弹出新增角色模态框，新增角色
 			// 重置表单数据 
 			reset_from("#addRoleform");
@@ -185,37 +202,43 @@
 		});
 
 		//表单提交事件
-		$("#role_save_btn").click(function() {
-			$.ajax({
-				type : 'POST',
-				url : 'role',
-				data : $('#roleAddModal form').serialize(),//表单数据
-				dataType : 'html',
-				success : function(JsonData) {
-					var obj = JSON.parse(JsonData);
-					if (obj.ret) {
-						alert("添加成功");
-						$('#roleAddModal').modal('hide');//关闭模态框
-						window.location.href = 'roles?pn=1';
-					} else {
-						alert("添加失败，请检查表单");
-						if(undefined != obj.extend.errorInfo.roleName){//如果有权限名的错误信息，就显示错误信息
-							show_validata_info(
-									'#roleAddModal form input[name="roleName"]',
-									'error', obj.extend.errorInfo.roleName);
-						}
-						if(undefined != obj.extend.errorInfo.remarks){//如果有URL的错误信息，就显示错误信息
-							show_validata_info(
-									'#roleAddModal form input[name="remarks"]',
-									'error', obj.extend.errorInfo.remarks);
-						}	
-					}
-				},
-				error : function(data) {
-					alert("连接失败，请检查网络");
-				}
-			});
-		});
+		$("#role_save_btn")
+				.click(
+						function() {
+									$.ajax({
+										type : 'POST',
+										url : 'role',
+										data : $('#roleAddModal form')
+												.serialize(),//表单数据
+										dataType : 'html',
+										success : function(JsonData) {
+											var obj = JSON.parse(JsonData);
+											if (obj.ret) {
+												alert("添加成功");
+												$('#roleAddModal')
+														.modal('hide');//关闭模态框
+												window.location.href = 'roles?pn=1';
+											} else {
+												alert("添加失败，请检查表单");
+												if (undefined != obj.extend.errorInfo.roleName) {//如果有权限名的错误信息，就显示错误信息
+													show_validata_info(
+															'#roleAddModal form input[name="roleName"]',
+															'error',
+															obj.extend.errorInfo.roleName);
+												}
+												if (undefined != obj.extend.errorInfo.remarks) {//如果有URL的错误信息，就显示错误信息
+													show_validata_info(
+															'#roleAddModal form input[name="remarks"]',
+															'error',
+															obj.extend.errorInfo.remarks);
+												}
+											}
+										},
+										error : function(data) {
+											alert("连接失败，请检查网络");
+										}
+									});
+						});
 	});
 
 	function show_validata_info(ele, status, msg) {//显示校验信息
@@ -230,72 +253,72 @@
 			$(ele).next('span').text(msg);
 		}
 	}
-	
+
 	$('#roleAddModal form input[name="roleName"]')
 			.focusout(
 					function() {//鼠标离开输入框时校验角色名是否存在
 						var roleName = this.value;
-						$.ajax({
-							type : 'GET',
-							url : 'checkrolename',
-							data : 'roleName=' + roleName,
-							dataType : 'json',
-							success : function(JsonData) {
-								if (JsonData.ret) {
-									show_validata_info(
-											'#roleAddModal form input[name="roleName"]',
-											'success', JsonData.msg);
-									$('#role_save_btn').attr('ajax-va',
-											'success');
-								} else {
-									show_validata_info(
-											'#roleAddModal form input[name="roleName"]',
-											'error', JsonData.msg);
-									$('#role_save_btn').attr('ajax-va',
-											'error');
-								}
-							},
-						});
+						$
+								.ajax({
+									type : 'GET',
+									url : 'checkrolename',
+									data : 'roleName=' + roleName,
+									dataType : 'json',
+									success : function(JsonData) {
+										if (JsonData.ret) {
+											show_validata_info(
+													'#roleAddModal form input[name="roleName"]',
+													'success', JsonData.msg);
+											$('#role_save_btn').attr('ajax-va',
+													'success');
+										} else {
+											show_validata_info(
+													'#roleAddModal form input[name="roleName"]',
+													'error', JsonData.msg);
+											$('#role_save_btn').attr('ajax-va',
+													'error');
+										}
+									},
+								});
 					});
 	$(".editRoleButton").click(function() {//点击修改按钮弹出新增角色模态框，修改角色
 		$('#roleUpdateModal').modal({//弹出新增角色模态框
 			backdrop : 'static' //弹出模态框时点击空白区域
 		});
 		//查询数据库，回显数据
-		var roleId= $(this).val();
+		var roleId = $(this).val();
 		$.ajax({
 			type : 'GET',
-			url : 'role/'+roleId,
+			url : 'role/' + roleId,
 			dataType : 'json',
 			success : function(JsonData) {
-				if(JsonData.ret){
+				if (JsonData.ret) {
 					$("#roleId_update_input").val(JsonData.data.roleId);
 					$("#roleName_update_input").val(JsonData.data.roleName);
 				}
 			}
 		});
 	});
-	
-	
-	$("#role_update_btn").click(function(){//修改按钮提交事件
+
+	$("#role_update_btn").click(function() {//修改按钮提交事件
 		//获取表单数据
 		var roleId = $("#roleId_update_input").val();
 		var roleName = $("#roleName_update_input").val();
 		var remarks = $("#remarks_update_input").val();
-		if(null==roleId || null==roleName || null==remarks){
+		if (null == roleId || null == roleName || null == remarks) {
 			alert("输入框不能为空");
-		}else{
+		} else {
 			$.ajax({
 				type : 'POST',
-				url : 'role/'+roleId,
-				data: $('#updateRoleFrom').serialize()+'&_method=PUT',//表单数据
+				url : 'role/' + roleId,
+				data : $('#updateRoleFrom').serialize() + '&_method=PUT',//表单数据
 				dataType : 'json',
 				success : function(JsonData) {
-					if(JsonData.ret){
+					if (JsonData.ret) {
 						alert("修改成功");
 						$('#roleUpdateModal').modal('hide');//关闭模态框
 						window.location.href = 'roles?pn=1';//跳转到第一页
-					}else{
+					} else {
 						alert("修改失败,请检查表单数据");
 					}
 				}
@@ -307,13 +330,13 @@
 			backdrop : 'static' //弹出模态框时点击空白区域
 		});
 		//查询数据库，回显数据
-		var roleId= $(this).val();
+		var roleId = $(this).val();
 		$.ajax({
 			type : 'GET',
-			url : 'role/'+roleId,
+			url : 'role/' + roleId,
 			dataType : 'json',
 			success : function(JsonData) {
-				if(JsonData.ret){
+				if (JsonData.ret) {
 					$("#roleId_update_input").val(JsonData.data.roleId);
 					$("#roleName_update_input").val(JsonData.data.roleName);
 					$("#remarks_update_input").val(JsonData.data.remarks);
@@ -322,30 +345,29 @@
 		});
 		//
 	});
-	
+
 	$(".deleteRoleButton").click(function() {//删除事件
 		//弹出确认删除对话框
-		var roleName =  $(this).parents("tr").find("td:eq(1)").text();
-		var roleId =  $(this).parents("tr").find("input").val();
-		if(confirm("确认删除：【"+roleName+"】吗？")){
-				//删除
+		var roleName = $(this).parents("tr").find("td:eq(1)").text();
+		var roleId = $(this).parents("tr").find("input").val();
+		if (confirm("确认删除：【" + roleName + "】吗？")) {
+			//删除
 			$.ajax({
 				type : 'POST',
-				url : 'role/'+roleId,
-				data: 'id='+roleId+'&_method=DELETE',//表单数据
+				url : 'role/' + roleId,
+				data : 'id=' + roleId + '&_method=DELETE',//表单数据
 				dataType : 'json',
 				success : function(JsonData) {
-					if(JsonData.ret){
+					if (JsonData.ret) {
 						alert("删除成功");
 						window.location.href = 'roles?pn=1';//跳转到第一页
-					}else{
+					} else {
 						alert("删除失败");
 					}
 				}
 			});
 		}
-		
+
 	});
-	
 </script>
 </html>

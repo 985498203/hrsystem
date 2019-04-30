@@ -76,7 +76,7 @@ public class RoleController {
 
 	@RequestMapping(value = "/role/{id}", method = RequestMethod.PUT)
 	@ResponseBody
-	public JsonData updateRole(@PathVariable(name = "id", required = true) int id,@ModelAttribute Role role, ModelAndView mav) {
+	public JsonData updateRole(@PathVariable(name = "id", required = true) int id,@ModelAttribute Role role) {
 		try {
 			if (null != role.getRoleId()) {
 				Role role2 = roleService.getRoleById(role.getRoleId());
@@ -91,5 +91,15 @@ public class RoleController {
 		}
 		return JsonData.success();
 	}
+	@RequestMapping(value = "/role/grantperm/{id}", method = RequestMethod.GET)
+	public ModelAndView grantperm(@PathVariable(name = "id", required = true) int id,ModelAndView mav) {
+		//查询角色信息
+		Role role = roleService.getRoleById(id);
+		mav.addObject("role", role);
+		mav.setViewName("empower");//跳转至授权页面
+		return mav;
+	}
+	
+	
 
 }

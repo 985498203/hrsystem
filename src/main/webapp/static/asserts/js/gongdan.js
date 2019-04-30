@@ -21,7 +21,7 @@ function fy(a){
 	$.ajax({
 		url:"findworder.html",
 		data:{"pageNo":pageNo},
-		type:'get',
+		type:'post',
 		dataType:"text",
 		success:function(msg){
 			$("#gdgd").html(msg);
@@ -65,7 +65,7 @@ function wxg(){
 	var state = $("input[name='state']").val();
 	$.ajax({
 		url:'updateworder.html',
-		data:{"worderId":worderId,"title":title,"detail":detail,"state":state,"_method":"PUT"},
+		data:{"worderId":worderId,"title":title,"detail":detail,"state":state},
 		type:'post',
 		dataType:"JSON",
 		success:function(msg){
@@ -91,7 +91,7 @@ function del(){
 	$.ajax({
 		traditional:true,
 		url:'delworder.html',
-		data:{"one":check_val,"_method":"DELETE"},
+		data:{"one":check_val},
 		type:'post',
 		dataType:"JSON",
 		success:function(msg){
