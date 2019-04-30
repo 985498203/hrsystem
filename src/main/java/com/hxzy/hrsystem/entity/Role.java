@@ -6,13 +6,32 @@ import java.util.Set;
 
 /**
  * 
- * 职位表
+ * 角色表
  */
 public class Role implements Serializable {
 
 	private static final long serialVersionUID = -8126774522037041059L;
-	private Integer roleId;// 职位ID
-	private String roleName;// 职位名
+	private Integer roleId;// 角色ID
+	private String roleName;// 角色名
+	private String remarks;// 角色备注
+
+	public Role(String roleName, String remarks) {
+		super();
+		this.roleName = roleName;
+		this.remarks = remarks;
+	}
+
+	public Role() {
+		super();
+	}
+
+	public String getRemarks() {
+		return remarks;
+	}
+
+	public void setRemarks(String remarks) {
+		this.remarks = remarks;
+	}
 
 	Set<UserRole> userRoleSet = new HashSet<UserRole>();// 配置与UserRole一对多的关系
 	Set<RolePerm> rolePermSet = new HashSet<RolePerm>();// 配置与RolePerm一对多的关系
@@ -48,5 +67,5 @@ public class Role implements Serializable {
 	public void setRoleName(String roleName) {
 		this.roleName = roleName;
 	}
-	
+
 }
