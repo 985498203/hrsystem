@@ -101,5 +101,14 @@ public class RoleController {
 	}
 	
 	
+//	****************************************测试**********************************************
+	@RequestMapping(value = "empower", method = RequestMethod.GET)
+	public ModelAndView tograntperm(ModelAndView mav) {
+		//查询角色信息
+		System.out.println("哎");
+		mav.setViewName("empower");//跳转至授权页面
+		return mav;
+	}
+	
 
 }
