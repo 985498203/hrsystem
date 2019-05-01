@@ -185,4 +185,15 @@ public class PermissionDaoImpl implements PermissionDao {
 		}
 	}
 
+	@Override
+	public List<Permission> getAllPermissionByPid(Integer permId) {
+		String sql = "select * from tb_permission where parent_id = ?";
+		Session session = this.getSession();
+		SQLQuery query = session.createSQLQuery(sql).addEntity(Permission.class);
+		query.setParameter(0, permId);
+		@SuppressWarnings("unchecked")
+		List<Permission> resultList = query.list();
+		return resultList;
+	}
+
 }

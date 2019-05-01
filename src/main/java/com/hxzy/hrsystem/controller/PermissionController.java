@@ -2,11 +2,12 @@ package com.hxzy.hrsystem.controller;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import javax.annotation.Resource;
-import javax.persistence.Version;
 import javax.validation.Valid;
 
 import org.springframework.stereotype.Controller;
@@ -20,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.hxzy.hrsystem.entity.NodeTree;
 import com.hxzy.hrsystem.entity.PageInfo;
 import com.hxzy.hrsystem.entity.Permission;
 import com.hxzy.hrsystem.param.PermissionParam;
@@ -74,8 +76,7 @@ public class PermissionController {
 
 	@RequestMapping(value = "/perm", method = RequestMethod.POST)
 	@ResponseBody
-	public JsonData addPermission(@Valid Permission permission,
-			BindingResult result) {
+	public JsonData addPermission(@Valid Permission permission, BindingResult result) {
 		if (result.hasErrors()) {
 			// 校验失败，返回失败信息，在模态框中显示校验错误信息
 			Map<String, Object> errorMap = new HashMap<>();
@@ -86,7 +87,7 @@ public class PermissionController {
 			return JsonData.fail().add("errorInfo", errorMap);
 		}
 //		if (parentId > -1 && null != parentId) {
-		
+
 //			Permission permission2 = permissionService.getPermissionById(parentId);
 //			if (null != permission2) {
 //				permission.setParent(permission2);
@@ -120,7 +121,7 @@ public class PermissionController {
 	 */
 	@RequestMapping(value = "/superperm", method = RequestMethod.GET)
 	public @ResponseBody JsonData getSuperPerm() {
-		List<Permission> list = permissionService.findAllSuperPermission();
+		List<Permission> list = permissionService.getAllRootPermission();
 		if (null == list) {
 			return JsonData.fail("没有顶级权限");
 		} else {
@@ -174,5 +175,66 @@ public class PermissionController {
 			}
 		}
 	}
+
+	@RequestMapping(value = "empower", method = RequestMethod.GET)
+	public ModelAndView tograntperm(ModelAndView mav) {
+		// 查询角色信息
+		mav.setViewName("empower");// 跳转至授权页面
+		return mav;
+	}
+	/**
+	 * 加载顶级权限节点
+	 * @return
+	 */
+	@RequestMapping(value = "permtree", method = RequestMethod.POST)
+	@ResponseBody
+	private Object getRootPerm() {
+	List<NodeTree> list = permissionService.getNodeTree();
+//		List<Permission> rootPerm = permissionService.getAllRootPermission();
+//		
+//		for (Permission permission : rootPerm) {
+//			List<Permission> childrenPerm = permissionService.getAllPermissionByPid(permission.getPermId());//通过父id查询子权限
+//			Set<Permission> childrenPerms  = new HashSet<Permission>(childrenPerm);//List转Set
+//			permission.setChildren(childrenPerms);//设置
+//			rootPerm.add(permission);
+//		}
+		return list;
+		
+		
+		
+		
+		
+//		list.add(new NodeTree(1, "", "硬件规格", "true", "true"));
+//		list.add(new NodeTree(10, 1, "单板", "true", "true"));
+//		list.add(new NodeTree(11, 1, "子卡", "true", "true"));
+//		list.add(new NodeTree(12, 1, "设备", "true", "true"));
+//		list.add(new NodeTree(2, "", "软件规格", "true", "true"));
+//		list.add(new NodeTree(20, 2, "java", "true", "true"));
+//		list.add(new NodeTree(21, 2, "jscript", "true", "true"));
+//		list.add(new NodeTree(22, 2, "php", "true", "true"));
+		
+//		return list;
+
+	}
+	
+	
+	/**
+	 * 加载权限子节点
+	 * @param id
+	 * @return
+	 * @throws Exception
+	 */
+	@RequestMapping("/asyncgetperm")
+    @ResponseBody
+    public List<NodeTree> asyncGetChildren(String id) throws Exception{
+//        List<NodeTree> nodeList = new ArrayList<NodeTree>();
+//        if(id.equals("10")){
+//            nodeList.add(new NodeTree("100",id,"单板_00","true","false"));
+//            nodeList.add(new NodeTree("101",id,"单板_01","true","false"));
+//        }
+//        Thread.sleep(3000);
+//        return nodeList;
+		 return null;
+    }
 
 }

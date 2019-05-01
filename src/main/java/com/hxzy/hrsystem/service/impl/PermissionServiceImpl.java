@@ -1,6 +1,9 @@
 package com.hxzy.hrsystem.service.impl;
 
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.annotation.Resource;
 
@@ -8,6 +11,7 @@ import org.springframework.stereotype.Component;
 
 import com.hxzy.hrsystem.dao.PermissionDao;
 import com.hxzy.hrsystem.dao.UserDao;
+import com.hxzy.hrsystem.entity.NodeTree;
 import com.hxzy.hrsystem.entity.PageInfo;
 import com.hxzy.hrsystem.entity.Permission;
 import com.hxzy.hrsystem.entity.Role;
@@ -84,7 +88,6 @@ public class PermissionServiceImpl implements PermissionService {
 		} else {
 			return totalPage + 1;
 		}
-
 	}
 
 	/**
@@ -101,7 +104,7 @@ public class PermissionServiceImpl implements PermissionService {
 	public void deletePermissionAll(int[] idArray) {
 		permissionDao.deleteAll(idArray);
 	}
-	
+
 	@Override
 	public PageInfo getPageInfo(int currentPage) {
 		PageInfo info = new PageInfo<Permission>();
@@ -113,14 +116,14 @@ public class PermissionServiceImpl implements PermissionService {
 		info.setPageList(permissions);// 设置分页的数据
 		int[] nums = new int[this.getTotalPages(info.getPagesize())];
 		for (int i = 0; i < nums.length; i++) {
-			nums[i] = i+1;
+			nums[i] = i + 1;
 		}
 		info.setNavigatepageNums(nums);// 设置所有导航页号
 		return info;
 	}
 
 	@Override
-	public List<Permission> findAllSuperPermission() {
+	public List<Permission> getAllRootPermission() {
 		return permissionDao.findAllSuperPermission();
 	}
 
@@ -137,7 +140,34 @@ public class PermissionServiceImpl implements PermissionService {
 	@Override
 	public void addAll(List<Permission> permissions) {
 		permissionDao.addAll(permissions);
-		
 	}
 
+	@Override
+	public List<NodeTree> getNodeTree() {
+		
+		List<NodeTree> rootTrees = new ArrayList<NodeTree>();//顶级节点集合
+		List<Permission> rootPermissions= permissionDao.findAllSuperPermission();//获取顶级权限集合
+		
+		
+		for (Permission permission : rootPermissions) {
+			System.out.println();
+			NodeTree rootNodeTree = new NodeTree(permission.getPermId(),0, permission.getPermName(), true, true) ; //转换为NodeTree
+			List<Permission> childrenList  = permissionDao.getAllPermissionByPid(permission.getPermId());//根据pid查询子权限集合
+			List<NodeTree> childrenTrees = new ArrayList<NodeTree>();//子节点集合
+			
+			for (Permission permission2 : childrenList) {
+				NodeTree nodeTree2 = new NodeTree(permission2.getPermId(),permission.getPermId(), permission2.getPermName(), true, true) ; //转换为NodeTree
+				childrenTrees.add(nodeTree2);	//添加至子节点集合	
+			}
+			rootNodeTree.setChildren(childrenTrees);//设置子节点
+			rootTrees.add(rootNodeTree);//添加
+		}
+		return rootTrees;
+	}
+
+	@Override
+	public List<Permission> getAllPermissionByPid(Integer permId) {
+		
+		return permissionDao.getAllPermissionByPid( permId);
+	}
 }

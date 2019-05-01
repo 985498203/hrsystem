@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Component;
 
+import com.hxzy.hrsystem.entity.NodeTree;
 import com.hxzy.hrsystem.entity.PageInfo;
 import com.hxzy.hrsystem.entity.Permission;
 
@@ -14,7 +15,14 @@ public interface PermissionService {
 	 * 
 	 * @return
 	 */
-	public List<Permission> findAllSuperPermission();
+	public List<Permission> getAllRootPermission();
+
+	/**
+	 * 获取权限树结构
+	 * 
+	 * @return
+	 */
+	public List<NodeTree> getNodeTree();
 
 	/**
 	 * 查询所有
@@ -127,10 +135,18 @@ public interface PermissionService {
 	 * @return
 	 */
 	public boolean checkPermUrl(String url);
+
 	/**
 	 * 批量增加
 	 */
 	public void addAll(List<Permission> permissions);
 
+	/**
+	 * 通过pid查询
+	 * 
+	 * @param permId
+	 * @return
+	 */
+	public List<Permission> getAllPermissionByPid(Integer permId);
 
 }

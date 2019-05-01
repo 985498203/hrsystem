@@ -85,4 +85,12 @@ public interface PermissionDao extends BaseDao<Permission> {
 	 */
 	public void addAll(List<Permission> permissions);
 
+	/**
+	 * 通过pid查询
+	 * 
+	 * @param permId
+	 * @return
+	 */
+	public List<Permission> getAllPermissionByPid(Integer permId);
+
 }
