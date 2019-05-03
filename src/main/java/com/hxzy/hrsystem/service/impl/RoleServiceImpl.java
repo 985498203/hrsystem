@@ -108,8 +108,8 @@ public class RoleServiceImpl implements RoleService {
 	}
 
 	@Override
-	public boolean addPermAllById(Integer roleId, List<Integer> permIdList) {
-		return roleDao.addPermAllById(roleId, permIdList);
+	public boolean addPermAllById(Integer roleId, Integer[] permIds) {
+		return roleDao.addPermAllById(roleId, permIds);
 	}
 
 	@Override
@@ -137,6 +137,14 @@ public class RoleServiceImpl implements RoleService {
 		}
 		info.setNavigatepageNums(nums);// 设置所有导航页号
 		return info;
+	}
+
+	@Override
+	public void doAssignPerm(Integer roleId, Integer[] permIds) {
+		//先删全部
+		roleDao.deletePermAll(roleId);
+		//后插入
+		roleDao.addPermAllById(roleId, permIds);
 	}
 
 }

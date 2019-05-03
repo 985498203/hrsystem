@@ -201,51 +201,30 @@ public class RoleDaoImpl implements RoleDao {
 	}
 
 	@Override
-	public boolean addPermAllById(Integer roleId, List<Integer> permIdList) {
+	public boolean addPermAllById(Integer roleId, Integer[] permIds) {
 		Session session = this.getSession();
 		// 查询角色
-		String hql2 = "from Role r where r.roleId=?";
+		String hql2 = "FROM Role r WHERE r.roleId=?";
 		Query query2 = session.createQuery(hql2);
 		query2.setParameter(0, roleId);
 		Role role = (Role) query2.uniqueResult();
 		if (null == role) {// id错误
 			System.out.println("roleID ERROR");
-			
 			return false;
 		} else {
-			for (int i = 0; i < permIdList.size(); i++) {
-				int permId = permIdList.get(i);
-
-				// 查询权限
-				String hql = "from Permission p where p.permId=?";
-				Query query = session.createQuery(hql);
-				query.setParameter(0, permId);
-				Permission permission = (Permission) query.uniqueResult();
-				// 查询是否有关联数据
-				String sql = "select * from tb_role_perm r where r.role_id=? and r.perm_id=?";
-
+			for (int i = 0; i < permIds.length; i++) {
+				int permId = permIds[i];
+				String sql = "INSERT INTO tb_role_perm(role_perm_id,role_id,perm_id) VALUES(seq_role_perm_id.NEXTVAL,?,?)";
 				SQLQuery sqlQuery = session.createSQLQuery(sql).addEntity(RolePerm.class);
 				sqlQuery.setParameter(0, roleId);
 				sqlQuery.setParameter(1, permId);
-
-				RolePerm rolePerm = (RolePerm) sqlQuery.uniqueResult();
-
-				if (null == permission || null == role || null != rolePerm) {
-					System.out.println("permission，rolePerm ERROR");
-					return false;
-					
-				} else {
-					RolePerm rolePerm2 = new RolePerm();
-					rolePerm2.setPermission(permission);
-					rolePerm2.setRole(role);
-					session.save(rolePerm2);
-
-					// 批插入的对象立即写入数据库并释放内存
-					if (i % 10 == 0) {
-						session.flush();
-						session.clear();
-					}
+				sqlQuery.executeUpdate();
+				// 批插入的对象立即写入数据库并释放内存
+				if (i % 10 == 0) {
+					session.flush();
+					session.clear();
 				}
+				
 			}
 		}
 		return true;
@@ -258,6 +237,15 @@ public class RoleDaoImpl implements RoleDao {
 		Query query = session.createQuery(hql);
 		int count = ((Long) query.iterate().next()).intValue();
 		return count;
+	}
+
+	@Override
+	public void deletePermAll(Integer roleId) {
+		Session session = this.getSession();
+		String sql = "delete from tb_role_perm where role_id = ?";
+		SQLQuery createSQLQuery = session.createSQLQuery(sql);
+		createSQLQuery.setParameter(0, roleId);//设置参数
+		createSQLQuery.executeUpdate();//执行
 	}
 
 }

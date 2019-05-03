@@ -17,6 +17,7 @@ public interface RoleService {
 	 * @return
 	 */
 	public List<Role> findAllRole();
+
 	/**
 	 * 通过id查询
 	 * 
@@ -31,7 +32,7 @@ public interface RoleService {
 	 * @return PageInfo分页信息
 	 */
 	public PageInfo getPageInfo(int currentPage);
-	
+
 	/**
 	 * 通过id添加权限
 	 * 
@@ -45,13 +46,10 @@ public interface RoleService {
 	 * 通过id批量添加权限
 	 * 
 	 * @param roleId     角色id
-	 * @param permIdList 权限id集合
+	 * @param permIdList 权限id数组
 	 * @return
 	 */
-	public boolean addPermAllById(Integer roleId, List<Integer> permIdList);
-
-
-	
+	public boolean addPermAllById(Integer roleId, Integer[] permIds);
 
 	/**
 	 * 通过Userid查询
@@ -138,10 +136,19 @@ public interface RoleService {
 	 * 批量增加
 	 */
 	public void addRoleAll(List<Role> roles);
+
 	/**
 	 * 得到总页数
 	 * 
 	 * @return
 	 */
 	public int getTotalPages(int i);
+
+	/**
+	 * 批量授予权限，先删，后插
+	 * 
+	 * @param roleId
+	 * @param permIds
+	 */
+	public void doAssignPerm(Integer roleId, Integer[] permIds);
 }

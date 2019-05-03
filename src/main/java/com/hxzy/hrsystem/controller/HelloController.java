@@ -118,7 +118,9 @@ public class HelloController {
 		permIdList.add(3);
 		permIdList.add(7);
 		permIdList.add(11);
-		roleService.addPermAllById(1, permIdList);
+		Integer[] ids= {1,3,7,11};
+		
+		roleService.addPermAllById(1, ids);
 		roleService.addPermById(2, 1);
 		roleService.addPermById(2, 3);
 		roleService.addPermById(3, 1);

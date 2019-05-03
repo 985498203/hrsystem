@@ -1,3 +1,5 @@
+<!-- 获取绝对路径 -->
+<#assign base=springMacroRequestContext.contextPath />
 <!DOCTYPE html>
 <html>
 <head>

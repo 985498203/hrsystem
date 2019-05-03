@@ -2,10 +2,8 @@ package com.hxzy.hrsystem.controller;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import javax.annotation.Resource;
 import javax.validation.Valid;
@@ -26,17 +24,24 @@ import com.hxzy.hrsystem.entity.PageInfo;
 import com.hxzy.hrsystem.entity.Permission;
 import com.hxzy.hrsystem.param.PermissionParam;
 import com.hxzy.hrsystem.service.PermissionService;
+import com.hxzy.hrsystem.service.RoleService;
 import com.hxzy.hrsystem.util.JsonData;
 
 @Controller
 public class PermissionController {
 
 	private PermissionService permissionService;
+	private RoleService roleService;
 
 	@Resource(name = "permissionServiceImpl")
 	public void setPermissionService(PermissionService permissionService) {
 		this.permissionService = permissionService;
 	}
+	@Resource(name = "roleServiceImpl")
+	public void setRoleService(RoleService roleService) {
+		this.roleService = roleService;
+	}
+
 
 	@RequestMapping(value = "/perms", method = RequestMethod.GET)
 	public ModelAndView getPermissions(@RequestParam(value = "pn", defaultValue = "1") Integer pn, ModelAndView mav) {
@@ -128,7 +133,7 @@ public class PermissionController {
 			List<PermissionParam> paramList = new ArrayList<PermissionParam>();
 			for (Permission permission : list) {
 				PermissionParam parem = new PermissionParam(permission.getPermId(), permission.getPermName(),
-						permission.getUrl(), null == permission.getParent() ? 0 : permission.getParent().getPermId());// 简化参数
+						permission.getUrl(), null == permission.getParent() ? 0 : permission.getParent().getPermId(),true);// 简化参数
 				paramList.add(parem);
 			}
 			return JsonData.success(paramList);
@@ -199,42 +204,33 @@ public class PermissionController {
 //			rootPerm.add(permission);
 //		}
 		return list;
-		
-		
-		
-		
-		
-//		list.add(new NodeTree(1, "", "硬件规格", "true", "true"));
-//		list.add(new NodeTree(10, 1, "单板", "true", "true"));
-//		list.add(new NodeTree(11, 1, "子卡", "true", "true"));
-//		list.add(new NodeTree(12, 1, "设备", "true", "true"));
-//		list.add(new NodeTree(2, "", "软件规格", "true", "true"));
-//		list.add(new NodeTree(20, 2, "java", "true", "true"));
-//		list.add(new NodeTree(21, 2, "jscript", "true", "true"));
-//		list.add(new NodeTree(22, 2, "php", "true", "true"));
-		
-//		return list;
-
+	}
+	
+	@RequestMapping(value = "permtrees", method = RequestMethod.GET)
+	@ResponseBody
+	public List<PermissionParam> getPermTree() {
+		List<Permission> perms = permissionService.findAllPermission();
+		List<PermissionParam> perms2 = new ArrayList<PermissionParam>(); 
+		for (Permission permission : perms) {
+			PermissionParam permissionParam = new PermissionParam(permission.getPermId(),permission.getPermName(),permission.getUrl(),permission.getParent()==null ? 0 :permission.getParent().getPermId(),true);
+			perms2.add(permissionParam);
+		}
+		return perms2;
 	}
 	
 	
-	/**
-	 * 加载权限子节点
-	 * @param id
-	 * @return
-	 * @throws Exception
-	 */
-	@RequestMapping("/asyncgetperm")
-    @ResponseBody
-    public List<NodeTree> asyncGetChildren(String id) throws Exception{
-//        List<NodeTree> nodeList = new ArrayList<NodeTree>();
-//        if(id.equals("10")){
-//            nodeList.add(new NodeTree("100",id,"单板_00","true","false"));
-//            nodeList.add(new NodeTree("101",id,"单板_01","true","false"));
-//        }
-//        Thread.sleep(3000);
-//        return nodeList;
-		 return null;
-    }
-
+	
+	@RequestMapping(value = "assignperm/{id}", method = RequestMethod.POST)
+	@ResponseBody
+	public JsonData doAssignPerm(@PathVariable(name = "id", required = true) Integer roleId,Integer[] permIds) {
+		try {
+			roleService.doAssignPerm(roleId, permIds);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return JsonData.fail();
+		}
+		return JsonData.success();
+		
+	}
+	
 }

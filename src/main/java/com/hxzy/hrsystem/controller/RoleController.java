@@ -96,11 +96,7 @@ public class RoleController {
 		//查询角色信息
 		Role role = roleService.getRoleById(id);
 		mav.addObject("role", role);
-		mav.setViewName("empower");//跳转至授权页面
+		mav.setViewName("admin/empower");//跳转至授权页面
 		return mav;
 	}
-	
-	
-//	****************************************测试**********************************************
-
 }

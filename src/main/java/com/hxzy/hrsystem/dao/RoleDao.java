@@ -40,7 +40,7 @@ public interface RoleDao extends BaseDao<Role> {
 	 * @param permIdList 权限id集合
 	 * @return
 	 */
-	public boolean addPermAllById(Integer roleId, List<Integer> permIdList);
+	public boolean addPermAllById(Integer roleId, Integer[] permIds);
 
 	/**
 	 * 根据职位id查询所有权限
@@ -100,5 +100,9 @@ public interface RoleDao extends BaseDao<Role> {
 	 * 
 	 */
 	public void addAll(List<Role> roles);
+	/**
+	 * 删除全部角色下的权限
+	 */
+	public void deletePermAll(Integer roleId);
 
 }
