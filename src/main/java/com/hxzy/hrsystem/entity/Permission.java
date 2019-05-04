@@ -12,7 +12,8 @@ public class Permission implements Serializable {
 	private String permName;// 权限名称
 	@Pattern(regexp = "^[^\\u4e00-\\u9fa5]{2,1999}+$", message = "URL不能包含汉字且长度必须大于1")
 	private String url;// 权限对应url
-	private boolean open;// 树节点是否打开
+	private boolean open = true;// 树节点是否打开
+	private boolean checked = false;// 是否选中
 	private Permission parent;// 上级权限
 	private Set<Permission> children = new HashSet<Permission>();// 下级权限
 
@@ -23,6 +24,14 @@ public class Permission implements Serializable {
 		this.permName = permName;
 		this.url = url;
 		this.parent = parent;
+	}
+	
+	public boolean isChecked() {
+		return checked;
+	}
+
+	public void setChecked(boolean checked) {
+		this.checked = checked;
 	}
 
 	public boolean isOpen() {

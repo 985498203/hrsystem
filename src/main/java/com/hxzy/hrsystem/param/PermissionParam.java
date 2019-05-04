@@ -9,7 +9,7 @@ public class PermissionParam implements Serializable {
 	private String permName;// 权限名称
 	private String url;// 权限对应url
 	private Boolean open;// 节点是否打开
-
+	private boolean checked = false;// 是否选中
 	private Integer parentId;// 上级ID
 
 	public Integer getPermId() {
@@ -23,6 +23,14 @@ public class PermissionParam implements Serializable {
 		this.url = url;
 		this.open = open;
 		this.parentId = parentId;
+	}
+
+	public boolean isChecked() {
+		return checked;
+	}
+
+	public void setChecked(boolean checked) {
+		this.checked = checked;
 	}
 
 	public String getPermName() {

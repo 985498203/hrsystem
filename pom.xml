@@ -8,12 +8,13 @@
 	<packaging>war</packaging>
 	<name>com.hxzy.hrsystem</name>
 	<properties>
-		<spring-version>4.3.18.RELEASE</spring-version>
-		<hibernate-version>4.0.1.Final</hibernate-version>
-		<jackson-version>2.8.5</jackson-version>
-		<freemarker-version>2.3.23</freemarker-version>
-		<c3p0-version>0.9.1.2</c3p0-version>
-		<fileupload-version>1.3.1</fileupload-version>
+		<spring.version>4.3.18.RELEASE</spring.version>
+		<springsecurity.version>4.2.3.RELEASE</springsecurity.version>
+		<hibernate.version>4.0.1.Final</hibernate.version>
+		<jackson.version>2.8.5</jackson.version>
+		<freemarker.version>2.3.23</freemarker.version>
+		<c3p0.version>0.9.1.2</c3p0.version>
+		<fileupload.version>1.3.1</fileupload.version>
 	</properties>
 
 	<!--项目依赖 -->
@@ -28,12 +29,12 @@
 		<dependency>
 			<groupId>org.springframework.security</groupId>
 			<artifactId>spring-security-web</artifactId>
-			<version>4.2.11.RELEASE</version>
+			<version>${springsecurity.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.security</groupId>
 			<artifactId>spring-security-config</artifactId>
-			<version>4.2.11.RELEASE</version>
+			<version>${springsecurity.version}</version>
 		</dependency>
 
 		<!-- springsecurity依赖end -->
@@ -82,12 +83,12 @@
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-context-support</artifactId>
-			<version>${spring-version}</version>
+			<version>${spring.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.freemarker</groupId>
 			<artifactId>freemarker</artifactId>
-			<version>${freemarker-version}</version>
+			<version>${freemarker.version}</version>
 		</dependency>
 		<!-- freemarker end -->
 		<!-- servlet,jsp,jstl依赖的jar包 start -->
@@ -144,7 +145,7 @@
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-jdbc</artifactId>
-			<version>${spring-version}</version>
+			<version>${spring.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>commons-dbcp</groupId>
@@ -156,35 +157,35 @@
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-webmvc</artifactId>
-			<version>${spring-version}</version>
+			<version>${spring.version}</version>
 		</dependency>
 
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-web</artifactId>
-			<version>${spring-version}</version>
+			<version>${spring.version}</version>
 		</dependency>
 		<!-- springmvc end -->
 		<!-- spring start -->
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-context</artifactId>
-			<version>${spring-version}</version>
+			<version>${spring.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-orm</artifactId>
-			<version>${spring-version}</version>
+			<version>${spring.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-tx</artifactId>
-			<version>${spring-version}</version>
+			<version>${spring.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-aop</artifactId>
-			<version>${spring-version}</version>
+			<version>${spring.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.aspectj</groupId>
@@ -194,20 +195,20 @@
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-beans</artifactId>
-			<version>${spring-version}</version>
+			<version>${spring.version}</version>
 		</dependency>
 
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-core</artifactId>
-			<version>${spring-version}</version>
+			<version>${spring.version}</version>
 		</dependency>
 		<!-- spring end -->
 		<!--文件 上传 start -->
 		<dependency>
 			<groupId>commons-fileupload</groupId>
 			<artifactId>commons-fileupload</artifactId>
-			<version>${fileupload-version}</version>
+			<version>${fileupload.version}</version>
 		</dependency>
 		<!--文件 上传 end -->
 		<!-- poi相关依赖 start -->
@@ -221,7 +222,7 @@
 		<dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-core</artifactId>
-			<version>${hibernate-version}</version>
+			<version>${hibernate.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.javassist</groupId>

@@ -235,8 +235,9 @@
 				success : function(JsonData) {
 					var obj = JSON.parse(JsonData);
 					if (obj.ret) {
-						alert("添加成功");
 						$('#permaddModal').modal('hide');//关闭模态框
+						alert("添加成功");
+						
 						lastPage(obj.data);
 					} else {
 						alert("添加失败，请检查表单");

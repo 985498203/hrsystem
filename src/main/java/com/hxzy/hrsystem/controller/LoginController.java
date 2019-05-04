@@ -17,12 +17,12 @@ public class LoginController {
 		this.userService = userService;
 	}
 
-//	@RequestMapping(value = "/user/login", method = RequestMethod.GET)
-//	public ModelAndView Login(ModelAndView mav) {
-//		System.out.println("你好");
-//		mav.setViewName("login");
-//		return mav;
-//	}
+	@RequestMapping(value = "/user/login", method = RequestMethod.GET)
+	public ModelAndView toLogin(ModelAndView mav) {
+		System.out.println("你好");
+		mav.setViewName("login");
+		return mav;
+	}
 
 	
 //	@RequestMapping(value = "/add", method = RequestMethod.GET)

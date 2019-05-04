@@ -22,6 +22,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.hxzy.hrsystem.entity.NodeTree;
 import com.hxzy.hrsystem.entity.PageInfo;
 import com.hxzy.hrsystem.entity.Permission;
+import com.hxzy.hrsystem.entity.Role;
 import com.hxzy.hrsystem.param.PermissionParam;
 import com.hxzy.hrsystem.service.PermissionService;
 import com.hxzy.hrsystem.service.RoleService;
@@ -37,11 +38,11 @@ public class PermissionController {
 	public void setPermissionService(PermissionService permissionService) {
 		this.permissionService = permissionService;
 	}
+
 	@Resource(name = "roleServiceImpl")
 	public void setRoleService(RoleService roleService) {
 		this.roleService = roleService;
 	}
-
 
 	@RequestMapping(value = "/perms", method = RequestMethod.GET)
 	public ModelAndView getPermissions(@RequestParam(value = "pn", defaultValue = "1") Integer pn, ModelAndView mav) {
@@ -133,7 +134,8 @@ public class PermissionController {
 			List<PermissionParam> paramList = new ArrayList<PermissionParam>();
 			for (Permission permission : list) {
 				PermissionParam parem = new PermissionParam(permission.getPermId(), permission.getPermName(),
-						permission.getUrl(), null == permission.getParent() ? 0 : permission.getParent().getPermId(),true);// 简化参数
+						permission.getUrl(), null == permission.getParent() ? 0 : permission.getParent().getPermId(),
+						true);// 简化参数
 				paramList.add(parem);
 			}
 			return JsonData.success(paramList);
@@ -187,14 +189,16 @@ public class PermissionController {
 		mav.setViewName("empower");// 跳转至授权页面
 		return mav;
 	}
+
 	/**
 	 * 加载顶级权限节点
+	 * 
 	 * @return
 	 */
 	@RequestMapping(value = "permtree", method = RequestMethod.POST)
 	@ResponseBody
 	private Object getRootPerm() {
-	List<NodeTree> list = permissionService.getNodeTree();
+		List<NodeTree> list = permissionService.getNodeTree();
 //		List<Permission> rootPerm = permissionService.getAllRootPermission();
 //		
 //		for (Permission permission : rootPerm) {
@@ -205,24 +209,23 @@ public class PermissionController {
 //		}
 		return list;
 	}
-	
+
 	@RequestMapping(value = "permtrees", method = RequestMethod.GET)
 	@ResponseBody
 	public List<PermissionParam> getPermTree() {
 		List<Permission> perms = permissionService.findAllPermission();
-		List<PermissionParam> perms2 = new ArrayList<PermissionParam>(); 
+		List<PermissionParam> perms2 = new ArrayList<PermissionParam>();
 		for (Permission permission : perms) {
-			PermissionParam permissionParam = new PermissionParam(permission.getPermId(),permission.getPermName(),permission.getUrl(),permission.getParent()==null ? 0 :permission.getParent().getPermId(),true);
+			PermissionParam permissionParam = new PermissionParam(permission.getPermId(), permission.getPermName(),
+					permission.getUrl(), permission.getParent() == null ? 0 : permission.getParent().getPermId(), true);
 			perms2.add(permissionParam);
 		}
 		return perms2;
 	}
-	
-	
-	
+
 	@RequestMapping(value = "assignperm/{id}", method = RequestMethod.POST)
 	@ResponseBody
-	public JsonData doAssignPerm(@PathVariable(name = "id", required = true) Integer roleId,Integer[] permIds) {
+	public JsonData doAssignPerm(@PathVariable(name = "id", required = true) Integer roleId, Integer[] permIds) {
 		try {
 			roleService.doAssignPerm(roleId, permIds);
 		} catch (Exception e) {
@@ -230,7 +233,40 @@ public class PermissionController {
 			return JsonData.fail();
 		}
 		return JsonData.success();
-		
+	}
+	@RequestMapping(value = "loadassigndata/{id}", method = RequestMethod.GET)
+	@ResponseBody
+	public JsonData loadAssignData(@PathVariable(name = "id", required = true) Integer roleId) {
+		List<Permission> roles= null;
+		List<Integer> permIds = null;
+		List<PermissionParam> perms2 = new ArrayList<PermissionParam>();//简化的权限信息
+		try {
+			List<Permission> perms = permissionService.findAllPermission();//得到所有的权限信息
+			roles= roleService.findAllPermissionByRoleId(roleId);//得到当前的角色所有的权限
+			permIds = new ArrayList<Integer>();//当前的角色所有的权限ID
+			
+			for (int i=0;i<roles.size();i++) {
+				Permission permission = roles.get(i);
+				permIds.add(permission.getPermId());//从权限中得到所有的权限ID
+			}
+			
+			for (Permission permission : perms) {
+				PermissionParam permissionParam = new PermissionParam(permission.getPermId(), permission.getPermName(),
+						permission.getUrl(), permission.getParent() == null ? 0 : permission.getParent().getPermId(), true);
+				if(permIds.contains(permission.getPermId())) {
+					permissionParam.setChecked(true);
+				}else {
+					permissionParam.setChecked(false);
+				}
+				perms2.add(permissionParam);
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			return JsonData.fail();
+		}
+		return JsonData.success(perms2);
 	}
 	
+
 }

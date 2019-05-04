@@ -1,0 +1,10 @@
+	<!-- 登录页面可以匿名访问 -->
+		<intercept-url pattern="/user/login.html"
+			access="IS_AUTHENTICATED_ANONYMOUSLY" />
+		<!--使用自带的登录表单 -->
+		<form-login login-page="/login"
+			password-parameter="password" username-parameter="username"
+			authentication-failure-url="/user/login.html?error=-1"
+			authentication-success-forward-url="/main.html" />
+		<!-- 配置用户注销 -->
+		<logout logout-url="/logout" />
