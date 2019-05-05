@@ -6,6 +6,14 @@
 	<welcome-file-list>
 		<welcome-file>index.html</welcome-file>
 	</welcome-file-list>
+
+	<!-- 静态资源的映射start js,css,img -->
+	<servlet-mapping>
+		<servlet-name>default</servlet-name>
+		<url-pattern>/static/*</url-pattern>
+	</servlet-mapping>
+	<!-- 静态资源的映射end -->
+
 	<!-- spring监听器start -->
 	<listener>
 		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
@@ -15,7 +23,7 @@
 		<param-value>classpath*:spring-*.xml</param-value>
 	</context-param>
 	<!-- spring监听器end -->
-	
+
 	<!-- 配置编码方式过滤器,注意一点:要配置在所有过滤器的前面 -->
 	<filter>
 		<filter-name>characterEncodingFilter</filter-name>
@@ -53,17 +61,17 @@
 		<url-pattern>*.html</url-pattern>
 	</servlet-mapping>
 	<!-- springmvc配置 end -->
-	
-	
-	
-	
-	
-	
 
 
-	
-	
-		
+
+
+
+
+
+
+
+
+
 	<!-- 事务配置 start -->
 	<filter>
 		<filter-name>Spring OpenSessionInViewFilter</filter-name>
@@ -81,7 +89,7 @@
 	</filter-mapping>
 	<!-- 事务配置 end -->
 
-	
+
 
 	<!-- 配置过滤器 将POST请求转换为PUT和DELETE请求 start -->
 	<filter>
@@ -100,10 +108,5 @@
 		<url-pattern>/</url-pattern>
 	</servlet-mapping>
 
-	<!-- 静态资源的映射start js,css,img -->
-	<servlet-mapping>
-		<servlet-name>default</servlet-name>
-		<url-pattern>/static/*</url-pattern>
-	</servlet-mapping>
-	<!-- 静态资源的映射end -->
+
 </web-app>

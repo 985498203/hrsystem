@@ -14,7 +14,7 @@ import org.springframework.security.web.authentication.AuthenticationFailureHand
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 /**
- * 处理登录失败后的逻辑
+ * 登录错误处理程序类， 处理登录失败后的逻辑
  *
  */
 public class MyAuthenticationFailureHandler implements AuthenticationFailureHandler {
@@ -24,9 +24,10 @@ public class MyAuthenticationFailureHandler implements AuthenticationFailureHand
 	public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response,
 			AuthenticationException exception) throws IOException, ServletException {
 		// 返回json数据
-		Map result = new HashMap<String, Boolean>();
-		result.put("success", false);
-		String json = objectMapper.writeValueAsString(result);// 字符串转化为json数据
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("success", false);
+		map.put("errorMsg", exception.getMessage());// 返回错误信息
+		String json = objectMapper.writeValueAsString(map);// 字符串转化为json数据
 		response.setContentType("text/json;charset=utf-8");
 		response.getWriter().write(json);//
 

@@ -37,7 +37,7 @@ public class ImageCode {
 	/**
 	 * 生成验证码图片
 	 */
-	public void drawImage(OutputStream outputStream) {
+	public Object[] drawImage() {
 		// 1.创建图片缓冲区对象, 并设置宽高和图像类型
 		img = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
 		// 2.得到绘制环境
@@ -79,7 +79,9 @@ public class ImageCode {
 		}
 		// 4.保存图片到指定的输出流
 		try {
-			ImageIO.write(this.img, "JPEG", outputStream);
+			
+			
+//			ImageIO.write(this.img, "JPEG", outputStream);
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new RuntimeException(e);
@@ -87,17 +89,10 @@ public class ImageCode {
 			// 5.释放资源
 			g2.dispose();
 		}
+		return new Object[] {text,img};//返回验证码 和图片
 	}
 
-	/**
-	 * 获取验证码字符串
-	 * 
-	 * @return
-	 */
-	public String getCode() {
-		return this.text;
-	}
-
+	
 	/*
 	 * 生成随机数的方法
 	 */

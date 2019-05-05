@@ -10,10 +10,9 @@
     http://www.springframework.org/schema/context/spring-context.xsd
     http://www.springframework.org/schema/security       
     http://www.springframework.org/schema/security/spring-security.xsd">
-
 	<http>
+		<!-- 禁用csrf -->
 		<csrf disabled="true" />
-		
 		<intercept-url pattern="/imgcode" access="permitAll()" />
 		<intercept-url pattern="/userlogin" access="permitAll()" />
 		<intercept-url pattern="/static/**" access="permitAll()" />
@@ -25,6 +24,8 @@
 			access="hasAuthority('ROLE_ADMIN')" />
 		<intercept-url pattern="/**"
 			access="isFullyAuthenticated()" />
+		<!-- 注册验证码过滤器 ,在表单验证过滤器(FORM_LOGIN_FILTER)之前调用-->
+		<custom-filter ref="imageAuthenticationFilter" before="FORM_LOGIN_FILTER"/>
 		<form-login login-page="/userlogin"
 			authentication-failure-handler-ref="myAuthenticationFailureHandler"
 			authentication-success-handler-ref="myAuthenticationSuccessHandler"/>
@@ -32,37 +33,22 @@
 	</http>
 
 
-
+	<!-- 自定义成功处理器 -->
 	<beans:bean id="myAuthenticationSuccessHandler" class="com.hxzy.hrsystem.security.MyAuthenticationSuccessHandler"></beans:bean>
+	<!-- 自定义失败处理器 -->
 	<beans:bean id="myAuthenticationFailureHandler" class="com.hxzy.hrsystem.security.MyAuthenticationFailureHandler"></beans:bean>
+	<!-- 自定义密码加密器 -->
 	<beans:bean id="passwordEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder"></beans:bean>
-	
 	<beans:bean id="myUserDetailsService" class="com.hxzy.hrsystem.security.MyUserDetailsService"></beans:bean>
+	<!-- 自定义验证码过滤器 -->
+	<beans:bean id="imageAuthenticationFilter" class="com.hxzy.hrsystem.security.ImageAuthenticationFilter">
+		<beans:property name="myAuthenticationFailureHandler" ref="myAuthenticationFailureHandler"></beans:property>
+	</beans:bean>
+	
 	<authentication-manager>
 		<authentication-provider user-service-ref="myUserDetailsService">
 			<!-- 使用加密的算法对用户的输入的密码进行加密，然后和数据库的密码进行比对 -->
 			<password-encoder ref="passwordEncoder" />
 		</authentication-provider>
 	</authentication-manager>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 </beans:beans>

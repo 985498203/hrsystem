@@ -57,8 +57,8 @@ width: 200px;
 			  
 			  <div class="form-group form-group-lg">
 				    <div class="input-group">
-						<div class="input-group-addon"><span class="glyphicon glyphicon-lock"></span></div>
-						<input type="password" class="form-control"  name="imgCode"  placeholder="密码">
+						<input type="text" class="form-control"  name="imgCode"  placeholder="验证码">
+						<div class="input-group-addon" style="background-color:#FFF;cursor:pointer;"><img id="imgcode" alt="图片加载中" src="imgcode"></div>
 					</div>
 			  </div>
 			  
@@ -76,7 +76,14 @@ width: 200px;
 
 </body>
 <script>
-$(function () { 
+$(function () {
+	$("#imgcode").click(function(){ //鼠标点击切换图片验证码
+		var img_src ="imgcode?t="+Math.random();//重新加载图片
+		$(this).attr("src",img_src);
+	});
+	
+	
+	
 	function chackInput(){
 		var username= $("input[name='username']").val().trim();
 		var password= $("input[name='password']").val().trim();
@@ -89,17 +96,20 @@ $(function () {
 	}
 
 	 $("#loginButton").click(function(){
+		 
 		var flg = chackInput();
 		if(flg){
 			$.ajax({
 				type : 'POST',
-				url : 'login',
+				url : 'login.html',
 				dataType : 'json',
 				data: $("form").serialize(),
 				success : function(data) {
 					if(data.success){
 						window.location.href="index";
 					}else{
+						
+						
 						$("#errorInfo").html("<b style='color:red;'>用户名或密码错误</b>");
 					}
 				}
