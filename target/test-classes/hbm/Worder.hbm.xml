@@ -17,8 +17,7 @@
 		<property name="detail" column="detail"></property>
 		<property name="state" column="state"></property>
 		<!-- 配置一对一，与user表关联 -->
-		<many-to-one name="user" class="User" cascade="all"
-			column="user_id" unique="true"></many-to-one>
+		<many-to-one name="user" class="User" column="user_id" unique="true"></many-to-one>
 		<!-- 配置一对多，与tb_worderRecord表关联 -->
 		<set name="worderRecordSet" inverse="true" lazy="false">
 			<key column="worder_id"></key>

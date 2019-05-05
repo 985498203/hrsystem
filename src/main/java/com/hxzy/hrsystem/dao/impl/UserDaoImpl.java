@@ -109,8 +109,7 @@ public class UserDaoImpl implements UserDao {
 	@Override
 	public User getUserByName(String userName) {
 		Session session = this.getSession();
-		String hql = "from User u where u.username=:username";
-		Query query = session.createQuery(hql);
+		Query query = session.createQuery("from com.hxzy.hrsystem.entity.User u where u.username =:username");// 得到Query对象
 		query.setParameter("username", userName);
 		User user2 = (User) query.uniqueResult();
 		return user2;
@@ -122,7 +121,7 @@ public class UserDaoImpl implements UserDao {
 		String sql = "select r.* from tb_user_role ur,tb_role r where ur.user_id =? and ur.role_id = r.role_id";
 		Session session = sessionFactory.getCurrentSession();
 		SQLQuery query = session.createSQLQuery(sql).addEntity(Role.class);
-		query.setInteger(1, id);
+		query.setParameter(0, id);
 		List<Role> resultList = query.list();
 		return resultList;
 	}
@@ -131,7 +130,7 @@ public class UserDaoImpl implements UserDao {
 	public void deleteById(int id) {
 		Session session = this.getSession();
 		Query query = session.createQuery("delete from User u where u.userId=?");
-		query.setInteger(1, id);
+		query.setParameter(0, id);
 		query.executeUpdate();
 	}
 

@@ -53,22 +53,22 @@ public class UserDTO implements Serializable, UserDetails {
 
 	@Override
 	public boolean isAccountNonExpired() {// 账户是否过期,过期无法验证
-		return false;
+		return true;
 	}
 
 	@Override
 	public boolean isAccountNonLocked() {// 指定用户是否被锁定或者解锁,锁定的用户无法进行身份验证
-		return false;
+		return true;
 	}
 
 	@Override
 	public boolean isCredentialsNonExpired() {// 指示是否已过期的用户的凭据(密码),过期的凭据防止认证
-		return false;
+		return true;
 	}
 
 	@Override
 	public boolean isEnabled() {// 是否被禁用,禁用的用户不能身份验证
-		if (-1 == state) {// -1表示被禁用,1表示可用
+		if (1 == state) {// -1表示被禁用,1表示可用
 			return true;
 		} else {
 			return false;

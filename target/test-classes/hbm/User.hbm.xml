@@ -17,6 +17,7 @@
 		<property name="password" column="password"></property>
 		<property name="name" column="name"></property>
 		<property name="age" column="age"></property>
+		<property name="gender" column="gender" ></property>
 		<property name="phone" column="phone"></property>
 		<property name="email" column="email"></property>
 		<property name="state" column="state"></property>

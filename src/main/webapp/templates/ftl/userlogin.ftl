@@ -40,13 +40,12 @@ width: 200px;
 <body>
 	<div class="logo_box">
 		<h3>人事资源管理系统</h3>
-		<form>
+		<form >
 			<span id="errorInfo"></span>
 			<div class="form-group"> 
 				<div class="input-group form-group-lg">
 					<div class="input-group-addon"><span class="glyphicon glyphicon-user"></span></div>
 					<input type="text" class="form-control"  name="username" placeholder="用户名" >
-					
 				</div>
 			</div>
 			  <div class="form-group form-group-lg">
@@ -55,6 +54,14 @@ width: 200px;
 						<input type="password" class="form-control"  name="password"  placeholder="密码">
 					</div>
 			  </div>
+			  
+			  <div class="form-group form-group-lg">
+				    <div class="input-group">
+						<div class="input-group-addon"><span class="glyphicon glyphicon-lock"></span></div>
+						<input type="password" class="form-control"  name="imgCode"  placeholder="密码">
+					</div>
+			  </div>
+			  
 			  
 			  <div class="checkbox">
 			    <label>
@@ -81,20 +88,24 @@ $(function () {
 		}
 	}
 
-	$("#loginButton").click(function(){
+	 $("#loginButton").click(function(){
 		var flg = chackInput();
 		if(flg){
 			$.ajax({
 				type : 'POST',
-				url : 'user/login',
+				url : 'login',
 				dataType : 'json',
 				data: $("form").serialize(),
-				success : function(JsonData) {
-					alert("请求成功");
+				success : function(data) {
+					if(data.success){
+						window.location.href="index";
+					}else{
+						$("#errorInfo").html("<b style='color:red;'>用户名或密码错误</b>");
+					}
 				}
 			});
 		}
-	});
+	}); 
 });
 </script>
 </html>

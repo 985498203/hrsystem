@@ -65,10 +65,10 @@ public class RoleDaoImpl implements RoleDao {
 
 	@Override
 	public List<Role> findAllRoleByUserId(int userId) {
-		String sql = "select r.* from tb_user_role ur,tb_role r where ur.user_id =? and ur.role_id = r.role_id";
+		String sql = "select r.* from tb_user_role ur,tb_role r where ur.user_id = ? and ur.role_id = r.role_id";
 		Session session = sessionFactory.getCurrentSession();
 		SQLQuery query = session.createSQLQuery(sql).addEntity(Role.class);
-		query.setInteger(0, userId);
+		query.setParameter(0, userId);
 		List<Role> resultList = query.list();
 		return resultList;
 	}

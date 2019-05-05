@@ -22,10 +22,8 @@
 		<property name="major" column="major"></property>
 		<property name="skill" column="skill"></property>
 		<property name="experience" column="experience"></property>
-		<property name="state" column="state"></property>
-		
-		<!-- 单向一对一 -->
-		<many-to-one name="user" class="User" column="user_id" unique="true"></many-to-one>
-		
+		<property name="state" >
+			<column name="state" default="1"/>
+		</property>
 	</class>
 </hibernate-mapping>

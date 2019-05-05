@@ -6,6 +6,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
+
+import com.hxzy.hrsystem.entity.User;
 import com.hxzy.hrsystem.service.UserService;
 
 @Controller
@@ -17,12 +19,22 @@ public class LoginController {
 		this.userService = userService;
 	}
 
+//	@RequestMapping(value = "/login", method = RequestMethod.GET)
+//	public ModelAndView toLogin(ModelAndView mav) {
+//		System.out.println("你好");
+//		mav.setViewName("login");
+//		return mav;
+//	}
+	
 	@RequestMapping(value = "/user/login", method = RequestMethod.GET)
-	public ModelAndView toLogin(ModelAndView mav) {
-		System.out.println("你好");
-		mav.setViewName("login");
+	public ModelAndView login(ModelAndView mav,User user) {
+		System.out.println("登录验证Controller");
+		 System.out.println(user.getName()+","+user.getPassword());
+		mav.setViewName("index");
 		return mav;
 	}
+	
+	
 
 	
 //	@RequestMapping(value = "/add", method = RequestMethod.GET)

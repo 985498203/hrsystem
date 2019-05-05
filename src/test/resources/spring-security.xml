@@ -13,8 +13,6 @@
 
 	<http>
 		<csrf disabled="true" />
-		
-		<intercept-url pattern="/imgcode" access="permitAll()" />
 		<intercept-url pattern="/userlogin" access="permitAll()" />
 		<intercept-url pattern="/static/**" access="permitAll()" />
 
@@ -35,14 +33,13 @@
 
 	<beans:bean id="myAuthenticationSuccessHandler" class="com.hxzy.hrsystem.security.MyAuthenticationSuccessHandler"></beans:bean>
 	<beans:bean id="myAuthenticationFailureHandler" class="com.hxzy.hrsystem.security.MyAuthenticationFailureHandler"></beans:bean>
-	<beans:bean id="passwordEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder"></beans:bean>
 	
-	<beans:bean id="myUserDetailsService" class="com.hxzy.hrsystem.security.MyUserDetailsService"></beans:bean>
+	
+	<beans:bean id="myUserDetailsService"
+		class="com.hxzy.hrsystem.security.MyUserDetailsService"></beans:bean>
 	<authentication-manager>
-		<authentication-provider user-service-ref="myUserDetailsService">
-			<!-- 使用加密的算法对用户的输入的密码进行加密，然后和数据库的密码进行比对 -->
-			<password-encoder ref="passwordEncoder" />
-		</authentication-provider>
+		<authentication-provider
+			user-service-ref="myUserDetailsService" />
 	</authentication-manager>
 
 

@@ -1,4 +1,4 @@
-package com.hxzy.hrsystem.config;
+package com.hxzy.hrsystem.security;
 
 import java.util.Collection;
 import java.util.Iterator;

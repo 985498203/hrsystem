@@ -31,6 +31,8 @@
 <script type="text/javascript" src="static/asserts/js/main.js"></script>
 </head>
 <body>
+
+
 	<div id="wrap">
 		<!-- 左侧菜单栏目块 -->
 		<div class="leftMeun" id="leftMeun">
