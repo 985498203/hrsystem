@@ -57,15 +57,15 @@ width: 200px;
 			  
 			  <div class="form-group form-group-lg">
 				    <div class="input-group">
-						<input type="text" class="form-control"  name="imgCode"  placeholder="验证码">
-						<div class="input-group-addon" style="background-color:#FFF;cursor:pointer;"><img id="imgcode" alt="图片加载中" src="imgcode"></div>
+						<input type="text" class="form-control"  name="imgCode" id="imgCodeInput" placeholder="验证码">
+						<div class="input-group-addon" style="background-color:#FFF;cursor:pointer;"><img id="codeimg" alt="图片加载中" src="imgcode"></div>
 					</div>
 			  </div>
 			  
 			  
 			  <div class="checkbox">
 			    <label>
-			        &nbsp;&nbsp;<input type="checkbox">记住密码
+			        &nbsp;&nbsp;<input type="checkbox" name="remember-me" value="true">记住密码
 			    </label>
 			  </div>
 			
@@ -77,7 +77,7 @@ width: 200px;
 </body>
 <script>
 $(function () {
-	$("#imgcode").click(function(){ //鼠标点击切换图片验证码
+	$("#codeimg").click(function(){ //鼠标点击切换图片验证码
 		var img_src ="imgcode?t="+Math.random();//重新加载图片
 		$(this).attr("src",img_src);
 	});
@@ -108,9 +108,15 @@ $(function () {
 					if(data.success){
 						window.location.href="index";
 					}else{
+						var img_src ="imgcode?t="+Math.random();//产生随机数
+						$("#codeimg").attr("src",img_src);//重新加载图片
 						
-						
-						$("#errorInfo").html("<b style='color:red;'>用户名或密码错误</b>");
+						$("#imgCodeInput").val("");//清空验证码输入框
+						if("Bad credentials"==data.errorMsg){
+							$("#errorInfo").html("<b style='color:red;'>用户名或密码错误</b>");
+						}else{
+							$("#errorInfo").html("<b style='color:red;'>"+data.errorMsg+"</b>");
+						}
 					}
 				}
 			});

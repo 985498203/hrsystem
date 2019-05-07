@@ -33,7 +33,7 @@
 		</property>
 	</bean>
 	<!-- 配置数据源 -->
-	<bean id="dataSoures"
+	<bean id="dataSource"
 		class="org.apache.commons.dbcp.BasicDataSource">
 		<property name="driverClassName"
 			value="${jdbc.driverClassName}"></property>
@@ -45,7 +45,7 @@
 	<bean id="sessionFactory"
 		class="org.springframework.orm.hibernate4.LocalSessionFactoryBean"
 		destroy-method="destroy">
-		<property name="dataSource" ref="dataSoures"></property>
+		<property name="dataSource" ref="dataSource"></property>
 		<!-- 扫描hibernate映射文件 -->
 		<property name="mappingLocations">
 			<list>

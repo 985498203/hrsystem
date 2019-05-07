@@ -1,11 +1,14 @@
 <!-- 获取绝对路径 -->
-<#assign base=springMacroRequestContext.contextPath />
+<!-- 获取绝对路径 -->
+<#assign BASE_PATH=springMacroRequestContext.contextPath />
+<#assign security=JspTaglibs["/META-INF/tlds/security.tld"] />
 <!DOCTYPE html>
 <html>
 <head>
 <#setting number_format="#">
 <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 <meta name="format-detection" content="telephone=no">
 <title>人力资源系统</title>
@@ -32,12 +35,14 @@
                 <div id="personInfor">
                     <p id="userName">杨鹏</p>
                     <p>
-                        <a>退出登录</a>
+                        <a href="${BASE_PATH}/logout">退出登录</a>
                     </p>
                 </div>
-                <div class="meun-title">信息管理</div>
-                <div class="meun-item" onclick="gongdan()" role="tab" data-toggle="tab"><img src="static/asserts/img/icon_source.png">工单</div>
-                <div class="meun-item" onclick="ygxx()" role="tab" data-toggle="tab"><img src="static/asserts/img/icon_card_grey.png">员工信息</div>
+                <@security.authorize access="hasRole('ROLE_ADMIN')">
+                	<div class="meun-title">信息管理</div>
+                	<div class="meun-item" onclick="gongdan()" role="tab" data-toggle="tab"><img src="static/asserts/img/icon_source.png">工单</div>
+                	<div class="meun-item" onclick="ygxx()" role="tab" data-toggle="tab"><img src="static/asserts/img/icon_card_grey.png">员工信息</div>
+                </@security.authorize>
                 <div class="meun-title">人事管理</div>
                 <div class="meun-item" id="zpgl"  onclick="zhaoping()" role="tab" data-toggle="tab"><img src="static/asserts/img/icon_house_grey.png">招聘</div>
                 <div class="meun-item" onclick="kaoqin()" role="tab" data-toggle="tab"><img src="static/asserts/img/icon_change_grey.png">考勤</div>
@@ -50,6 +55,7 @@
             	<!-- 工单模块 -->
             	<div class="gongdan">
             	</div>
+            	
             	<!-- 员工信息模块 -->
             	<div class="ygxx">
             	</div>
@@ -61,10 +67,10 @@
 					  <h1>考勤</h1>
             	</div>     
             	<!-- 权限管理模块 -->
-			<div class="qxgl" id="qxglpage">
+				<div class="qxgl" id="qxglpage">
             	</div> 
-            			<iframe scrolling="no" id="qxgliframe" name="main" frameborder="0"
-     						 style="min-height:600px;width:100%;height:100%;"></iframe>
+        			<iframe scrolling="no" id="qxgliframe" name="main" frameborder="0"
+ 						 style="min-height:600px;width:100%;height:100%;"></iframe>
             	<!-- 角色管理模块 -->
 				<div id="jsgl" >
 					  

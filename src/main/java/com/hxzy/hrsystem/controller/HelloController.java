@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -39,6 +40,11 @@ public class HelloController {
 	@RequestMapping(value = "/index", method = RequestMethod.GET)
 	public ModelAndView Login(ModelAndView mav) {
 		System.out.println("主页");
+		
+		//得到当前登录用户的信息
+		SecurityContextHolder.getContext().getAuthentication().getPrincipal();//拿到UserDetailsService对象
+		
+		
 		mav.setViewName("index");
 		return mav;
 	}

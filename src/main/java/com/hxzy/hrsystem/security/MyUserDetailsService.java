@@ -25,7 +25,7 @@ import com.hxzy.hrsystem.service.UserService;
 
 public class MyUserDetailsService implements UserDetailsService {
 	public UserService userService;
-	public Logger logger = LoggerFactory.getLogger(MyUserDetailsService.class);
+
 	@Resource(name = "userServiceImpl")
 	public void setUserService(UserService userService) {
 		this.userService = userService;
@@ -37,16 +37,13 @@ public class MyUserDetailsService implements UserDetailsService {
 	 */
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		UserDTO dto = null;System.out.println("经过了MyUserDetailsServiceImpl");
-		
-		logger.info("通过自定义的MyUserDetailsServiceImpl进行验证");
-		
+		UserDTO dto = null;
+		System.out.println("通过自定义的MyUserDetailsServiceImpl进行验证");
 		User user = getUser(username);// 通过用户名得到当前用户信息
 		if (null == user) {
-			System.out.println("用户未找到!");
+			
 			throw new UsernameNotFoundException("用户未找到!");
 		} else {
-			logger.info("用户"+user.getName()+",在"+new Date()+",登录了系统");
 			dto = new UserDTO();// 实体转化为dto传递数据
 			dto.setUsername(user.getUsername());
 			dto.setPassword(user.getPassword());
@@ -64,7 +61,7 @@ public class MyUserDetailsService implements UserDetailsService {
 	 * @return
 	 */
 	public User getUser(String username) {
-	 return userService.getUserByName(username);// 通过用户名查询用户信息
+		return userService.getUserByName(username);// 通过用户名查询用户信息
 	}
 
 	/**
@@ -79,9 +76,9 @@ public class MyUserDetailsService implements UserDetailsService {
 			List<Role> rolesList = userService.findAllRoleByUserId(user.getUserId());// 根据用户ID查询角色列表
 			rolesNameList = new ArrayList<GrantedAuthority>();// GrantedAuthority角色列表
 			for (Role role : rolesList) {
-				
+
 				System.out.println("============================遍历用户的角色名 ===============================");
-				System.out.println("角色："+role.getRoleName());
+				System.out.println("角色：" + role.getRoleName());
 				String roleName = role.getRoleName();// 得到角色名
 				if (rolesNameList.contains(new SimpleGrantedAuthority(roleName))) {
 					continue;

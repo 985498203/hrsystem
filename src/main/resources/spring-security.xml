@@ -26,10 +26,16 @@
 			access="isFullyAuthenticated()" />
 		<!-- 注册验证码过滤器 ,在表单验证过滤器(FORM_LOGIN_FILTER)之前调用-->
 		<custom-filter ref="imageAuthenticationFilter" before="FORM_LOGIN_FILTER"/>
+		
 		<form-login login-page="/userlogin"
+		login-processing-url="/login.html"
 			authentication-failure-handler-ref="myAuthenticationFailureHandler"
 			authentication-success-handler-ref="myAuthenticationSuccessHandler"/>
 		<access-denied-handler error-page="/403" />
+		<!-- 配置记住我的功能 -->
+		<!-- token-validity-seconds：有效秒数 -->
+		<remember-me token-repository-ref="jdbcTokenRepository" token-validity-seconds="3600"/>
+		<logout logout-url="/logout" />
 	</http>
 
 
@@ -44,6 +50,16 @@
 	<beans:bean id="imageAuthenticationFilter" class="com.hxzy.hrsystem.security.ImageAuthenticationFilter">
 		<beans:property name="myAuthenticationFailureHandler" ref="myAuthenticationFailureHandler"></beans:property>
 	</beans:bean>
+	<!-- 配置记住我功能 -->
+	<beans:bean id="jdbcTokenRepository" class="org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl">
+		<!-- 配置jdbc数据源 -->
+		<beans:property name="dataSource" ref="dataSource"/>
+		<!-- 配置自动建表 -->
+		<beans:property name="createTableOnStartup" value="false"></beans:property>
+	</beans:bean>
+	
+	
+	
 	
 	<authentication-manager>
 		<authentication-provider user-service-ref="myUserDetailsService">
