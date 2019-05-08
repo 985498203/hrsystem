@@ -2,9 +2,9 @@ package com.hxzy.hrsystem.service;
 
 import java.util.List;
 
+import org.springframework.stereotype.Component;
 import com.hxzy.hrsystem.entity.Dept;
 import com.hxzy.hrsystem.entity.PageInfo;
-
 public interface DeptService {
 	/**
 	 * 根据部门名查询部门信息

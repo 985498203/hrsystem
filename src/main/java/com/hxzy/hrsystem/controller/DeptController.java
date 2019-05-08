@@ -1,6 +1,9 @@
 package com.hxzy.hrsystem.controller;
 
+import java.util.List;
+
 import javax.annotation.Resource;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -41,6 +44,21 @@ public class DeptController {
 		mav.setViewName("admin/dept");
 		return mav;
 	}
+	
+	/**获取全部部门信息*/
+	@RequestMapping(value = "/depts/json", method = RequestMethod.GET)
+	@ResponseBody
+	public JsonData getDeptsJson() {
+		List<Dept> depts = null;
+		try {
+			depts = deptService.findDeptAll();
+		} catch (Exception e) {
+			e.printStackTrace();
+			return JsonData.fail("获取数据失败");
+		}
+		return JsonData.success(depts);
+	}
+	
 
 	@RequestMapping(value = "/dept/{id}", method = RequestMethod.GET)
 	@ResponseBody
@@ -64,9 +82,18 @@ public class DeptController {
 
 	@RequestMapping(value = "/dept", method = RequestMethod.POST)
 	@ResponseBody
-	public JsonData addDept(Dept dept) {
+	public JsonData addDept(Integer parentId, Dept dept) {
 		if (null != dept.getDeptName()) {
-			deptService.addDept(dept);// 添加数据
+			System.out.println("ID:"+parentId);
+			if(null!=parentId) {
+				System.out.println("不为NULL");
+				Dept dept2 = deptService.getDeptById(parentId);
+				dept.setParent(dept2);
+				deptService.addDept(dept);// 添加数据
+			}else {
+				deptService.addDept(dept);// 添加数据
+			}
+			
 			int zys = deptService.getTotalPages(5);// 得到总页数
 			return JsonData.success(zys);// 返回处理结果
 		}
@@ -81,6 +108,7 @@ public class DeptController {
 		if (null != dept.getDeptId()) {
 			Dept dept2 = deptService.getDeptById(dept.getDeptId());
 			dept2.setDeptName(dept.getDeptName());
+			dept2.setDescription(dept.getDescription());
 			deptService.updateDept(dept2);
 			return JsonData.success();
 		}

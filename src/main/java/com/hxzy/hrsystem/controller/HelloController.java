@@ -43,8 +43,6 @@ public class HelloController {
 		
 		//得到当前登录用户的信息
 		SecurityContextHolder.getContext().getAuthentication().getPrincipal();//拿到UserDetailsService对象
-		
-		
 		mav.setViewName("index");
 		return mav;
 	}

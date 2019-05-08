@@ -16,7 +16,7 @@
 	<div class="container">
 		<div class="row">
 			<div class="col-md-12 ">
-				<h3>资源列表</h3>
+				<h3>部门列表</h3>
 			</div>
 		</div>
 		<div class="row">
@@ -32,21 +32,26 @@
 					<thead>
 						<th><input type="checkbox" id="input_all" onclick="deptqx(0)">全选</th>
 						<th>部门名称</th>
+						<th>上级部门名称</th>
+						<th>部门描述</th>
 					</thead>
 					<tbody>
 						<#list pageInfo.pageList as p>
 						<tr>
 							<td width="80px"><input type="checkbox" id="input_one"
-								onclick="deptqx(1)" value="${p.deptId}">
-							</td>
+								onclick="deptqx(1)" value="${p.deptId}"></td>
 							<td>${p.deptName}</td>
+							<td>${(p.parent.deptName) ! "无"}</td>
 							
+							<td>${p.description}</td>
 							<td>
-								<button class="btn btn-primary btn-sm editDeptButton" value="${p.deptId}" >
+								<button class="btn btn-primary btn-sm editDeptButton"
+									value="${p.deptId}">
 									<span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
 									编辑
 								</button>
-								<button class="btn btn-danger btn-sm deleteDeptButton" value="${p.deptId}">
+								<button class="btn btn-danger btn-sm deleteDeptButton"
+									value="${p.deptId}">
 									<span class="glyphicon glyphicon-trash"></span> 删除
 								</button>
 							</td>
@@ -90,12 +95,12 @@
 			</div>
 		</div>
 
-		<!-- 添加权限资源弹窗开始 -->
-		<div class="modal fade" id="deptaddModal" data-backdrop="static"
+		<!-- 添加部门弹窗开始 -->
+		<div class="modal fade" id="deptAddModal" data-backdrop="static"
 			tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 			<div class="modal-dialog">
-				<!-- 添加权限资源表单开始 -->
-				<form id="adddeptform" action="/prem">
+				<!-- 添加部门表单开始 -->
+				<form id="addDeptForm" action="/prem">
 					<div class="modal-content">
 						<div class="modal-header">
 							<button data-dismiss="modal" class="close" type="button">
@@ -104,12 +109,12 @@
 							<h4 class="modal-title">新增部门</h4>
 						</div>
 						<div class="modal-body">
-							<p>权限名称</p>
+							<p>部门名称</p>
 							<input type="text" class="form-control" id="deptName_add_input"
 								name="deptName"> <span class="help-block"></span>
 						</div>
-						<!-- <div class="modal-body">
-							<p>上级权限</p>
+						<div class="modal-body">
+							<p>上级部门</p>
 							<div class="row">
 								<div class="col-md-4 ">
 									<select class="form-control" name="parentId">
@@ -117,7 +122,15 @@
 									</select>
 								</div>
 							</div>
-						</div> -->
+						</div>
+						<div class="modal-body">
+							<p>职能描述</p>
+							<input type="text" class="form-control" id="description_add_input"
+								name="description"> <span class="help-block"></span>
+						</div>
+						
+						
+						
 						<div class="modal-footer">
 							<button data-dismiss="modal" class="btn btn-default"
 								type="button">关闭</button>
@@ -127,94 +140,114 @@
 					<!-- /.modal-content -->
 
 				</form>
-				<!-- 添加权限资源表单结束 -->
+				<!-- 添加部门表单结束 -->
 			</div>
 			<!-- /.modal-dialog -->
 		</div>
-		<!-- 修改权限资源弹窗开始 -->
+		<!-- 修改部门弹窗开始 -->
 		<div class="modal fade" id="deptUpdateModal" data-backdrop="static"
 			tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 			<div class="modal-dialog">
-				<!-- 修改权限资源表单开始 -->
+				<!-- 修改部门表单开始 -->
 				<form id="updateDeptFrom" action="/dept">
 					<div class="modal-content">
 						<div class="modal-header">
 							<button data-dismiss="modal" class="close" type="button">
 								<span aria-hidden="true">×</span><span class="sr-only">Close</span>
 							</button>
-							<h4 class="modal-title">修改权限资源</h4>
+							<h4 class="modal-title">修改部门信息</h4>
 						</div>
 						<!-- 隐藏表单：id -->
-						<input type="hidden" name="deptId" id="deptId_update_input" value=""/>
-						
+						<input type="hidden" name="deptId" id="deptId_update_input"
+							value="" />
+
 						<div class="modal-body">
-							<p>权限名称</p>
-							<input type="text" class="form-control" id="deptName_update_input"
-								name="deptName"> <span class="help-block"></span>
+							<p>部门名称</p>
+							<input type="text" class="form-control"
+								id="deptName_update_input" name="deptName"> <span
+								class="help-block"></span>
 						</div>
-						
+						<div class="modal-body">
+							<p>职能描述</p>
+							<input type="text" class="form-control" id="description_update_input"
+								name="description"> <span class="help-block"></span>
+						</div>
 						<div class="modal-footer">
 							<button data-dismiss="modal" class="btn btn-default"
 								type="button">关闭</button>
-							<button class="btn btn-primary" id="dept_update_btn" type="button">更新</button>
+							<button class="btn btn-primary" id="dept_update_btn"
+								type="button">更新</button>
 						</div>
 					</div>
 					<!-- /.modal-content -->
 				</form>
-				<!-- 修改权限资源表单结束 -->
+				<!-- 修改部门表单结束 -->
 			</div>
 		</div>
-		<!-- 修改权限资源弹窗结束-->
+		<!-- 修改部门弹窗结束-->
 	</div>
 </body>
 <script type="text/javascript">
-	/* 全选反选事件 */
-	function deptqx(obj) {
-		var all = document.getElementById("input_all");
-		var noe = document.getElementsByName("input_one");
-		if (obj == 1) {
-
-			if (all.checked == true) {
-				alert("true");
-				for (var i = 0; i < noe.length; i++) {
-					alert("遍历");
-					noe[i].checked = true;
-				}
-			} else {
-				for (var i = 0; i < noe.length; i++) {
-					noe[i].checked = false;
-				}
-			}
-		} else {
-		}
-	}
 	$(function() {
 
 		function reset_from(ele) {
 			$(ele)[0].reset();//jq对象转DOM对象调用reset方法
 			$(ele).find('*').removeClass('has-error has-success');//清空表单样式
 			$(ele).find('.help-block').text('');//清除提示信息
-			$('#deptaddModal select').html('');
-			var optionEle = $('<option></option>').append('不选则设为顶级权限').attr(
-					'value', 0);
-			optionEle.appendTo("#deptaddModal select");//添加至下拉列表中
+			$('#deptAddModal select').html('');
 		}
-		$("#addDeptButton").click(function() {//点击新增按钮弹出新增权限资源模态框，新增权限资源
-			// 重置表单数据 
+		
+		
+		//点击新增按钮弹出新增部门模态框
+		$("#addDeptButton").click(function() {
+			// 重置表单数据
 			reset_from("#addDeptForm");
-			//1.发送ajax，先查出所有的顶级权限，显示在下拉列表中
-			getSuperdept();
-			$('#deptAddModal').modal({
-				backdrop : 'static'
+			//回显部门列表
+			getDeptAll();
+			
+			
+			$('#deptAddModal').modal({//设置点击空白区域模态框不消失
+				backdrop : 'static' 
 			});
 		});
-
+		
+		//查出所有的部门列表
+		function getDeptAll(){
+			$.ajax({
+				type : 'GET',
+				url: 'depts/json',
+				dataType : 'json',
+				success : function(JsonData) {
+					console.log(JsonData);
+					
+					if (JsonData.ret) {
+						$.each(JsonData.data, function() {//解析数据
+							var optionEle = $('<option></option>').append(
+									this.deptName).attr('value', this.deptId);
+							optionEle.appendTo("#deptAddModal select");//添加至下拉列表中
+						});
+					}
+				},
+				error : function(data) {
+					alert("获取部门列表失败，请检查网络");
+				}
+				
+			});
+	
+		}
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
 		//表单提交事件
 		$("#dept_save_btn").click(function() {
-			if (!validata_add_form()) {//校验表单数据
-				return false;
-			}
-			if ($(this).attr("ajax-va") == "error") {//判断之前ajax检查权限名和URl是可用
+			if ($(this).attr("ajax-va") == "error") {//判断之前ajax检查部门名是否通过
 				return false;
 			}
 			$.ajax({
@@ -225,9 +258,8 @@
 				success : function(JsonData) {
 					var obj = JSON.parse(JsonData);
 					if (obj.ret) {
-						$('#deptaddModal').modal('hide');//关闭模态框
+						$('#deptAddModal').modal('hide');//关闭模态框
 						alert("添加成功");
-						
 						lastPage(obj.data);
 					} else {
 						alert("添加失败，请检查表单");
@@ -236,11 +268,6 @@
 									'#deptAddModal form input[name="deptName"]',
 									'error', obj.extend.errorInfo.deptName);
 						}
-						if(undefined != obj.extend.errorInfo.url){//如果有URL的错误信息，就显示错误信息
-							show_validata_info(
-									'#deptAddModal form input[name="url"]',
-									'error', obj.extend.errorInfo.url);
-						}	
 					}
 				},
 				error : function(data) {
@@ -268,9 +295,9 @@
 			$(ele).next('span').text(msg);
 		}
 	}
-	$('#deptaddModal form input[name="deptName"]')
-			.focusout(
-					function() {//鼠标离开输入框时校验权限名是否存在
+	
+	$('#deptAddModal form input[name="deptName"]').focusout(
+					function() {//鼠标离开输入框时校验部门名是否存在
 						var deptName = this.value;
 						$.ajax({
 							type : 'GET',
@@ -280,19 +307,20 @@
 							success : function(JsonData) {
 								if (JsonData.ret) {
 									show_validata_info(
-											'#deptaddModal form input[name="deptName"]',
+											'#deptAddModal form input[name="deptName"]',
 											'success', JsonData.msg);
 									$('#dept_save_btn').attr('ajax-va',
 											'success');
 								} else {
 									show_validata_info(
-											'#deptaddModal form input[name="deptName"]',
+											'#deptAddModal form input[name="deptName"]',
 											'error', JsonData.msg);
 									$('#dept_save_btn').attr('ajax-va',
 											'error');
 								}
 							},
 						});
+	});
 	$(".editDeptButton").click(function() {//点击修改按钮弹出新增权限资源模态框，修改权限资源
 		$('#deptUpdateModal').modal({//弹出新增权限资源模态框
 			backdrop : 'static' //弹出模态框时点击空白区域
@@ -307,10 +335,10 @@
 				if(JsonData.ret){
 					$("#deptId_update_input").val(JsonData.data.deptId);
 					$("#deptName_update_input").val(JsonData.data.deptName);
+					$("#description_update_input").val(JsonData.data.description);
 				}
 			}
 		});
-		//
 	});
 	
 	$("#dept_update_btn").click(function(){//修改按钮提交事件
@@ -339,7 +367,7 @@
 		}
 	});
 	
-	
+
 	$(".deleteDeptButton").click(function() {//删除事件
 		//弹出确认删除对话框
 		var deptName =  $(this).parents("tr").find("td:eq(1)").text();
@@ -363,6 +391,8 @@
 		}
 		
 	});
+	
+
 	
 </script>
 </html>

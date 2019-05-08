@@ -4,18 +4,20 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
+import org.springframework.stereotype.Component;
+
 import com.hxzy.hrsystem.dao.DeptDao;
 import com.hxzy.hrsystem.entity.Dept;
 import com.hxzy.hrsystem.entity.PageInfo;
 import com.hxzy.hrsystem.entity.Permission;
 import com.hxzy.hrsystem.service.DeptService;
-
+@Component("deptServiceImpl")
 public class DeptServiceImpl implements DeptService {
 
 	private DeptDao deptDao;
 	private int pageCount;// 总页数
 
-	@Resource(name = "deptaDaoImpl")
+	@Resource(name = "deptDaoImpl")
 	public void setDeptDao(DeptDao deptDao) {
 		this.deptDao = deptDao;
 	}

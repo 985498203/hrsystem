@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import com.hxzy.hrsystem.dao.DeptDao;
 import com.hxzy.hrsystem.entity.Dept;
+
 @Component("deptDaoImpl")
 public class DeptDaoImpl implements DeptDao {
 	@Autowired
@@ -22,9 +23,9 @@ public class DeptDaoImpl implements DeptDao {
 	public Session getSession() {
 		return this.sessionFactory.getCurrentSession();
 	}
-	
+
 	private int pageCount;// 总页数
-	
+
 	@Override
 	public int getPageCount() {// 得到总页数
 		return pageCount;
@@ -34,7 +35,7 @@ public class DeptDaoImpl implements DeptDao {
 	public void setPageCount(int pageCount) {// 设置总页数
 		this.pageCount = pageCount;
 	}
-	
+
 	@Override
 	public Dept getBy(Dept t) {
 
@@ -129,7 +130,7 @@ public class DeptDaoImpl implements DeptDao {
 		Session session = this.getSession();
 		Query q = session.createQuery("delete from Dept where " + hql);
 		q.executeUpdate();
-		
+
 	}
 
 	@Override
@@ -156,7 +157,7 @@ public class DeptDaoImpl implements DeptDao {
 				session.clear();
 			}
 		}
-		
+
 	}
 
 }

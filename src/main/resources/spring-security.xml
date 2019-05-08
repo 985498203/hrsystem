@@ -76,7 +76,7 @@
 		<!-- 配置jdbc数据源 -->
 		<beans:property name="dataSource" ref="dataSource"/>
 		<!-- 配置自动建表 -->
-		<beans:property name="createTableOnStartup" value="true"></beans:property>
+		<!-- <beans:property name="createTableOnStartup" value="true"></beans:property> -->
 	</beans:bean>
 	
 	
