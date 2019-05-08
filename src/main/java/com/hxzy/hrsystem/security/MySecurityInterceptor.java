@@ -1,4 +1,4 @@
-package com.hxzy.hrsystem.filter;
+package com.hxzy.hrsystem.security;
 
 import java.io.IOException;
 
@@ -25,6 +25,7 @@ import org.springframework.stereotype.Component;
 public class MySecurityInterceptor extends AbstractSecurityInterceptor implements Filter {
 
 	public FilterInvocationSecurityMetadataSource securityMetadataSource;
+	
 	public AuthenticationManager authenticationManager;
 
 	public void setSecurityMetadataSource(FilterInvocationSecurityMetadataSource securityMetadataSource) {

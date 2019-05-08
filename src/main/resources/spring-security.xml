@@ -10,6 +10,8 @@
     http://www.springframework.org/schema/context/spring-context.xsd
     http://www.springframework.org/schema/security       
     http://www.springframework.org/schema/security/spring-security.xsd">
+	
+	
 	<http>
 		<!-- 禁用csrf -->
 		<csrf disabled="true" />
@@ -18,10 +20,10 @@
 		<intercept-url pattern="/static/**" access="permitAll()" />
 
 
-		<intercept-url pattern="/roles"
+<!-- 		<intercept-url pattern="/roles"
 			access="hasAuthority('ROLE_USER')" />
 		<intercept-url pattern="/perms"
-			access="hasAuthority('ROLE_ADMIN')" />
+			access="hasAuthority('ROLE_ADMIN')" /> -->
 		<intercept-url pattern="/**"
 			access="isFullyAuthenticated()" />
 		<!-- 注册验证码过滤器 ,在表单验证过滤器(FORM_LOGIN_FILTER)之前调用-->
@@ -37,31 +39,50 @@
 		<remember-me token-repository-ref="jdbcTokenRepository" token-validity-seconds="3600"/>
 		<logout logout-url="/logout" />
 	</http>
-
-
+	<!-- 开启注解 -->
+	<context:annotation-config />	
+	
+	<beans:bean id="invocationSecurityMetadataSource" class="com.hxzy.hrsystem.security.MyFilterInvocationSecurityMetadataSource">
+	</beans:bean>
+	
 	<!-- 自定义成功处理器 -->
 	<beans:bean id="myAuthenticationSuccessHandler" class="com.hxzy.hrsystem.security.MyAuthenticationSuccessHandler"></beans:bean>
 	<!-- 自定义失败处理器 -->
 	<beans:bean id="myAuthenticationFailureHandler" class="com.hxzy.hrsystem.security.MyAuthenticationFailureHandler"></beans:bean>
 	<!-- 自定义密码加密器 -->
 	<beans:bean id="passwordEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder"></beans:bean>
+	<!-- 自定义认证器 -->
 	<beans:bean id="myUserDetailsService" class="com.hxzy.hrsystem.security.MyUserDetailsService"></beans:bean>
 	<!-- 自定义验证码过滤器 -->
 	<beans:bean id="imageAuthenticationFilter" class="com.hxzy.hrsystem.security.ImageAuthenticationFilter">
 		<beans:property name="myAuthenticationFailureHandler" ref="myAuthenticationFailureHandler"></beans:property>
 	</beans:bean>
+	<!-- 自定义决策器 -->
+	<beans:bean id="myAccessDecisionManager"
+		class="com.hxzy.hrsystem.security.MyAccessDecisionManager"></beans:bean>
+	<!-- 拦截器 -->
+	<beans:bean id="mySecurityInterceptor" class="com.hxzy.hrsystem.security.MySecurityInterceptor">
+		<beans:property name="securityMetadataSource"
+			ref="invocationSecurityMetadataSource"></beans:property>
+		<beans:property name="accessDecisionManager"
+			ref="myAccessDecisionManager"></beans:property>
+		<beans:property name="authenticationManager"
+			ref="authenticationManager"></beans:property>
+	</beans:bean>
+	
+	
 	<!-- 配置记住我功能 -->
 	<beans:bean id="jdbcTokenRepository" class="org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl">
 		<!-- 配置jdbc数据源 -->
 		<beans:property name="dataSource" ref="dataSource"/>
 		<!-- 配置自动建表 -->
-		<beans:property name="createTableOnStartup" value="false"></beans:property>
+		<beans:property name="createTableOnStartup" value="true"></beans:property>
 	</beans:bean>
 	
 	
 	
 	
-	<authentication-manager>
+	<authentication-manager alias="authenticationManager">
 		<authentication-provider user-service-ref="myUserDetailsService">
 			<!-- 使用加密的算法对用户的输入的密码进行加密，然后和数据库的密码进行比对 -->
 			<password-encoder ref="passwordEncoder" />

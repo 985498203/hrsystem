@@ -49,7 +49,7 @@ public interface BaseDao<T> {
 	public void delete(T t);
 	
 	/**
-	 * 删除
+	 * 根据id删除
 	 * 
 	 * @param entity
 	 */

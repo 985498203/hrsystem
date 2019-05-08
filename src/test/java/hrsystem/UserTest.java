@@ -18,7 +18,7 @@ public class UserTest extends BaseTest {
 	}
 	@Test
 	public void updateUser() {
-		User user = userService.getUserByName("u1");
+		User user = userService.getUserByName("u3");
 		//哈希算法+盐
 		PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 		user.setPassword(passwordEncoder.encode("123"));

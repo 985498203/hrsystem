@@ -84,7 +84,7 @@ public class MyFilterInvocationSecurityMetadataSource implements FilterInvocatio
 				}
 			}
 		}
-		System.out.println("———————————————————————结束———————————————————");
+		System.out.println("———————————————————————开始———————————————————");
 
 		for (String key : resourceMap.keySet()) {
 			System.out.println("key:" + key);
@@ -116,7 +116,6 @@ public class MyFilterInvocationSecurityMetadataSource implements FilterInvocatio
 
 	@Override
 	public Collection<ConfigAttribute> getAllConfigAttributes() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
