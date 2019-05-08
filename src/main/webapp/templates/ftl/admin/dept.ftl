@@ -110,7 +110,7 @@
 						</div>
 						<div class="modal-body">
 							<p>部门名称</p>
-							<input type="text" class="form-control" id="deptName_add_input"
+							<input type="text" class="form-control" id="deptName_add_input" 
 								name="deptName"> <span class="help-block"></span>
 						</div>
 						<div class="modal-body">
@@ -168,6 +168,17 @@
 								class="help-block"></span>
 						</div>
 						<div class="modal-body">
+							<p>上级部门</p>
+							<div class="row">
+								<div class="col-md-4 ">
+									<select class="form-control" id="parentId_update_select" name="parentId">
+										
+									</select>
+								</div>
+							</div>
+						</div>
+						
+						<div class="modal-body">
 							<p>职能描述</p>
 							<input type="text" class="form-control" id="description_update_input"
 								name="description"> <span class="help-block"></span>
@@ -195,6 +206,10 @@
 			$(ele).find('*').removeClass('has-error has-success');//清空表单样式
 			$(ele).find('.help-block').text('');//清除提示信息
 			$('#deptAddModal select').html('');
+			var optionEle = $('<option></option>').append('==请选择部门==').attr(
+					'value', 0);
+			optionEle.appendTo("#deptAddModal select");//添加至下拉列表中
+			
 		}
 		
 		
@@ -203,7 +218,7 @@
 			// 重置表单数据
 			reset_from("#addDeptForm");
 			//回显部门列表
-			getDeptAll();
+			getDeptAll("#deptAddModal select");
 			
 			
 			$('#deptAddModal').modal({//设置点击空白区域模态框不消失
@@ -212,19 +227,20 @@
 		});
 		
 		//查出所有的部门列表
-		function getDeptAll(){
+		function getDeptAll(ele){
 			$.ajax({
 				type : 'GET',
 				url: 'depts/json',
 				dataType : 'json',
 				success : function(JsonData) {
 					console.log(JsonData);
-					
 					if (JsonData.ret) {
 						$.each(JsonData.data, function() {//解析数据
-							var optionEle = $('<option></option>').append(
-									this.deptName).attr('value', this.deptId);
-							optionEle.appendTo("#deptAddModal select");//添加至下拉列表中
+							if(undefined!=this.deptName){
+								var optionEle = $('<option></option>').append(
+										this.deptName).attr('value', this.deptId);
+								optionEle.appendTo(ele);//添加至下拉列表中
+							}
 						});
 					}
 				},
@@ -233,20 +249,16 @@
 				}
 				
 			});
-	
 		}
-		
-		
-		
-		
-		
-		
-		
-		
-		
 		
 		//表单提交事件
 		$("#dept_save_btn").click(function() {
+			var deptName=$("#deptName_add_input").val().trim();
+			var description=$("#description_add_input").val().trim();
+			if(deptName.length == 0){
+				show_validata_info('#deptName_add_input',error,'部门名不能为空');
+				return false;
+			}
 			if ($(this).attr("ajax-va") == "error") {//判断之前ajax检查部门名是否通过
 				return false;
 			}
@@ -275,7 +287,7 @@
 				}
 			});
 		});
-	});
+
 
 	//添加后显示最后一页；
 	function lastPage(page) {//得到最后一页
@@ -296,35 +308,53 @@
 		}
 	}
 	
-	$('#deptAddModal form input[name="deptName"]').focusout(
-					function() {//鼠标离开输入框时校验部门名是否存在
-						var deptName = this.value;
-						$.ajax({
-							type : 'GET',
-							url : 'checkdeptname',
-							data : 'deptName=' + deptName,
-							dataType : 'json',
-							success : function(JsonData) {
-								if (JsonData.ret) {
-									show_validata_info(
-											'#deptAddModal form input[name="deptName"]',
-											'success', JsonData.msg);
-									$('#dept_save_btn').attr('ajax-va',
-											'success');
-								} else {
-									show_validata_info(
-											'#deptAddModal form input[name="deptName"]',
-											'error', JsonData.msg);
-									$('#dept_save_btn').attr('ajax-va',
-											'error');
-								}
-							},
-						});
+	$('#deptAddModal form input[name="deptName"]').focusout(function() {//鼠标离开输入框时校验部门名是否存在
+		var deptName= $(this).val().trim();
+		if(deptName.length==0){
+			show_validata_info(
+					'#deptAddModal form input[name="deptName"]',
+					'error', "部门名不能为空");
+			$('#dept_save_btn').attr('ajax-va',
+					'error');
+		}else{
+			$.ajax({
+				type : 'GET',
+				url : 'checkdeptname',
+				data : 'deptName=' + deptName,
+				dataType : 'json',
+				success : function(JsonData) {
+					if (JsonData.ret) {
+						show_validata_info(
+								'#deptAddModal form input[name="deptName"]',
+								'success', JsonData.msg);
+						$('#dept_save_btn').attr('ajax-va',
+								'success');
+					} else {
+						show_validata_info(
+								'#deptAddModal form input[name="deptName"]',
+								'error', JsonData.msg);
+						$('#dept_save_btn').attr('ajax-va',
+								'error');
+					}
+				},
+			});
+		}
 	});
+	
+	
 	$(".editDeptButton").click(function() {//点击修改按钮弹出新增权限资源模态框，修改权限资源
+		
+		$('#deptUpdateModal select').html('');
+		var optionEle = $('<option></option>').append('==请选择部门==').attr(
+				'value', 0);
+		optionEle.appendTo("#deptUpdateModal select");//添加至下拉列表中
+		
+		getDeptAll("#deptUpdateModal select");
+		
 		$('#deptUpdateModal').modal({//弹出新增权限资源模态框
 			backdrop : 'static' //弹出模态框时点击空白区域
 		});
+		
 		//查询数据库，回显数据
 		var deptId= $(this).val();
 		$.ajax({
@@ -336,10 +366,30 @@
 					$("#deptId_update_input").val(JsonData.data.deptId);
 					$("#deptName_update_input").val(JsonData.data.deptName);
 					$("#description_update_input").val(JsonData.data.description);
+					var parentId= JsonData.extend.parentId;
+					
+					if(undefined==parentId){
+						selected(0);
+					}else{
+						selected(parentId);
+						
+						//$("#deptUpdateModal select").attr("value",parentId);
+					}
 				}
 			}
 		});
 	});
+	
+	//设置select选择状态
+	function selected(value){
+		alert(value);
+		$("#deptUpdateModal select option[value='"+value+"']").attr("selected","selected");
+	}
+	
+	
+	
+	
+	
 	
 	$("#dept_update_btn").click(function(){//修改按钮提交事件
 		//获取表单数据
@@ -391,7 +441,7 @@
 		}
 		
 	});
-	
+});
 
 	
 </script>

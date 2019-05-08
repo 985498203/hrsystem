@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.hxzy.hrsystem.entity.Dept;
 import com.hxzy.hrsystem.entity.PageInfo;
 import com.hxzy.hrsystem.service.DeptService;
@@ -52,20 +54,32 @@ public class DeptController {
 		List<Dept> depts = null;
 		try {
 			depts = deptService.findDeptAll();
+			for (Dept dept : depts) {
+				System.out.println("***********************::"+dept.getDeptName());
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 			return JsonData.fail("获取数据失败");
 		}
+		
+		
 		return JsonData.success(depts);
 	}
 	
-
+	/** 获取当个部门*/
 	@RequestMapping(value = "/dept/{id}", method = RequestMethod.GET)
 	@ResponseBody
 	public JsonData deptInfo(@PathVariable(name = "id", required = true) int id) {
 		System.out.println("id:" + id);
 		Dept dept = deptService.getDeptById(id);
-		return JsonData.success(dept);
+		
+		// 前端出现$ref解决办法 ，暂时不可取，会导致 java.lang.StackOverflowError
+		//String jsonStr=JSON.toJSONString(depts, SerializerFeature.DisableCircularReferenceDetect); 
+		if(null!=dept.getParent()) {//有上级部门
+			int parentId = dept.getParent().getDeptId();
+			return JsonData.success(dept).add("parentId", parentId);
+		}
+		return JsonData.success(dept);//没有上级部门不返回上级部门id
 	}
 
 	@RequestMapping(value = "/dept/{id}", method = RequestMethod.DELETE)
