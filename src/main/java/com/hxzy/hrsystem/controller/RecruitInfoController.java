@@ -16,7 +16,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.hxzy.hrsystem.entity.RecruitInfo;
 import com.hxzy.hrsystem.service.RecruitInfoService;
-
+ 
 
 @Controller
 public class RecruitInfoController {
